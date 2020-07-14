@@ -1,5 +1,6 @@
 import React from "react";
-import Story from "./components/story";
+import Stories from "./pages/stories";
+import Products from "./pages/products";
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -29,30 +30,28 @@ export default function App() {
         <Router>
           <div>
             <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="/">Navbar</Navbar.Brand>
+              <Navbar.Brand href="/">Nav</Navbar.Brand>
               <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/story">Story</Nav.Link>
+                <Nav.Link href="/stories">Stories</Nav.Link>
                 <Nav.Link href="/topics">Topics</Nav.Link>
+                <Nav.Link href="/products">Products</Nav.Link>
                 <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
               </Nav>
             </Navbar>
 
             <Switch>
-              <Route path="/story">
-                <Story />
+              <Route path="/stories">
+                <Stories />
+              </Route>
+              <Route path="/products">
+                <Products />
               </Route>
               <Route path="/topics">
                 <Topics />
               </Route>
               <Route path="/">
                 <Home />
-              </Route>
-              <Route path="/cats">
-                <h1>Cats</h1>
-              </Route>
-              <Route path="/dogs">
-              <h1>Dogs</h1>
               </Route>
             </Switch>
           </div>
