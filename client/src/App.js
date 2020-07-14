@@ -1,6 +1,6 @@
 import React from "react";
-import Stories from "./pages/stories";
-import Products from "./pages/products";
+import StoryPage from "./pages/StoryPage";
+import ProductPage from "./pages/ProductPage";
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -42,10 +42,10 @@ export default function App() {
 
             <Switch>
               <Route path="/stories">
-                <Stories />
+                <StoryPage />
               </Route>
               <Route path="/products">
-                <Products />
+                <ProductPage />
               </Route>
               <Route path="/topics">
                 <Topics />
