@@ -1,10 +1,10 @@
 import React from "react";
+import Story from "./components/story";
 import { ApolloClient } from 'apollo-boost';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { Query, KeystoneProvider } from '@keystonejs/apollo-helpers';
+import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +13,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Nav, Navbar, NavItem, Form, FormControl, Button } from "react-bootstrap";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 const client = new ApolloClient({
@@ -31,16 +31,16 @@ export default function App() {
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/">Navbar</Navbar.Brand>
               <Nav className="mr-auto">
-                <Nav.Link href="home">Home</Nav.Link>
-                <LinkContainer to="/"><NavItem>Home</NavItem></LinkContainer>
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/story">Story</Nav.Link>
+                <Nav.Link href="/topics">Topics</Nav.Link>
                 <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
-                <LinkContainer to="/topics"><NavItem>Topics</NavItem></LinkContainer>
               </Nav>
             </Navbar>
 
             <Switch>
-              <Route path="/about">
-                <About />
+              <Route path="/story">
+                <Story />
               </Route>
               <Route path="/topics">
                 <Topics />
@@ -63,51 +63,7 @@ export default function App() {
 }
 
 function Home() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      allProducts{
-        name
-        origin
-      }
-    }
-  `);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  console.log(data);
-
-  return data.allProducts.map(({ name, origin }) => (
-    <div key={name}>
-      <p>
-        {name}: {origin}
-      </p>
-    </div>
-  ));
-}
-
-function About() {
-  const { loading, error, data } = useQuery(gql`
-    {
-      allStories{
-        title
-        story_content
-      }
-    }
-  `);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  console.log(data);
-
-  return data.allStories.map(({ title, story_content }) => (
-    <div key={title}>
-      <p>
-        {title}: {story_content}
-      </p>
-    </div>
-  ));
+  return <h1>HOME</h1>
 }
 
 function Topics() {
