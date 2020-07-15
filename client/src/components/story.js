@@ -19,9 +19,8 @@ export default function Story() {
 
   return data.allStories.map(({ title, story_content }) => (
     <div key={title}>
-      <p>
-        {title}: {story_content}
-      </p>
+        <h4 className="list-group-item-heading">{title}</h4>
+        <p className="list-group-item-text">{story_content}</p>
     </div>
   ));
 }

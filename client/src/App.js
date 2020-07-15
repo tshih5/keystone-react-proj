@@ -39,7 +39,7 @@ export default function App() {
                 <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
               </Nav>
             </Navbar>
-
+            
             <Switch>
               <Route path="/stories">
                 <StoryPage />
