@@ -78,16 +78,14 @@ const authStrategy = keystone.createAuthStrategy({
 
 keystone.createList('Product', {
   fields: {
-    name: {
-      type: Text,
-      isUnique: true
-    },
+    name: {type: Text,},
     price_in_usd: {type: Decimal},
-    quality: { type: Stars, starCount: 5 },
+    quality: {type: Stars, starCount: 5 },
     origin: {type: Select, options: 'opt1, opt2, opt3'},
     info: {type: Text, isMultiline: true},
     image: {type: Url},
   },
+  labelField: "id",
 });
 
 keystone.createList('Story',{
@@ -99,6 +97,7 @@ keystone.createList('Story',{
     category:{type: Select, options: 'opt1, opt2, opt3'},
     story_content: {type: Text, isMultiline: true},
   },
+  labelField: "id",
 });
 
 module.exports = {
