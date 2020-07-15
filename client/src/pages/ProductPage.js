@@ -14,6 +14,7 @@ function RenderProducts(){
         name
         price_in_usd
         origin
+        id
       }
     }
   `);
@@ -23,7 +24,10 @@ function RenderProducts(){
 
   console.log(data);
 
-  return data.allProducts.map(({ name, price_in_usd, origin }) => (
-    <Product name={name} price={price_in_usd} origin={origin}/>
+  return data.allProducts.map((props) => (
+    <div key={props.id}>
+      <Product {...props} />
+    </div>
+
   ));
 }

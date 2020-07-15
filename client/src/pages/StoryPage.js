@@ -16,6 +16,7 @@ function RenderStories(){
       allStories{
         title
         story_content
+        id
       }
     }
   `);
@@ -25,7 +26,9 @@ function RenderStories(){
 
   console.log(data);
 
-  return data.allStories.map(({ title, story_content }) => (
-    <Story title={title} content={story_content} />
+  return data.allStories.map((props) => (
+    <div key={props.id}>
+      <Story {...props} />
+    </div>
   ));
 }
