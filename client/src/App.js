@@ -1,6 +1,7 @@
 import React from "react";
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
+import HomePage from "./pages/HomePage";
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -39,7 +40,7 @@ export default function App() {
                 <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
               </Nav>
             </Navbar>
-            
+
             <Switch>
               <Route path="/stories">
                 <StoryPage />
@@ -51,7 +52,7 @@ export default function App() {
                 <Topics />
               </Route>
               <Route path="/">
-                <Home />
+                <HomePage />
               </Route>
             </Switch>
           </div>
@@ -59,10 +60,6 @@ export default function App() {
       </KeystoneProvider>
     </ApolloProvider>
   );
-}
-
-function Home() {
-  return <h1>HOME</h1>
 }
 
 function Topics() {
