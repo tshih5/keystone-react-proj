@@ -35,8 +35,9 @@ export default function App() {
               <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/stories">Stories</Nav.Link>
-                <Nav.Link href="/topics">Topics</Nav.Link>
                 <Nav.Link href="/products">Products</Nav.Link>
+                <Nav.Link href="/topics">Topics</Nav.Link>
+                {/* May need to change this how this works later*/}
                 <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
               </Nav>
             </Navbar>
