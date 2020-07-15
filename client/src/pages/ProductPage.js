@@ -4,7 +4,9 @@ import { useQuery } from '@apollo/react-hooks';
 import Product from "../components/product"
 
 export default function ProductPage() {
-  return <RenderProducts />;
+  return (
+    <RenderProducts />
+  );
 }
 
 function RenderProducts(){
@@ -25,9 +27,7 @@ function RenderProducts(){
   console.log(data);
 
   return data.allProducts.map((props) => (
-    <div key={props.id}>
-      <Product {...props} />
-    </div>
+    <Product {...props} />
 
   ));
 }
