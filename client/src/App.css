@@ -16,3 +16,28 @@
   background-position: center, center;
   min-height: 450px;
 }
+.ButtonProduct1 {
+  border: 1px solid red;
+  left: 500px;
+  top: 100px;
+}
+.ButtonProduct2 {
+  border: 1px solid red;
+  left: 100px;
+  top: 100px;
+}
+.ButtonProduct3 {
+  border: 1px solid red;
+  left: 150px;
+  top: 100px;
+}
+.ButtonProduct4 {
+  border: 1px solid red;
+  left: 200px;
+  top: 100px;
+}
+.customerStory {
+  /*background-image: */
+  left: 1000px;
+}
+
