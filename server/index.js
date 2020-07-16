@@ -64,7 +64,7 @@ keystone.createList('User', {
     create: access.userIsAdmin,
     delete: access.userIsAdmin,
     auth: true,
-  },
+  }, 
 });
 
 const authStrategy = keystone.createAuthStrategy({
