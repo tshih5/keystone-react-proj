@@ -5,7 +5,9 @@ import Product from "../components/product"
 
 export default function ProductPage() {
   return (
-    <RenderProducts />
+    <div className="wrapper">
+      <RenderProducts />
+    </div>
   );
 }
 
