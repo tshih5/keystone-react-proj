@@ -16,3 +16,89 @@
   background-position: center, center;
   min-height: 450px;
 }
+.ButtonProduct1 {
+  border: 1px solid red;
+  left: 500px;
+  top: 100px;
+}
+.ButtonProduct2 {
+  border: 1px solid red;
+  left: 100px;
+  top: 100px;
+}
+.ButtonProduct3 {
+  border: 1px solid red;
+  left: 150px;
+  top: 100px;
+}
+.ButtonProduct4 {
+  border: 1px solid red;
+  left: 200px;
+  top: 100px;
+}
+.customerStory {
+  /*background-image: */
+  left: 1000px;
+}
+.mainRock1 {
+  background-color: grey;
+  /*border: 10px brown;*/
+  color: whitesmoke;
+  border-radius: 50%;
+  font-size: larger;
+}
+.mainRock2 {
+  background-color: grey;
+  color: whitesmoke;
+  border-radius: 50%;
+  font-size: larger;
+}
+.mainRock3 {
+  background-color: grey;
+  color: whitesmoke;
+  border-radius: 50%;
+  font-size: larger;
+}
+.mainRock4 {
+  background-color: grey;
+  color: whitesmoke;
+  border-radius: 50%;
+  font-size: larger;
+}
+.subRock1 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+.subRock2 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+.subRock3 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+.subRock4 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+.subRock5 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+.subRock6 {
+  background-color: white;
+  color: burlywood;
+  font-size: small;
+  border: none;
+}
+

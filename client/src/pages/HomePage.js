@@ -18,15 +18,17 @@ export default function HomePage() {
       </div>
       <div className="home-banner-2">
         <h2>Popular Stones</h2>
-        <button /*onClick*/>product example 1</button>
-        <button>product example 2</button>
-        <button>product example 3</button>
-        <button>product example 4</button>
+        <button className="ButtonProduct1" /*onClick*/>product example 1</button>
+        <button className="ButtonProduct2">product example 2</button>
+        <button className="ButtonProduct3">product example 3</button>
+        <button className="ButtonProduct4">product example 4</button>
 
       </div>
       <div className="home-banner-3">
         <h2>mission statement/blog post</h2>
-
+          <div className="customerStory">
+            <h6>"Wow this is a really great stone i would 10/10 buy"</h6>
+          </div>
       </div>
     </div>
     
