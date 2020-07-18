@@ -33,12 +33,10 @@ export default function App() {
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/">Nav</Navbar.Brand>
               <Nav className="mr-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/stories">Stories</Nav.Link>
-                <Nav.Link href="/products">Products</Nav.Link>
-                <Nav.Link href="/topics">Topics</Nav.Link>
-                {/* May need to change this how this works later*/}
-                <LinkContainer to="/about"><NavItem>About</NavItem></LinkContainer>
+                <Nav.Link as={Link} to="/">Home</Nav.Link>
+                <Nav.Link as={Link} to="/stories">Stories</Nav.Link>
+                <Nav.Link as={Link} to="/products">Products</Nav.Link>
+                <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
               </Nav>
             </Navbar>
 
