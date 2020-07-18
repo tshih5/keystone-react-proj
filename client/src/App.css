@@ -16,11 +16,7 @@
   background-position: center, center;
   min-height: 450px;
 }
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-}
+
 .ButtonProduct1 {
   border: 1px solid red;
   left: 500px;
