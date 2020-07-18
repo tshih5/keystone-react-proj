@@ -1,10 +1,14 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
+
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship } = require('@keystonejs/fields');
+const Stars = require('./fields/Stars');
+const { Content } = require('@keystonejs/field-content');
+
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const initialiseData = require('./initial-data');
-const Stars = require('./fields/Stars');
+
 
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 
@@ -82,15 +86,25 @@ keystone.createList('Product', {
     price_in_usd: {type: Decimal},
     quality: {type: Stars, starCount: 5 },
     origin: {type: Select, options: 'opt1, opt2, opt3'},
-    stone_type: {type: Relationship, ref: 'Mineral', many: false},
+    stone_type: {type: Relationship, ref: 'Mineral_Category', many: false},
     favorite: {type: Checkbox},
-    info: {type: Text, isMultiline: true},
+    info: {
+      type: Content,
+      blocks: [
+        Content.blocks.blockquote,
+        Content.blocks.image,
+        Content.blocks.link,
+        Content.blocks.orderedList,
+        Content.blocks.unorderedList,
+        Content.blocks.heading,
+      ],
+    },
     image: {type: Url},
   },
   labelField: "id",
 });
 
-keystone.createList('Mineral', {
+keystone.createList('Mineral_Category', {
   fields: {
     name: {type: Text},
   },
@@ -103,11 +117,29 @@ keystone.createList('Story',{
       type: Text, 
       isUnique: true
     },
-    category:{type: Select, options: 'opt1, opt2, opt3'},
+    category:{type: Relationship, ref: 'Story_Category', many: false},
     date_published:{type: CalendarDay},
-    story_content: {type: Text, isMultiline: true},
+    story_content:{
+      type: Content,
+      blocks: [
+        Content.blocks.blockquote,
+        Content.blocks.image,
+        Content.blocks.link,
+        Content.blocks.orderedList,
+        Content.blocks.unorderedList,
+        Content.blocks.heading,
+      ],
+    },
+    status:{type: Select, options: ['published', 'In_Progress', 'Hidden']},
   },
   labelField: "id",
+});
+
+keystone.createList('Story_Category', {
+  fields: {
+    topic: {type: Text},
+  },
+  labelField: "name",
 });
 
 module.exports = {
@@ -120,21 +152,3 @@ module.exports = {
     }),
   ],
 };
-
-
-
-
-
-module.exports = {
-  keystone,
-  apps: [
-    new GraphQLApp(),
-    new AdminUIApp({
-      enableDefaultRoute: true,
-      authStrategy,
-    }),
-  ],
-};
-
-
-
