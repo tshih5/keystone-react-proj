@@ -8,7 +8,6 @@ export default function Product(props) {
       <Card.Img variant="top" src="https://via.placeholder.com/200x200" />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
-        <Card.Subtitle>{props.origin}</Card.Subtitle>
         <Card.Text>${props.price_in_usd}</Card.Text>
       </Card.Body>
     </Card>

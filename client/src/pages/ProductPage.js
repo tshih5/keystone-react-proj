@@ -13,6 +13,9 @@ export default function ProductPage() {
         </Row>
         <Row>
           <Col>
+            <div>
+              <MainCatButtons />
+            </div>
             <button className="mainRock1" /*onClickHandler*/>Rock1</button>
             <button className="mainRock2" /*onClickHandler*/>Rock2</button>
             <button className="mainRock3" /*onClickHandler*/>Rock3</button>
@@ -33,8 +36,7 @@ export default function ProductPage() {
           <RenderProducts />
         </Row>
       </Container>
-  </div>
-
+    </div>
   );
 }
 
@@ -44,7 +46,6 @@ function RenderProducts(){
       allProducts{
         name
         price_in_usd
-        origin
         id
       }
     }
@@ -59,4 +60,40 @@ function RenderProducts(){
     <Col md={3}><Product {...props} /></Col>
 
   ));
+}
+
+/* Render the buttons for the main stone categories
+**
+**
+*/
+function MainCatButtons(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allMineralMainCategories{
+        name
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  console.log(data);
+
+  return data.allMineralMainCategories.map((category) => (
+    <button className="mainRock1" /*onClickHandler*/>{category.name}</button>
+  ));
+}
+
+function SubCatButtons(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allMineralMainCategories{
+        name
+        subcategories{
+          name
+        }
+      }
+    }
+  `);
 }
