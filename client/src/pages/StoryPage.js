@@ -15,7 +15,9 @@ function RenderStories(){
     {
       allStories{
         title
-        story_content
+        story_content{
+          document
+        }
         id
       }
     }
