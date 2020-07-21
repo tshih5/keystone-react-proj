@@ -4,6 +4,8 @@ const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship } = require('@keystonejs/fields');
 const Stars = require('./fields/Stars');
 const { Content } = require('@keystonejs/field-content');
+const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
+
 
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
@@ -129,7 +131,7 @@ keystone.createList('Product', {
     price_in_usd: {type: Decimal},
     quality: {type: Stars, starCount: 5 },
     tags:{type: Relationship, ref: 'Product_Tag', many: true},
-    image: {type: Url},
+    main_image: {type: Url},
   },
   labelField: "id",
 });
@@ -176,7 +178,9 @@ keystone.createList('Story',{
         Content.blocks.heading,
       ],
     },
+    content_test:{type: Wysiwyg},
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
+    main_image: {type: Url},
   },
   labelField: "id",
 });
