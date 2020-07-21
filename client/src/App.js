@@ -15,8 +15,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Nav, Navbar} from "react-bootstrap";
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
