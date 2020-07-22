@@ -1,11 +1,18 @@
 import React from "react";
+
+import { Nav, Navbar, NavDropdown} from "react-bootstrap";
+
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
+
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+
 import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
   BrowserRouter as Router,
@@ -15,7 +22,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Nav, Navbar} from "react-bootstrap";
+
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
@@ -34,8 +41,10 @@ export default function App() {
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/stories">Stories</Nav.Link>
-                <Nav.Link as={Link} to="/products">Products</Nav.Link>
                 <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
+                <NavDropdown title="Products" id="basic-nav-dropdown">
+                  <DropDowns />
+                </NavDropdown>
               </Nav>
             </Navbar>
 
@@ -43,7 +52,7 @@ export default function App() {
               <Route path="/stories">
                 <StoryPage />
               </Route>
-              <Route path="/products">
+              <Route path="/products/:category">
                 <ProductPage />
               </Route>
               <Route path="/topics">
@@ -58,6 +67,25 @@ export default function App() {
       </KeystoneProvider>
     </ApolloProvider>
   );
+}
+
+function DropDowns(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allMineralMainCategories{
+        name
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  console.log(data);
+
+  return data.allMineralMainCategories.map((category) => (
+    <NavDropdown.Item as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
+  ));
 }
 
 function Topics() {
