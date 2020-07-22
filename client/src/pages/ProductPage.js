@@ -1,26 +1,23 @@
 import React from "react";
-
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import {
   useLocation,
 } from "react-router-dom";
 
-
 import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
 export default function ProductPage() {
-  const location = useLocation();
+  let endPath = GetEndPath();
 
   return (
     <div>
       <Container>
         <Row>
-          <Col>{location.pathname.substring(location.pathname.lastIndexOf('/') + 1)}</Col>
-          <Col><h1>ROCKS(in chinese)</h1></Col>
+          <Col><h1>{endPath}</h1></Col>
         </Row>
-          <FilterGroup />
+        <FilterGroup />
         <Row>
           <RenderProducts />
         </Row>
@@ -46,7 +43,7 @@ function RenderProducts(){
   //console.log(data);
 
   return data.allProducts.map((props) => (
-    <Col md={3}><Product {...props} /></Col>
+    <Col md={3} key={props.id}><Product {...props} /></Col>
 
   ));
 }
@@ -79,13 +76,14 @@ function FilterGroup(){
 **
 */
 function MainCatButtons(){
-  const location = useLocation();
+  let endPath = GetEndPath();
 
   const { loading, error, data } = useQuery(gql`
     {
-      allMineralMainCategories(where:{name: "${location.pathname.substring(location.pathname.lastIndexOf('/') + 1)}"}){
+      allMineralMainCategories(where:{name: "${endPath}"}){
         subcategories{
           name
+          id
         }
       }
     }
@@ -97,6 +95,11 @@ function MainCatButtons(){
   //console.log(data.allMineralMainCategories[0].subcategories);
 
   return data.allMineralMainCategories[0].subcategories.map((category) => (
-    <button className="mainRock1" /*onClickHandler*/>{category.name}</button>
+    <button className="mainRock1" key={category.id}/*onClickHandler*/>{category.name}</button>
   ));
+}
+
+function GetEndPath(){
+  const location = useLocation();
+  return location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
 }
