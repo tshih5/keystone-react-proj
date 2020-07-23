@@ -11,7 +11,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
   let endPath = GetEndPath();
-
   return (
     <div>
       <Container>
@@ -20,7 +19,7 @@ export default function ProductPage() {
         </Row>
         <FilterGroup />
         <Row>
-          <RenderProducts filter={endPath}/>
+          <RenderProducts filterName={endPath}/>
         </Row>
       </Container>
     </div>
@@ -29,12 +28,15 @@ export default function ProductPage() {
 
 /* Render product cards based on main category
  */
-function RenderProducts(){
+function RenderProducts(props){
   const { loading, error, data } = useQuery(gql`
     {
-      allProducts{
+      allProducts(where:{main_category:{name: "${props.filterName}"}}){
         name
         price_in_usd
+        sub_category{
+          name
+        }
         id
       }
     }
@@ -46,8 +48,8 @@ function RenderProducts(){
   //console.log(data);
   
   //TODO: Once Product Cards are finalized, don't send every prop as it is harder to document
-  return data.allProducts.map((props) => (
-    <Col md={3} key={props.id}><Product {...props} /></Col>
+  return data.allProducts.map((item) => (
+    <Col md={3} key={item.id}><Product {...item} /></Col>
 
   ));
 }
@@ -105,7 +107,7 @@ function SubCatButtons(){
   ));
 }
 
-/* gets the last part of the url (/foo/bar will return bar)
+/* get the last part of the url (e.g. url.com/foo/bar will return bar)
  * 
  */
 function GetEndPath(){
@@ -115,8 +117,9 @@ function GetEndPath(){
 
 /*
 query{
-	allProducts(where:{stone_type:{name: "ice"}}){
-    stone_type{
+	allProducts(where:{sub_category}:{name: "ice"}}){
+    name
+    sub_category{
       name
     }
   }
