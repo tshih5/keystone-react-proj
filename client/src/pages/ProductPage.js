@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import {
@@ -9,6 +9,7 @@ import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
 export default function ProductPage() {
+  const [products, setProducts] = useState([]);
   let endPath = GetEndPath();
 
   return (
@@ -19,13 +20,15 @@ export default function ProductPage() {
         </Row>
         <FilterGroup />
         <Row>
-          <RenderProducts />
+          <RenderProducts filter={endPath}/>
         </Row>
       </Container>
     </div>
   );
 }
 
+/* Render product cards based on main category
+ */
 function RenderProducts(){
   const { loading, error, data } = useQuery(gql`
     {
@@ -41,20 +44,23 @@ function RenderProducts(){
   if (error) return <p>Error :(</p>;
 
   //console.log(data);
-
+  
+  //TODO: Once Product Cards are finalized, don't send every prop as it is harder to document
   return data.allProducts.map((props) => (
     <Col md={3} key={props.id}><Product {...props} /></Col>
 
   ));
 }
 
+/* Button group for sub categories or tags
+ */
 function FilterGroup(){
   
   return(
     <>
       <Row>
         <Col>
-          <MainCatButtons />
+          <SubCatButtons />
         </Col>
       </Row>
       <Row>
@@ -71,11 +77,11 @@ function FilterGroup(){
   );
 }
 
-/* Render the buttons for the main stone categories
+/* Render the buttons for the sub categories
 **
 **
 */
-function MainCatButtons(){
+function SubCatButtons(){
   let endPath = GetEndPath();
 
   const { loading, error, data } = useQuery(gql`
@@ -99,7 +105,20 @@ function MainCatButtons(){
   ));
 }
 
+/* gets the last part of the url (/foo/bar will return bar)
+ * 
+ */
 function GetEndPath(){
   const location = useLocation();
   return location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
 }
+
+/*
+query{
+	allProducts(where:{stone_type:{name: "ice"}}){
+    stone_type{
+      name
+    }
+  }
+}
+*/

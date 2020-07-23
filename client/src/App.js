@@ -69,6 +69,8 @@ export default function App() {
   );
 }
 
+/* Renders dropdown buttons for the product tab
+ */
 function DropDowns(){
   const { loading, error, data } = useQuery(gql`
     {
@@ -84,10 +86,13 @@ function DropDowns(){
   console.log(data);
 
   return data.allMineralMainCategories.map((category) => (
+    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
+    /*does not account for spaces in the category name, may cause URL issues */
     <NavDropdown.Item as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
   ));
 }
 
+//TODO: remove this later
 function Topics() {
   let match = useRouteMatch();
 
