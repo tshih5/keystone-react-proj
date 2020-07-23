@@ -83,7 +83,8 @@ const authStrategy = keystone.createAuthStrategy({
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
-    stone_type: {type: Relationship, ref: 'Mineral_Sub_Category', many: false},
+    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false},
+    sub_category: {type: Relationship, ref: 'Mineral_Sub_Category', many: false},
     seal:{type: Text},
     length_cm:{type: Decimal},
     height_cm:{type: Decimal},
