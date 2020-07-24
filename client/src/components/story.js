@@ -1,7 +1,7 @@
 import React from "react";
 
 function createMarkup(props){
-  return {__html: props.content_test};
+  return {__html: props.story_content};
 }
 
 export default function Story(props) {
