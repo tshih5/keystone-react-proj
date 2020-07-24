@@ -22,9 +22,7 @@ function RenderStories(){
     {
       allStories{
         title
-        story_content{
-          document
-        }
+        story_content
         id
       }
     }
