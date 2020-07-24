@@ -9,17 +9,17 @@ import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
 export default function ProductPage() {
-  const [products, setProducts] = useState([]);
-  let endPath = GetEndPath();
+  let nameFilter = GetEndPath();
+
   return (
     <div>
       <Container>
         <Row>
-          <Col><h1>{endPath}</h1></Col>
+          <Col><h1>{nameFilter}</h1></Col>
         </Row>
         <FilterGroup />
         <Row>
-          <RenderProducts filterName={endPath}/>
+          <RenderProducts nameFilter={nameFilter}/>
         </Row>
       </Container>
     </div>
@@ -29,9 +29,12 @@ export default function ProductPage() {
 /* Render product cards based on main category
  */
 function RenderProducts(props){
-  const { loading, error, data } = useQuery(gql`
+  const [products, setProducts] = useState([]);
+  const [category, setCategory] = useState('main_category');
+
+  const { loading, error, data  } = useQuery(gql`
     {
-      allProducts(where:{main_category:{name: "${props.filterName}"}}){
+      allProducts(where:{${category}:{name: "${props.nameFilter}"}}){
         name
         price_in_usd
         sub_category{
@@ -62,6 +65,7 @@ function FilterGroup(){
     <>
       <Row>
         <Col>
+          <button className="mainRock1" key="all"/*onClickHandler*/>All</button>
           <SubCatButtons />
         </Col>
       </Row>
