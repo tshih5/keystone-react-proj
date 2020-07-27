@@ -20,7 +20,8 @@ import {
   Route,
   Link,
   useRouteMatch,
-  useParams
+  useParams,
+  useLocation,
 } from "react-router-dom";
 
 
@@ -53,7 +54,7 @@ export default function App() {
                 <StoryPage />
               </Route>
               <Route path="/products/:category">
-                <ProductPage />
+                <ProductPage key={Date.now()}/>
               </Route>
               <Route path="/topics">
                 <Topics />
@@ -88,7 +89,7 @@ function DropDowns(){
   return data.allMineralMainCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
-    <NavDropdown.Item as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
+    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
   ));
 }
 

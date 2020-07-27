@@ -1,25 +1,35 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import {
-  useLocation,
+  withRouter,
 } from "react-router-dom";
 
 import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
-export default function ProductPage() {
-  let nameFilter = GetEndPath();
+function ProductPage(props) {
+  const [nameFilter, setNameFilter] = useState(props.match.params.category);
+  const [products, setProducts] = useState([]);
+  const [oldProducts, setOldProducts] = useState([]);
+  console.log(props);
+
+  useEffect(() => {
+    setNameFilter(props.match.params.category);
+  }, [props.match.params.category]);
 
   return (
     <div>
       <Container>
         <Row>
-          <Col><h1>{nameFilter}</h1></Col>
+          <Col><h1>{props.match.params.category}</h1></Col>
         </Row>
-        <FilterGroup />
         <Row>
-          <RenderProducts nameFilter={nameFilter}/>
+        <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
+        </Row>
+        <Row>
+          <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
+          <RenderProducts products={products}/>
         </Row>
       </Container>
     </div>
@@ -28,13 +38,11 @@ export default function ProductPage() {
 
 /* Render product cards based on main category
  */
-function RenderProducts(props){
-  const [products, setProducts] = useState([]);
-  const [category, setCategory] = useState('main_category');
+function GetProducts({nameFilter, setProducts, setOldProducts}){
 
-  const { loading, error, data  } = useQuery(gql`
+  const { loading, error, data } = useQuery(gql`
     {
-      allProducts(where:{${category}:{name: "${props.nameFilter}"}}){
+      allProducts(where:{main_category:{name: "${nameFilter}"}}){
         name
         price_in_usd
         sub_category{
@@ -44,6 +52,13 @@ function RenderProducts(props){
       }
     }
   `);
+  
+  useEffect(() => {
+    if(loading === false && data){
+      setProducts(data.allProducts);
+      setOldProducts(data.allProducts);
+    }
+  }, [data]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -51,14 +66,19 @@ function RenderProducts(props){
   //console.log(data);
   
   //TODO: Once Product Cards are finalized, don't send every prop as it is harder to document
-  return data.allProducts.map((item) => (
+  return null;
+}
+
+function RenderProducts(props){
+
+  return props.products.map((item) => (
     <Col md={3} key={item.id}><Product {...item} /></Col>
 
   ));
 }
-
 /* Button group for sub categories or tags
  */
+
 function FilterGroup(){
   
   return(
@@ -66,7 +86,7 @@ function FilterGroup(){
       <Row>
         <Col>
           <button className="mainRock1" key="all"/*onClickHandler*/>All</button>
-          <SubCatButtons />
+          <SubCatButtons/>
         </Col>
       </Row>
       <Row>
@@ -87,12 +107,11 @@ function FilterGroup(){
 **
 **
 */
-function SubCatButtons(){
-  let endPath = GetEndPath();
+function SubCatButtons(props){
 
   const { loading, error, data } = useQuery(gql`
     {
-      allMineralMainCategories(where:{name: "${endPath}"}){
+      allMineralMainCategories(where:{name: "${props.nameFilter}"}){
         subcategories{
           name
           id
@@ -107,16 +126,18 @@ function SubCatButtons(){
   //console.log(data.allMineralMainCategories[0].subcategories);
 
   return data.allMineralMainCategories[0].subcategories.map((category) => (
-    <button className="mainRock1" key={category.id}/*onClickHandler*/>{category.name}</button>
+    <button className="mainRock1" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
   ));
 }
 
-/* get the last part of the url (e.g. url.com/foo/bar will return bar)
- * 
- */
-function GetEndPath(){
-  const location = useLocation();
-  return location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
+function FilterProducts(props, sub_name){
+  let filteredArray = [];
+  for(var i = 0; i < props.oldProducts.length; ++i){
+    if(props.oldProducts[i].sub_category.name === sub_name){
+      filteredArray.push(props.oldProducts[i]);
+    }
+  }
+  props.setProducts(filteredArray);
 }
 
 /*
@@ -129,3 +150,4 @@ query{
   }
 }
 */
+export default withRouter(ProductPage);
