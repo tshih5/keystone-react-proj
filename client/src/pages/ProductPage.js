@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import {
   withRouter,
 } from "react-router-dom";
-
 import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -36,10 +35,10 @@ function ProductPage(props) {
   );
 }
 
-/* Render product cards based on main category
+/* Get Products based on main category
+   Does not return anything
  */
 function GetProducts({nameFilter, setProducts, setOldProducts}){
-
   const { loading, error, data } = useQuery(gql`
     {
       allProducts(where:{main_category:{name: "${nameFilter}"}}){
@@ -65,42 +64,14 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 
   //console.log(data);
   
-  //TODO: Once Product Cards are finalized, don't send every prop as it is harder to document
   return null;
 }
 
 function RenderProducts(props){
-
   return props.products.map((item) => (
     <Col md={3} key={item.id}><Product {...item} /></Col>
 
   ));
-}
-/* Button group for sub categories or tags
- */
-
-function FilterGroup(){
-  
-  return(
-    <>
-      <Row>
-        <Col>
-          <button className="mainRock1" key="all"/*onClickHandler*/>All</button>
-          <SubCatButtons/>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <button className="subRock1" /*onClickHandler*/>SubRock1</button>
-          <button className="subRock2" /*onClickHandler*/>SubRock2</button>
-          <button className="subRock3" /*onClickHandler*/>SubRock3</button>
-          <button className="subRock4" /*onClickHandler*/>SubRock4</button>
-          <button className="subRock5" /*onClickHandler*/>SubRock5</button>
-          <button className="subRock6" /*onClickHandler*/>SubRock6</button>
-        </Col>
-      </Row>
-    </>
-  );
 }
 
 /* Render the buttons for the sub categories
@@ -108,7 +79,6 @@ function FilterGroup(){
 **
 */
 function SubCatButtons(props){
-
   const { loading, error, data } = useQuery(gql`
     {
       allMineralMainCategories(where:{name: "${props.nameFilter}"}){
@@ -140,14 +110,4 @@ function FilterProducts(props, sub_name){
   props.setProducts(filteredArray);
 }
 
-/*
-query{
-	allProducts(where:{sub_category}:{name: "ice"}}){
-    name
-    sub_category{
-      name
-    }
-  }
-}
-*/
 export default withRouter(ProductPage);
