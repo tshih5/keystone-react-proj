@@ -1,17 +1,17 @@
 .home-banner-1 {
-  background-image: url("https://via.placeholder.com/1000x500");
+  background-image: url("./img/home_banner.jpg");
   background-size: cover;
   background-position: center, center;
   min-height: 450px;
 }
 .home-banner-2 {
-  background-image: url("https://via.placeholder.com/1000x500");
+  background-image: url("./img/flower.jpg");
   background-size: cover;
   background-position: center, center;
   min-height: 450px;
 }
 .home-banner-3 {
-  background-image: url("https://via.placeholder.com/1000x500");
+  background-image: url("./img/story_banner.jpg");
   background-size: cover;
   background-position: center, center;
   min-height: 450px;
