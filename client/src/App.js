@@ -1,11 +1,19 @@
 import React from "react";
+
+import { Nav, Navbar, NavDropdown} from "react-bootstrap";
+
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
+import ProductDisplay from "./pages/ProductDisplay";
+
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/react-hooks';
+
 import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
   BrowserRouter as Router,
@@ -13,10 +21,10 @@ import {
   Route,
   Link,
   useRouteMatch,
-  useParams
+  useParams,
+  useLocation,
 } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
@@ -35,22 +43,27 @@ export default function App() {
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/stories">Stories</Nav.Link>
-                <Nav.Link as={Link} to="/products">Products</Nav.Link>
                 <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
+                <NavDropdown title="Products" id="basic-nav-dropdown">
+                  <DropDowns />
+                </NavDropdown>
               </Nav>
             </Navbar>
 
             <Switch>
+              <Route path="/products/:category/:productid">
+                <ProductDisplay />
+              </Route>
+              <Route path="/products/:category">
+                <ProductPage />
+              </Route>
               <Route path="/stories">
                 <StoryPage />
-              </Route>
-              <Route path="/products">
-                <ProductPage />
               </Route>
               <Route path="/topics">
                 <Topics />
               </Route>
-              <Route path="/">
+              <Route exact path="/">
                 <HomePage />
               </Route>
             </Switch>
@@ -61,6 +74,30 @@ export default function App() {
   );
 }
 
+/* Renders dropdown buttons for the product tab
+ */
+function DropDowns(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allMineralMainCategories{
+        name
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  console.log(data);
+
+  return data.allMineralMainCategories.map((category) => (
+    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
+    /*does not account for spaces in the category name, may cause URL issues */
+    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
+  ));
+}
+
+//TODO: remove this later
 function Topics() {
   let match = useRouteMatch();
 

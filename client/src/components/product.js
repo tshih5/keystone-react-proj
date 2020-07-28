@@ -1,19 +1,31 @@
 import React from "react";
-import { Card } from "react-bootstrap";
-import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { Card, Button } from "react-bootstrap";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
+  useLocation,
+  withRouter,
+} from "react-router-dom";
 
-export default function Product(props) {
-  console.log();
+function Product(props) {
+  let match = useRouteMatch();
   return(
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://via.placeholder.com/286x180" />
+    <Card style={{ width: '12rem' }}>
+      <Card.Img variant="top" src="https://via.placeholder.com/200x200" />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
-        <Card.Subtitle>{props.origin}</Card.Subtitle>
-        <Card.Text>${props.price_in_usd}</Card.Text>
+        <Card.Text>{props.price_in_usd}</Card.Text>
+        <Card.Text>Sub-category: {props.sub_category.name}</Card.Text>
+        <Link to={`${match.url}/${props.id}`}>
+          <Button>View Item</Button>
+        </Link>
       </Card.Body>
     </Card>
-    
   );
 }
+
+export default withRouter(Product);
