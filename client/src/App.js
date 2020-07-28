@@ -5,6 +5,7 @@ import { Nav, Navbar, NavDropdown} from "react-bootstrap";
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
+import ProductDisplay from "./pages/ProductDisplay";
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -50,16 +51,19 @@ export default function App() {
             </Navbar>
 
             <Switch>
-              <Route path="/stories">
-                <StoryPage />
+              <Route path="/products/:category/:productid">
+                <ProductDisplay />
               </Route>
               <Route path="/products/:category">
-                <ProductPage key={Date.now()}/>
+                <ProductPage />
+              </Route>
+              <Route path="/stories">
+                <StoryPage />
               </Route>
               <Route path="/topics">
                 <Topics />
               </Route>
-              <Route path="/">
+              <Route exact path="/">
                 <HomePage />
               </Route>
             </Switch>
