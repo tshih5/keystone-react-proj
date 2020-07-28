@@ -4,6 +4,8 @@ const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship } = require('@keystonejs/fields');
 const Stars = require('./fields/Stars');
 const { Content } = require('@keystonejs/field-content');
+const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
+
 
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
@@ -91,45 +93,15 @@ keystone.createList('Product', {
     weight:{type: Decimal},
     quality:{type: Text},
     creator:{type: Text},
-    craftsmanship_comment:{
-      type: Content,
-      blocks: [
-        Content.blocks.blockquote,
-        Content.blocks.image,
-        Content.blocks.link,
-        Content.blocks.orderedList,
-        Content.blocks.unorderedList,
-        Content.blocks.heading,
-      ],
-    },
-    item_description: {
-      type: Content,
-      blocks: [
-        Content.blocks.blockquote,
-        Content.blocks.image,
-        Content.blocks.link,
-        Content.blocks.orderedList,
-        Content.blocks.unorderedList,
-        Content.blocks.heading,
-      ],
-    },
-    item_story: {
-      type: Content,
-      blocks: [
-        Content.blocks.blockquote,
-        Content.blocks.image,
-        Content.blocks.link,
-        Content.blocks.orderedList,
-        Content.blocks.unorderedList,
-        Content.blocks.heading,
-      ],
-    },
+    craftsmanship_comment:{type: Wysiwyg},
+    item_description: {type: Wysiwyg},
+    item_story: {type: Wysiwyg},
     note:{type: Text, isMultiline: true},
     favorite: {type: Checkbox},
     price_in_usd: {type: Decimal},
     quality: {type: Stars, starCount: 5 },
     tags:{type: Relationship, ref: 'Product_Tag', many: true},
-    image: {type: Url},
+    main_image: {type: Url},
   },
   labelField: "id",
 });
@@ -165,18 +137,9 @@ keystone.createList('Story',{
     },
     category:{type: Relationship, ref: 'Story_Tag', many: false},
     date_published:{type: CalendarDay},
-    story_content:{
-      type: Content,
-      blocks: [
-        Content.blocks.blockquote,
-        Content.blocks.image,
-        Content.blocks.link,
-        Content.blocks.orderedList,
-        Content.blocks.unorderedList,
-        Content.blocks.heading,
-      ],
-    },
+    story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
+    main_image: {type: Url},
   },
   labelField: "id",
 });
