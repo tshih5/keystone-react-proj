@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import {
   withRouter,
 } from "react-router-dom";
+
 import Product from "../components/product";
 import { Container, Row, Col } from 'react-bootstrap';
 
