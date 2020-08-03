@@ -12,7 +12,7 @@ function ProductPage(props) {
   const [nameFilter, setNameFilter] = useState(props.match.params.category);
   const [products, setProducts] = useState([]);
   const [oldProducts, setOldProducts] = useState([]);
-  console.log(props);
+  //console.log(props);
 
   useEffect(() => {
     setNameFilter(props.match.params.category);
