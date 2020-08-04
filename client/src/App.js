@@ -41,10 +41,11 @@ export default function App() {
               <Navbar.Brand href="/">Nav</Navbar.Brand>
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
-                <Nav.Link as={Link} to="/stories">Stories</Nav.Link>
-                <Nav.Link as={Link} to="/topics">Topics</Nav.Link>
+                <NavDropdown title="Stories" id="basic-nav-dropdown">
+                  <StoryDropDowns />
+                </NavDropdown>
                 <NavDropdown title="Products" id="basic-nav-dropdown">
-                  <DropDowns />
+                  <ProductDropDowns />
                 </NavDropdown>
               </Nav>
             </Navbar>
@@ -56,7 +57,10 @@ export default function App() {
               <Route path="/products/:category">
                 <ProductPage />
               </Route>
-              <Route path="/stories">
+              <Route path="/stories/:topic/:storyid">
+                <h1>StoryID</h1>
+              </Route>
+              <Route path="/stories/:topic">
                 <StoryPage />
               </Route>
               <Route path="/topics">
@@ -73,9 +77,30 @@ export default function App() {
   );
 }
 
+/*Render dropdown buttons for story tab*/
+function StoryDropDowns(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allStoryTags{
+        topic
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  //console.log(data);
+
+  return data.allStoryTags.map((category) => (
+    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
+    /*does not account for spaces in the category name, may cause URL issues */
+    <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic}`}>{category.topic}</NavDropdown.Item>
+  ));
+}
 /* Renders dropdown buttons for the product tab
  */
-function DropDowns(){
+function ProductDropDowns(){
   const { loading, error, data } = useQuery(gql`
     {
       allMineralMainCategories{
