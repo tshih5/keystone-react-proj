@@ -1,8 +1,12 @@
 import React from "react";
 import "../App.css";
 import { Container, Row, Col } from "react-bootstrap";
+import {
+  withRouter,
+  Link,
+} from "react-router-dom";
 
-export default function HomePage() {
+function HomePage() {
   return (
     <div>
       <div className="home-banner-1">
@@ -18,10 +22,18 @@ export default function HomePage() {
       </div>
       <div className="home-banner-2">
         <h2>Popular Stones</h2>
-        <button className="ButtonProduct1" /*onClick*/>product example 1</button>
-        <button className="ButtonProduct2">product example 2</button>
-        <button className="ButtonProduct3">product example 3</button>
-        <button className="ButtonProduct4">product example 4</button>
+        <Link to={`/products/壽山石`}>
+          <button className="ButtonProduct1" /*onClick*/>壽山石</button>
+        </Link>
+        <Link to={`/products/和田玉`}>
+          <button className="ButtonProduct2">product example 2</button>
+        </Link>
+        <Link to={`/products/翡翠`}>
+          <button className="ButtonProduct3">翡翠</button>
+        </Link>
+        <Link to={`/products/`}>
+          <button className="ButtonProduct4">product example 4</button>
+        </Link>
 
       </div>
       <div className="home-banner-3">
@@ -34,3 +46,5 @@ export default function HomePage() {
     
   );
 }
+
+export default withRouter(HomePage);

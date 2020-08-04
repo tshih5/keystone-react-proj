@@ -1,13 +1,8 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
   useRouteMatch,
-  useParams,
-  useLocation,
   withRouter,
 } from "react-router-dom";
 
