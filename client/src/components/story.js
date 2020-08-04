@@ -7,8 +7,8 @@ function createMarkup(props){
 export default function Story(props) {
   return(
     <>
-      <h1 className="list-group-item-heading">{props.title}</h1>
-      <div dangerouslySetInnerHTML={createMarkup(props)} />
+      <img src={props.main_image} />
+      <h3 className="list-group-item-heading">{props.title}</h3>
       {/*currently displays serialized Slate.js structure, needs to be changed*/}
     </>
   );
