@@ -62,16 +62,13 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
   //console.log(data);
-  
   return null;
 }
 
 function RenderProducts(props){
   return props.products.map((item) => (
     <Col md={3} key={item.id}><Product {...item} /></Col>
-
   ));
 }
 
@@ -95,10 +92,14 @@ function SubCatButtons(props){
   if (error) return <p>Error :(</p>;
 
   //console.log(data.allMineralMainCategories[0].subcategories);
-
-  return data.allMineralMainCategories[0].subcategories.map((category) => (
-    <button className="mainRock1" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
-  ));
+  if(data){
+    return data.allMineralMainCategories[0].subcategories.map((category) => (
+      <button className="mainRock1" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
+    ));
+  }else{
+    return <h1>Error :(</h1>
+  }
+  
 }
 
 function FilterProducts(props, sub_name){

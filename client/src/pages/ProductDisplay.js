@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import product from "../components/product";
 
 function ProductDisplay(props) {
   let productID = props.match.params.productid;
@@ -17,23 +18,18 @@ function ProductDisplay(props) {
           <GetItemData productID={productID} setProductData={setProductData} />
           <h2>{productData.name}</h2>
           <img src={productData.main_image} />
-          
           <div className="descriptions">
             <p>[name]:</p>
             <p>[seal]:</p>
             <p>[dimensions l x w x h]: {productData.length_cm} x {productData.width_cm} x {productData.height_cm}</p>
             <p>[weight]: {productData.weight}</p>
             <p>[creator]: </p>
-            <p>[item description]: </p>
-            <div dangerouslySetInnerHTML={createMarkup(productData.item_description)} />
-            <p>[item story]: </p>
-            <div dangerouslySetInnerHTML={createMarkup(productData.item_story)} />
+            <p>[craftsmanship_comment]: {productData.craftsmanship_comment}</p>
+            <p>[item description]: {productData.item_description}</p>
+            <p>[item story]: {productData.item_story} </p>
             <p>[note]: </p>
-            
             <p>ProductID: {productID}</p>
           </div>
-          
-          
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
         <Col xl={3} md={4} sm={12}>COLUMN 2</Col>
@@ -63,6 +59,7 @@ function GetItemData({productID, setProductData}){
       }
     }
   `);
+
   useEffect(() => {
     if(loading === false && data){
       setProductData(data.allProducts[0]);
@@ -71,17 +68,6 @@ function GetItemData({productID, setProductData}){
 
   if(error) return <p>Error :(</p>
   return null;
-}
-
-function createMarkup(htmlData){
-
-  if(htmlData){
-    console.log("creating markup");
-    console.log(htmlData);
-    return {__html: htmlData};
-  }else{
-    return null;
-  }
 }
 
 export default withRouter(ProductDisplay);
