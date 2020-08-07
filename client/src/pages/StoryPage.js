@@ -3,14 +3,17 @@ import { Spinner, Container, Row, Col } from "react-bootstrap";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import Story from "./../components/story";
+import {
+  withRouter,
+} from "react-router-dom";
 
-export default function StoryPage() {
+function StoryPage(props) {
   return (
     <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <div className="header"><h1>TAGNAME</h1></div>
-          <RenderStories />
+          <RenderStories {...props}/>
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
         <Col xl={3} md={4} sm={12}>COLUMN 2</Col>
@@ -20,10 +23,11 @@ export default function StoryPage() {
   );
 }
 
-function RenderStories(){
+function RenderStories(props){
+  //console.log(props.match.params.topic);
   const { loading, error, data } = useQuery(gql`
     {
-      allStories{
+      allStories(where:{category:{topic: "${props.match.params.topic}"}}){
         title
         main_image
         id
@@ -37,8 +41,10 @@ function RenderStories(){
   console.log(data);
 
   return data.allStories.map((props) => (
-    <div key={props.id}>
+    <div className="story-preview" key={props.id}>
       <Story {...props} />
     </div>
   ));
 }
+
+export default withRouter(StoryPage);
