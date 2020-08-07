@@ -6,6 +6,7 @@ import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
+import StoryDisplay from "./pages/StoryDisplay";
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -58,7 +59,7 @@ export default function App() {
                 <ProductPage />
               </Route>
               <Route path="/stories/:topic/:storyid">
-                <h1>StoryID</h1>
+                <StoryDisplay />
               </Route>
               <Route path="/stories/:topic">
                 <StoryPage />
@@ -98,6 +99,7 @@ function StoryDropDowns(){
     <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic}`}>{category.topic}</NavDropdown.Item>
   ));
 }
+
 /* Renders dropdown buttons for the product tab
  */
 function ProductDropDowns(){
