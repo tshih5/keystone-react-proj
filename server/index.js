@@ -136,13 +136,21 @@ keystone.createList('Story',{
       type: Text, 
       isUnique: true
     },
-    category:{type: Relationship, ref: 'Story_Tag', many: false},
+    category:{type: Relationship, ref: 'Story_Category', many: false},
     date_published:{type: CalendarDay},
     story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
     main_image: {type: Url},
+    tags:{type: Relationship, ref: 'Story_Tag', many: true},
   },
   labelField: "id",
+});
+
+keystone.createList('Story_Category', {
+  fields: {
+    topic: {type: Text},
+  },
+  labelField: "topic",
 });
 
 keystone.createList('Story_Tag', {
