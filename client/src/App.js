@@ -82,7 +82,7 @@ export default function App() {
 function StoryDropDowns(){
   const { loading, error, data } = useQuery(gql`
     {
-      allStoryTags{
+      allStoryCategories{
         topic
       }
     }
@@ -92,8 +92,8 @@ function StoryDropDowns(){
   if (error) return <p>Error :(</p>;
 
   //console.log(data);
-
-  return data.allStoryTags.map((category) => (
+  
+  return data.allStoryCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
     <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic}`}>{category.topic}</NavDropdown.Item>
