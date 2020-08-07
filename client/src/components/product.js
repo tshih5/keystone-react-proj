@@ -9,12 +9,14 @@ import {
 function Product(props) {
   let match = useRouteMatch();
   return(
-    <Card style={{ width: '12rem' }}>
-      <Card.Img variant="top" src="https://via.placeholder.com/200x200" />
+    <Card border="dark" style={{ width: '18rem' }}>
+      <Card.Img variant="top" src="https://via.placeholder.com/300x200" />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
-        <Card.Text>{props.price_in_usd}</Card.Text>
-        <Card.Text>Sub-category: {props.sub_category.name}</Card.Text>
+        <Card.Text>Price: {props.price_in_usd}
+          <br /> 
+          Sub-category: {props.sub_category.name}
+        </Card.Text>
         <Link to={`${match.url}/${props.id}`}>
           <Button>View Item</Button>
         </Link>
