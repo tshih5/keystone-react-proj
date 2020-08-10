@@ -4,7 +4,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
-import product from "../components/product";
 
 function ProductDisplay(props) {
   let productID = props.match.params.productid;

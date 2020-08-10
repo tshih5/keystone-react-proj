@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Product from "../components/product";
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, CardDeck } from 'react-bootstrap';
 
 function ProductPage(props) {
   const [nameFilter, setNameFilter] = useState(props.match.params.category);
@@ -37,8 +37,8 @@ function ProductPage(props) {
 }
 
 /* Get Products based on main category
-   Does not return anything
- */
+** Does not return anything
+*/
 function GetProducts({nameFilter, setProducts, setOldProducts}){
   const { loading, error, data } = useQuery(gql`
     {
@@ -68,7 +68,8 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 
 function RenderProducts(props){
   return props.products.map((item) => (
-    <Col md={3} key={item.id}><Product {...item} /></Col>
+    //<Col md={3} key={item.id}><Product {...item} /></Col>
+    <CardDeck><Product {...item} /></CardDeck>
   ));
 }
 

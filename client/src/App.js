@@ -6,6 +6,7 @@ import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
+import StoryDisplay from "./pages/StoryDisplay";
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -58,7 +59,7 @@ export default function App() {
                 <ProductPage />
               </Route>
               <Route path="/stories/:topic/:storyid">
-                <h1>StoryID</h1>
+                <StoryDisplay />
               </Route>
               <Route path="/stories/:topic">
                 <StoryPage />
@@ -81,7 +82,7 @@ export default function App() {
 function StoryDropDowns(){
   const { loading, error, data } = useQuery(gql`
     {
-      allStoryTags{
+      allStoryCategories{
         topic
       }
     }
@@ -91,13 +92,14 @@ function StoryDropDowns(){
   if (error) return <p>Error :(</p>;
 
   //console.log(data);
-
-  return data.allStoryTags.map((category) => (
+  
+  return data.allStoryCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
     <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic}`}>{category.topic}</NavDropdown.Item>
   ));
 }
+
 /* Renders dropdown buttons for the product tab
  */
 function ProductDropDowns(){
