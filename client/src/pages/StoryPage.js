@@ -31,6 +31,9 @@ function RenderStories(props){
         title
         main_image
         id
+        image{
+          filename
+        }
       }
     }
   `);

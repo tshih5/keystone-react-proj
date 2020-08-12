@@ -10,7 +10,7 @@ function Product(props) {
   let match = useRouteMatch();
   return(
     <Card border="dark" style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://via.placeholder.com/300x200" />
+      <Card.Img variant="top" src={`./../public/${props.id}_m.webp`} />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>Price: {props.price_in_usd}
