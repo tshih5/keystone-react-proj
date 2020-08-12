@@ -5,6 +5,7 @@ import {
   withRouter,
   Link,
 } from "react-router-dom";
+import logo from './../img/home_main.png'
 
 function HomePage() {
   return (
@@ -14,7 +15,7 @@ function HomePage() {
         <Row>
           <Col>
             <div className="home-text text-center">
-              <h1>HOME</h1>
+              <img src={logo} />
             </div>
           </Col>
         </Row>
