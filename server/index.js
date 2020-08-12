@@ -85,7 +85,7 @@ const authStrategy = keystone.createAuthStrategy({
 
 const fileAdapter = new LocalFileAdapter({
   src: './public',
-  path: '/public',
+  path: '/images',
 });
 
 keystone.createList('Product', {
@@ -148,9 +148,25 @@ keystone.createList('Story',{
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
     main_image: {type: Url},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
-    image:{type: File, adapter: fileAdapter}
+    file:{
+      type: File,
+      adapter: fileAdapter,
+      hooks: {
+        beforeChange: async ({ existingItem }) => {
+          if (existingItem && existingItem.file) {
+            await fileAdapter.delete(existingItem.file);
+          }
+        },
+      },
+    },
   },
-  labelField: "id",
+  hooks: {
+    afterDelete: async ({ existingItem }) => {
+      if (existingItem.file) {
+        await fileAdapter.delete(existingItem.file);
+      }
+    },
+  },
 });
 
 keystone.createList('Story_Category', {
