@@ -1,14 +1,15 @@
 const { Keystone, BaseKeystoneAdapter } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship } = require('@keystonejs/fields');
+const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
 const Stars = require('./fields/Stars');
 const { Content } = require('@keystonejs/field-content');
 const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
-
+const { LocalFileAdapter } = require('@keystonejs/file-adapters');
 
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
+const { StaticApp } = require('@keystonejs/app-static');
 const initialiseData = require('./initial-data');
 
 
@@ -82,6 +83,11 @@ const authStrategy = keystone.createAuthStrategy({
   },
 });
 
+const fileAdapter = new LocalFileAdapter({
+  src: './public',
+  path: '/public',
+});
+
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
@@ -142,6 +148,7 @@ keystone.createList('Story',{
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
     main_image: {type: Url},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
+    image:{type: File, adapter: fileAdapter}
   },
   labelField: "id",
 });
@@ -174,6 +181,10 @@ module.exports = {
     new AdminUIApp({
       enableDefaultRoute: true,
       authStrategy,
+    }),
+    new StaticApp({
+      path: '/images',
+      src: './public',
     }),
   ],
 };
