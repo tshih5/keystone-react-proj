@@ -11,7 +11,7 @@ function Story(props) {
   return(
     <>
       <img src={props.main_image} />
-      <img src={`http://localhost:3000/images/${props.image.filename}`} />
+      <img src={props.image == null ? '': `http://localhost:3000/images/${props.image.filename}`} />
       <h3 className="list-group-item-heading">{props.title}</h3>
       <Link to={`${match.url}/${props.id}`}>
         <Button>View Story</Button>
