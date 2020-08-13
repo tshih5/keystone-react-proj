@@ -5,6 +5,7 @@ import {
   withRouter,
   Link,
 } from "react-router-dom";
+import logo from './../img/home_main.png'
 
 function HomePage() {
   return (
@@ -14,7 +15,7 @@ function HomePage() {
         <Row>
           <Col>
             <div className="home-text text-center">
-              <h1>HOME</h1>
+              <img src={logo} />
             </div>
           </Col>
         </Row>
@@ -23,10 +24,10 @@ function HomePage() {
       <div className="home-banner-2">
         <h2>Popular Stones</h2>
         <Link to={`/products/壽山石`}>
-          <button className="ButtonProduct1" /*onClick*/>壽山石</button>
+          <button className="ButtonProduct1">壽山石</button>
         </Link>
         <Link to={`/products/和田玉`}>
-          <button className="ButtonProduct2">product example 2</button>
+          <button className="ButtonProduct2">和田玉</button>
         </Link>
         <Link to={`/products/翡翠`}>
           <button className="ButtonProduct3">翡翠</button>
