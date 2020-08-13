@@ -29,9 +29,9 @@ function RenderStories(props){
     {
       allStories(where:{category:{topic: "${props.match.params.topic}"}}){
         title
-        main_image
         id
-        image{
+        status
+        main_image{
           filename
         }
       }
@@ -39,11 +39,11 @@ function RenderStories(props){
   `);
 
   if (loading) return <Spinner animation="border" />;
-  if (error) return <p>Error :(</p>;
+  if (error) return <p>{error.message}</p>;
 
   console.log(data);
 
-  return data.allStories.map((props) => (
+  return data.allStories.filter((props) => props.status == "Published").map((props) => (
     <div className="story-preview" key={props.id}>
       <Story {...props} />
     </div>
