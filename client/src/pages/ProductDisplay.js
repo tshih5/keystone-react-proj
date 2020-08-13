@@ -16,7 +16,7 @@ function ProductDisplay(props) {
         <Col xl={8} md={7} sm={12}>
           <GetItemData productID={productID} setProductData={setProductData} />
           <h2>{productData.name}</h2>
-          <img src={productData.main_image} />
+          <img src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} />
           <div className="descriptions">
             <p>[name]:</p>
             <p>[seal]:</p>
@@ -52,7 +52,9 @@ function GetItemData({productID, setProductData}){
         item_description
         item_story
         note
-        main_image
+        main_image{
+          filename
+        }
         price_in_usd
         id
       }

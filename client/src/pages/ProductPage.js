@@ -48,6 +48,9 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
         sub_category{
           name
         }
+        thumbnail{
+          filename
+        }
         id
       }
     }
