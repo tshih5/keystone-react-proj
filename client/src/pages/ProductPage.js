@@ -69,7 +69,7 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 function RenderProducts(props){
   return props.products.map((item) => (
     //<Col md={3} key={item.id}><Product {...item} /></Col>
-    <CardDeck><Product {...item} /></CardDeck>
+    <CardDeck><Product key={item.id} {...item} /></CardDeck>
   ));
 }
 
