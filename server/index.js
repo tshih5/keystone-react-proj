@@ -108,7 +108,38 @@ keystone.createList('Product', {
     price_in_usd: {type: Decimal},
     quality: {type: Stars, starCount: 5 },
     tags:{type: Relationship, ref: 'Product_Tag', many: true},
-    main_image: {type: Url},
+    main_image: {
+      type: File,
+      adapter: fileAdapter,
+      hooks: {
+        beforeChange: async ({ existingItem }) => {
+          if (existingItem && existingItem.main_image) {
+            await fileAdapter.delete(existingItem.main_image);
+          }
+        },
+      },
+    },
+    thumbnail: {
+      type: File,
+      adapter: fileAdapter,
+      hooks: {
+        beforeChange: async ({ existingItem }) => {
+          if (existingItem && existingItem.thumbnail) {
+            await fileAdapter.delete(existingItem.thumbnail);
+          }
+        },
+      },
+    },
+  },
+  hooks: {
+    afterDelete: async ({ existingItem }) => {
+      if(existingItem.main_image){
+        await fileAdapter.delete(existingItem.main_image);
+      }
+      if(existingItem.thumbnail){
+        await fileAdapter.delete(existingItem.thumbnail);
+      }
+    },
   },
   labelField: "id",
 });
@@ -146,15 +177,14 @@ keystone.createList('Story',{
     date_published:{type: CalendarDay},
     story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
-    main_image: {type: Url},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
-    image:{
+    main_image: {
       type: File,
       adapter: fileAdapter,
       hooks: {
         beforeChange: async ({ existingItem }) => {
-          if (existingItem && existingItem.image) {
-            await fileAdapter.delete(existingItem.image);
+          if (existingItem && existingItem.main_image) {
+            await fileAdapter.delete(existingItem.main_image);
           }
         },
       },
@@ -162,8 +192,8 @@ keystone.createList('Story',{
   },
   hooks: {
     afterDelete: async ({ existingItem }) => {
-      if (existingItem.image) {
-        await fileAdapter.delete(existingItem.image);
+      if(existingItem.main_image){
+        await fileAdapter.delete(existingItem.main_image);
       }
     },
   },
