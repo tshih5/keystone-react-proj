@@ -148,13 +148,13 @@ keystone.createList('Story',{
     status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
     main_image: {type: Url},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
-    file:{
+    image:{
       type: File,
       adapter: fileAdapter,
       hooks: {
         beforeChange: async ({ existingItem }) => {
-          if (existingItem && existingItem.file) {
-            await fileAdapter.delete(existingItem.file);
+          if (existingItem && existingItem.image) {
+            await fileAdapter.delete(existingItem.image);
           }
         },
       },
@@ -162,8 +162,8 @@ keystone.createList('Story',{
   },
   hooks: {
     afterDelete: async ({ existingItem }) => {
-      if (existingItem.file) {
-        await fileAdapter.delete(existingItem.file);
+      if (existingItem.image) {
+        await fileAdapter.delete(existingItem.image);
       }
     },
   },

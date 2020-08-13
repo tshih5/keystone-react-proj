@@ -10,8 +10,7 @@ function Story(props) {
   let match = useRouteMatch();
   return(
     <>
-      <img src={props.main_image} />
-      <img src={props.image == null ? '': `http://localhost:3000/images/${props.image.filename}`} />
+      <img src={props.main_image == null ? '': `http://localhost:3000/images/${props.main_image.filename}`} />
       <h3 className="list-group-item-heading">{props.title}</h3>
       <Link to={`${match.url}/${props.id}`}>
         <Button>View Story</Button>

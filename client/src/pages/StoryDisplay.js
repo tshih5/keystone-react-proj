@@ -15,7 +15,7 @@ function StoryDisplay(props) {
       <Col xl={8} md={7} sm={12}>
         <GetStoryData storyID={storyID} setStoryData={setStoryData} />
         <h2>{storyData.title}</h2>
-        <img src={storyData.main_image} />
+        <img src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} />
         <h3>Date Published: {storyData.date_published}</h3>
       </Col>
       <Col xl={1} md={1} sm={12}></Col>
@@ -35,7 +35,9 @@ function GetStoryData({storyID, setStoryData}){
         }
         date_published
         story_content
-        main_image
+        main_image{
+          filename
+        }
       }
     }
   `);
