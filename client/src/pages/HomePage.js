@@ -11,15 +11,7 @@ function HomePage() {
   return (
     <div>
       <div className="home-banner-1">
-      <Container>
-        <Row>
-          <Col>
-            <div className="home-text text-center">
-              <img src={logo} />
-            </div>
-          </Col>
-        </Row>
-      </Container>
+        <img src={logo} className="center"/>
       </div>
       <div className="home-banner-2">
         <h2>Popular Stones</h2>
@@ -29,12 +21,15 @@ function HomePage() {
         <Link to={`/products/和田玉`}>
           <button className="ButtonProduct2">和田玉</button>
         </Link>
+        {/* 
         <Link to={`/products/翡翠`}>
           <button className="ButtonProduct3">翡翠</button>
         </Link>
         <Link to={`/products/`}>
           <button className="ButtonProduct4">product example 4</button>
         </Link>
+        */}
+        
 
       </div>
       <div className="home-banner-3">
