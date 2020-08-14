@@ -12,7 +12,7 @@ function StoryPage(props) {
     <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <div className="header"><h1>TAGNAME</h1></div>
+          <div className="header"><h1>{props.match.params.topic}</h1></div>
           <RenderStories {...props}/>
         </Col>
         <Col xl={1} md={1} sm={12}></Col>

@@ -16,7 +16,8 @@ function StoryDisplay(props) {
         <GetStoryData storyID={storyID} setStoryData={setStoryData} />
         <h2>{storyData.title}</h2>
         <img src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} />
-        <h3>Date Published: {storyData.date_published}</h3>
+        <p>Date Published: {storyData.date_published}</p>
+        <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
       </Col>
       <Col xl={1} md={1} sm={12}></Col>
       <Col xl={3} md={4} sm={12}>COLUMN 2</Col>
@@ -50,6 +51,10 @@ function GetStoryData({storyID, setStoryData}){
 
   if(error) return <p>Error :(</p>
   return null;
+}
+
+function createMarkup(story_content){
+  return {__html: story_content};
 }
 
 export default withRouter(StoryDisplay);
