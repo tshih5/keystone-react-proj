@@ -110,3 +110,11 @@
   margin-right: auto;
   width: 80%;
 }
+
+.card-container {
+  padding-bottom: 10px;
+}
+.card-child {
+  margin-top: 13px;
+  margin-bottom: 12px;
+}
