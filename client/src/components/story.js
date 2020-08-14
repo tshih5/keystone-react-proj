@@ -15,7 +15,6 @@ function Story(props) {
       <Link to={`${match.url}/${props.id}`}>
         <Button>View Story</Button>
       </Link>
-      {/*currently displays serialized Slate.js structure, needs to be changed*/}
     </>
   );
 }
