@@ -9,7 +9,7 @@ import {
 function Product(props) {
   let match = useRouteMatch();
   return(
-    <Card border="dark" style={{ width: '18rem' }}>
+    <Card className="card-child" border="dark">
       <Card.Img variant="top" src={props.thumbnail == null ? 'http://placehold.jp/150x100.png': `http://localhost:3000/images/${props.thumbnail.filename}`} />
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
