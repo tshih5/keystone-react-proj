@@ -43,7 +43,7 @@ function RenderStories(props){
 
   console.log(data);
 
-  return data.allStories.filter((props) => props.status == "Published").map((props) => (
+  return data.allStories.filter((props) => props.status === "Published").map((props) => (
     <div className="story-preview" key={props.id}>
       <Story {...props} />
     </div>

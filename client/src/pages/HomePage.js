@@ -14,7 +14,7 @@ function HomePage() {
         <img src={logo} className="center"/>
       </div>
       <div className="home-banner-2">
-        <h2>Popular Stones</h2>
+        <h2>石頭種類</h2>
         <Link to={`/products/壽山石`}>
           <button className="ButtonProduct1">壽山石</button>
         </Link>
@@ -36,6 +36,11 @@ function HomePage() {
         <h2>mission statement/blog post</h2>
           <div className="customerStory">
             <h6>"Wow this is a really great stone i would 10/10 buy"</h6>
+          </div>
+          <div className="story-button">
+            <Link to={`/stories/General`}>
+              <button className="ButtonProduct3">view more stories</button>
+            </Link>
           </div>
       </div>
     </div>
