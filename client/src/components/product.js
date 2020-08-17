@@ -17,10 +17,12 @@ function Product(props) {
           <br /> 
           Sub-category: {props.sub_category.name}
         </Card.Text>
-        <Link to={`${match.url}/${props.id}`}>
-          <Button>View Item</Button>
-        </Link>
       </Card.Body>
+      <Card.Footer className="text-center">
+        <Link to={`${match.url}/${props.id}`}>
+          <Button variant="light">View Item</Button>
+        </Link>
+      </Card.Footer>
     </Card>
   );
 }
