@@ -25,12 +25,15 @@ function ProductPage(props) {
           <Col><h1>{props.match.params.category}</h1></Col>
         </Row>
         <Row>
-        <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
+          <button className="mainRock1" onClick={()=>{setProducts(oldProducts)}}>all</button>
+          <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
         </Row>
-        <Row>
-          <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
+      </Container>
+      <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
+      <Container>
+        <div className="row card-container">
           <RenderProducts products={products}/>
-        </Row>
+        </div>
       </Container>
     </div>
   );
@@ -71,8 +74,8 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 
 function RenderProducts(props){
   return props.products.map((item) => (
-    //<Col md={3} key={item.id}><Product {...item} /></Col>
-    <CardDeck><Product key={item.id} {...item} /></CardDeck>
+    <Col lg={3} md={4} sm={6}><Product key={item.id} {...item} /></Col>
+    //<Product key={item.id} {...item} />
   ));
 }
 
