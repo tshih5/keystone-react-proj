@@ -25,6 +25,7 @@ function ProductPage(props) {
           <Col><h1>{props.match.params.category}</h1></Col>
         </Row>
         <Row>
+          <button className="mainRock1" onClick={()=>{setProducts(oldProducts)}}>all</button>
           <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
         </Row>
       </Container>
