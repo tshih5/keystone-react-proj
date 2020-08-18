@@ -20,7 +20,7 @@ function Product(props) {
       </Card.Body>
       <Card.Footer className="text-center">
         <Link to={`${match.url}/${props.id}`}>
-          <Button variant="light">View Item</Button>
+          <Button variant="dark" block>View Item</Button>
         </Link>
       </Card.Footer>
     </Card>
