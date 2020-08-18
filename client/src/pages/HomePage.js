@@ -14,7 +14,9 @@ function HomePage() {
         <img src={logo} className="center"/>
       </div>
       <div className="home-banner-2">
-        <h2>石頭種類</h2>
+        <div className="text-center">
+          <h2>石頭種類</h2>
+        </div>
         <Link to={`/products/壽山石`}>
           <button className="ButtonProduct1">壽山石</button>
         </Link>
@@ -38,7 +40,7 @@ function HomePage() {
             <h6>"Wow this is a really great stone i would 10/10 buy"</h6>
           </div>
           <div className="story-button">
-            <Link to={`/stories/General`}>
+            <Link to={`/stories/General`}>{/*Change this to first category tag*/}
               <button className="ButtonProduct3">view more stories</button>
             </Link>
           </div>
