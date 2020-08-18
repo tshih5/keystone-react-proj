@@ -66,7 +66,7 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
     }
   }, [data]);
 
-  if (loading) return <p>Loading...</p>;
+  //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   //console.log(data);
   return null;
@@ -74,7 +74,7 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 
 function RenderProducts(props){
   return props.products.map((item) => (
-    <Col lg={3} md={4} sm={6}><Product key={item.id} {...item} /></Col>
+    <Col lg={3} md={4} sm={6} key={item.id}><Product  {...item} /></Col>
     //<Product key={item.id} {...item} />
   ));
 }

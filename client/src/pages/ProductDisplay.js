@@ -16,7 +16,7 @@ function ProductDisplay(props) {
         <Col xl={8} md={7} sm={12}>
           <GetItemData productID={productID} setProductData={setProductData} />
           <h2>{productData.name}</h2>
-          <img src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} />
+          <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} alt=""/>
           <div className="descriptions">
             <p>[name]:</p>
             <p>[seal]:</p>
@@ -31,7 +31,9 @@ function ProductDisplay(props) {
           </div>
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
-        <Col xl={3} md={4} sm={12}>COLUMN 2</Col>
+        <Col xl={3} md={4} sm={12}>
+          <h3>Col 2</h3>
+        </Col>
       </Row>
     </Container>
   );
