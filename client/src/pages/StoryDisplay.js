@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Badge } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
@@ -11,23 +11,26 @@ function StoryDisplay(props) {
   console.log(storyData)
   return (
     <Container fluid={true}>
-    <Row xl={3} md={3} sm={1}>
-      <Col xl={8} md={7} sm={12}>
-        <GetStoryData storyID={storyID} setStoryData={setStoryData} />
-        <h2>{storyData.title}</h2>
-        <img className="img-fluid" src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} alt="" />
-        <p>Date Published: {storyData.date_published}</p>
-        <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
-      </Col>
-      <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
-      <Col xl={3} md={4} sm={12}>
-        <h3>趣聞雜談</h3>
-        <ListGroup variant="flush">
-          <StoryCategoryList />
-        </ListGroup>
-      </Col>
-    </Row>
-  </Container>
+      <Row xl={3} md={3} sm={1}>
+        <Col xl={8} md={7} sm={12}>
+          <GetStoryData storyID={storyID} setStoryData={setStoryData} />
+          <h2>{storyData.title}</h2>
+          <img className="img-fluid" src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} alt="" />
+          <p>Date Published: {storyData.date_published}</p>
+          <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
+        </Col>
+        {/*divider for second column */}
+        <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
+        <Col xl={3} md={4} sm={12}>
+          <h3>趣聞雜談</h3>
+          <ListGroup variant="flush">
+            <StoryCategoryList />
+          </ListGroup>
+          <h3>Tags</h3>
+          <h5><DisplayTags tags={storyData.tags} /></h5>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
@@ -43,6 +46,9 @@ function GetStoryData({storyID, setStoryData}){
         story_content
         main_image{
           filename
+        }
+        tags{
+          tag
         }
       }
     }
@@ -63,6 +69,7 @@ function StoryCategoryList(){
     {
       allStoryCategories{
         topic
+        id
       }
     }
   `);
@@ -75,8 +82,22 @@ function StoryCategoryList(){
   return data.allStoryCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-" or ""
     /*does not account for spaces in the category name, may cause URL issues */
-    <ListGroup.Item><Link to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</Link></ListGroup.Item>
+    //<ListGroup.Item key={category.id}><Link to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</Link></ListGroup.Item>
+    <ListGroup.Item eventKey={category.id} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</ListGroup.Item>
   ));
+}
+
+function DisplayTags(props){
+  console.log(props);
+  if(props.tags){
+    return props.tags.map((tag) => (
+      <>
+        <Badge variant="info">{tag.tag}</Badge>
+        <span> </span>
+      </>
+    ));
+  }
+  return <p>hello</p>;
 }
 
 function createMarkup(story_content){
