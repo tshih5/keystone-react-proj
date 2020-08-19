@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
 import "../App.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Badge } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+
+//This page displays individual products/items
 
 function ProductDisplay(props) {
   let productID = props.match.params.productid;
@@ -32,7 +34,8 @@ function ProductDisplay(props) {
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
         <Col xl={3} md={4} sm={12}>
-          <h3>Col 2</h3>
+          <h3>Tags</h3> 
+          <h5><DisplayTags tags={productData.tags}/></h5>
         </Col>
       </Row>
     </Container>
@@ -57,6 +60,9 @@ function GetItemData({productID, setProductData}){
         main_image{
           filename
         }
+        tags{
+          tag
+        }
         price_in_usd
         id
       }
@@ -71,6 +77,19 @@ function GetItemData({productID, setProductData}){
 
   if(error) return <p>Error :(</p>
   return null;
+}
+
+function DisplayTags(props){
+  console.log(props);
+  if(props.tags){
+    return props.tags.map((tag) => (
+      <>
+        <Badge variant="info">{tag.tag}</Badge>
+        <span> </span>
+      </>
+    ));
+  }
+  return <p>hello</p>;
 }
 
 export default withRouter(ProductDisplay);
