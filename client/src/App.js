@@ -119,6 +119,6 @@ function ProductDropDowns(){
   return data.allMineralMainCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
-    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
+    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name.trim().replace(/\s/g, '-')}`}>{category.name}</NavDropdown.Item>
   ));
 }
