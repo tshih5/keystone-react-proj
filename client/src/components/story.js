@@ -11,7 +11,7 @@ function Story(props) {
   return(
     <Jumbotron fluid>
       <Container>
-        <img className="img-fluid" src={props.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${props.main_image.filename}`}  alt=""/>
+        <img className="img-fluid" src={props.main_image == null ? '': `http://localhost:3000/images/${props.main_image.filename}`}  alt=""/>
         {/*TODO: Scale image such that it does not extend outside the bounds of the jumbotron */}
         <h3 className="list-group-item-heading">{props.title}</h3>
         <Link to={`${match.url}/${props.id}`}>
