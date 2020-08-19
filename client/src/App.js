@@ -37,7 +37,7 @@ export default function App() {
     <ApolloProvider client={client}>
       <KeystoneProvider>
         <Router>
-          <div>
+          <div className="wrapper">
             <Navbar bg="dark" variant="dark" expand="lg">
               <Navbar.Brand href="/">Nav</Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -53,24 +53,32 @@ export default function App() {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
+            
+            <div className="site-content">
+              <Switch>
+                <Route path="/products/:category/:productid">
+                  <ProductDisplay />
+                </Route>
+                <Route path="/products/:category">
+                  <ProductPage />
+                </Route>
+                <Route path="/stories/:topic/:storyid">
+                  <StoryDisplay />
+                </Route>
+                <Route path="/stories/:topic">
+                  <StoryPage />
+                </Route>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+              </Switch>
+            </div>
 
-            <Switch>
-              <Route path="/products/:category/:productid">
-                <ProductDisplay />
-              </Route>
-              <Route path="/products/:category">
-                <ProductPage />
-              </Route>
-              <Route path="/stories/:topic/:storyid">
-                <StoryDisplay />
-              </Route>
-              <Route path="/stories/:topic">
-                <StoryPage />
-              </Route>
-              <Route exact path="/">
-                <HomePage />
-              </Route>
-            </Switch>
+            <footer id="sticky-footer" className="py-4 bg-dark text-white-50">
+              <div className="container text-center">
+                <small>Copyright &copy; Tom Shih</small>
+              </div>
+            </footer>
           </div>
         </Router>
       </KeystoneProvider>

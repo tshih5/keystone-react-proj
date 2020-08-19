@@ -11,18 +11,17 @@ a:hover {
   margin: auto;
 }
 
-.footer{
-  background-color: #343a40;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 70px;
+.wrapper{
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+footer{
+  flex: 0 1 auto;
 }
 
-#copyright{
-  color:rgba(255, 255, 255, 0.5);
-  align-self: flex-end;
+.site-content{
+  flex: 1;
 }
 
 .home-banner-1 {
