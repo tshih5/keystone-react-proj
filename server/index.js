@@ -91,8 +91,8 @@ const fileAdapter = new LocalFileAdapter({
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
-    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false},
-    sub_category: {type: Relationship, ref: 'Mineral_Sub_Category', many: false},
+    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false,isRequired: true},
+    sub_category: {type: Relationship, ref: 'Mineral_Sub_Category', many: false, isRequired: true},
     seal:{type: Text},
     length_cm:{type: Decimal},
     height_cm:{type: Decimal},
@@ -208,9 +208,9 @@ keystone.createList('Story_Category', {
 
 keystone.createList('Story_Tag', {
   fields: {
-    topic: {type: Text},
+    tag: {type: Text},
   },
-  labelField: "topic",
+  labelField: "tag",
 });
 
 keystone.createList('Product_Tag', {
