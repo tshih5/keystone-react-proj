@@ -15,7 +15,7 @@ function Product(props) {
         <Card.Title>{props.name}</Card.Title>
         <Card.Text>Price: {props.price_in_usd}
           <br /> 
-          Sub-category: {props.sub_category.name}
+          Sub-category: {props.sub_category == null ? 'No subCategory': props.sub_category.name}
         </Card.Text>
       </Card.Body>
       <Card.Footer className="text-center">
