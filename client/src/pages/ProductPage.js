@@ -8,6 +8,7 @@ import {
 import Product from "../components/product";
 import { Container, Row, Col, CardDeck } from 'react-bootstrap';
 
+//This page displays the added items from the cms in a grid
 function ProductPage(props) {
   const [nameFilter, setNameFilter] = useState(props.match.params.category);
   const [products, setProducts] = useState([]);
@@ -80,8 +81,6 @@ function RenderProducts(props){
 }
 
 /* Render the buttons for the sub categories
-**
-**
 */
 function SubCatButtons(props){
   const { loading, error, data } = useQuery(gql`
@@ -112,7 +111,7 @@ function SubCatButtons(props){
 function FilterProducts(props, sub_name){
   let filteredArray = [];
   for(var i = 0; i < props.oldProducts.length; ++i){
-    if(props.oldProducts[i].sub_category.name === sub_name){
+    if( props.oldProducts[i].sub_category && props.oldProducts[i].sub_category.name === sub_name){
       filteredArray.push(props.oldProducts[i]);
     }
   }
