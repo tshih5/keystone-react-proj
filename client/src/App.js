@@ -25,7 +25,6 @@ import {
   useParams,
 } from "react-router-dom";
 
-
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
   cache: new InMemoryCache(),
@@ -33,17 +32,20 @@ const client = new ApolloClient({
 
 
 export default function App() {
+
   return (
     <ApolloProvider client={client}>
       <KeystoneProvider>
         <Router>
           <div className="wrapper">
             <Navbar bg="dark" variant="dark" expand="lg">
-              <Navbar.Brand href="/">Nav</Navbar.Brand>
-              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Brand href="/">
+                Logo
+              </Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav.Link as={Link} to="/">Home</Nav.Link>
+                  <Nav.Link as={Link} to="/" >Home</Nav.Link>
                   <NavDropdown title="Stories" id="basic-nav-dropdown">
                     <StoryDropDowns />
                   </NavDropdown>
@@ -53,7 +55,7 @@ export default function App() {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
-            
+
             <div className="site-content">
               <Switch>
                 <Route path="/products/:category/:productid">
@@ -74,9 +76,9 @@ export default function App() {
               </Switch>
             </div>
 
-            <footer id="sticky-footer" className="py-4 bg-dark text-white-50">
+            <footer className="py-4 bg-dark text-white-50">
               <div className="container text-center">
-                <small>Copyright &copy; Tom Shih</small>
+                <small>&copy;2020 by Tom Shih</small>
               </div>
             </footer>
           </div>
