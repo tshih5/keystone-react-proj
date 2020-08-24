@@ -5,7 +5,9 @@ import {
   withRouter,
   Link,
 } from "react-router-dom";
-import logo from './../img/home_main.png'
+import logo from './../img/home_main.png';
+import vertBtn1 from './../img/vertical_button_1.png';
+import vertBtn2 from './../img/vertical_button_2.png';
 
 function HomePage() {
   return (
@@ -24,22 +26,42 @@ function HomePage() {
         <Container>
           <Row>
             <Col>
-              <h2 className="text-center">石頭種類</h2>
+              <h1 className="text-center banner-title">石頭種類</h1>
             </Col>
           </Row>
           <Row>
             <Col></Col>
-            <Col>
-              <Link to={`/products/壽山石`}>
-                <button className="ButtonProduct1">壽山石</button>
-              </Link>
+            <Col className="text-center">
+              <div>
+                <Link to={`/products/壽山石`}>
+                  <img className="button-img" src={vertBtn2} />
+                  <button className="button-vertical">壽<br/>山<br/>石</button>
+                </Link>
+              </div>
             </Col>
-            <Col>
-              <Link to={`/products/和田玉`}>
-                <button className="ButtonProduct2">和田玉</button>
-              </Link>
+            <Col className="text-center">
+              <div>
+                <Link to={`/products/和田玉`}>
+                  <img className="button-img" src={vertBtn1} />
+                  <button className="button-vertical">和<br/>田<br/>玉</button>
+                </Link>
+              </div>
             </Col>
-            <Col></Col>
+            <Col className="text-center">
+              <a href="https://www.google.com">
+                <div>
+                  <div className="button-img">
+                    <img className="testing" src={vertBtn1}/>
+                  </div>
+                  <div className="fake-button"> 
+                    T<br/>
+                    E<br/>
+                    S<br/>
+                    T<br/>
+                  </div>
+                </div>
+              </a>
+            </Col>
           </Row>
         </Container>
         {/* 

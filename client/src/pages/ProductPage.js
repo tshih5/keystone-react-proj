@@ -23,11 +23,13 @@ function ProductPage(props) {
     <div>
       <Container>
         <Row>
-          <Col><h1>{props.match.params.category}</h1></Col>
+          <Col><h1 className="text-center">{props.match.params.category}</h1></Col>
         </Row>
         <Row>
-          <button className="mainRock1" onClick={()=>{setProducts(oldProducts)}}>all</button>
-          <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
+          <div className="sub-buttongroup">
+            <button className="pill" onClick={()=>{setProducts(oldProducts)}}>all</button>
+            <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
+          </div>
         </Row>
       </Container>
       <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
@@ -100,7 +102,7 @@ function SubCatButtons(props){
   //console.log(data.allMineralMainCategories[0].subcategories);
   if(data){
     return data.allMineralMainCategories[0].subcategories.map((category) => (
-      <button className="mainRock1" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
+      <button className="pill" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
     ));
   }else{
     return <h1>Error :(</h1>

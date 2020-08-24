@@ -16,26 +16,29 @@ function ProductDisplay(props) {
     <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <GetItemData productID={productID} setProductData={setProductData} />
-          <h2>{productData.name}</h2>
-          <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} alt=""/>
-          <div className="descriptions">
-            <p>[name]:</p>
-            <p>[seal]:</p>
-            <p>[dimensions l x w x h]: {productData.length_cm} x {productData.width_cm} x {productData.height_cm}</p>
-            <p>[weight]: {productData.weight}</p>
-            <p>[creator]: </p>
-            <p>[craftsmanship_comment]: {productData.craftsmanship_comment}</p>
-            <p>[item description]: {productData.item_description}</p>
-            <p>[item story]: {productData.item_story} </p>
-            <p>[note]: </p>
-            <p>ProductID: {productID}</p>
-          </div>
+          <Container className="product-info">
+            <GetItemData productID={productID} setProductData={setProductData} />
+            <h1>{productData.name}</h1>
+            <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} alt=""/>
+            <div className="descriptions">
+              <p>[seal]: {productData.seal}
+              <br/>[dimensions l x w x h]: {productData.length_cm}{productData.width_cm == null ? '' : 'cm x '}{productData.width_cm}{productData.height_cm == null ? '' : 'cm x '} {productData.height_cm}{productData.height_cm == null ? '' : 'cm'}
+              <br/>[weight]: {productData.weight}g
+              <br/>[creator]: {productData.creator}</p>
+              <p>[craftsmanship_comment]: {productData.craftsmanship_comment}</p>
+              <p>[item description]: {productData.item_description}</p>
+              <p>[item story]: {productData.item_story} </p>
+              <p>[note]: {productData.note}</p>
+            </div>
+          </Container>
+
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
-        <Col xl={3} md={4} sm={12}>
-          <h3>Tags</h3> 
-          <h5><DisplayTags tags={productData.tags}/></h5>
+        <Col className="sticky-col" xl={3} md={4} sm={12}>
+          <div className="tag-list">
+            <h3>Tags</h3>
+            <DisplayTags tags={productData.tags} />
+          </div>
         </Col>
       </Row>
     </Container>
@@ -81,15 +84,21 @@ function GetItemData({productID, setProductData}){
 
 function DisplayTags(props){
   console.log(props);
-  if(props.tags){
+  if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
-      <>
-        <Badge variant="info">{tag.tag}</Badge>
-        <span> </span>
-      </>
+        <Badge className="tag" variant="info">{tag.tag}</Badge>
     ));
+  }else{
+    return <h5>None</h5>;
   }
-  return <p>hello</p>;
+}
+
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
 }
 
 export default withRouter(ProductDisplay);
