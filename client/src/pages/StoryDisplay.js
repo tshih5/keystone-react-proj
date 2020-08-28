@@ -10,7 +10,7 @@ function StoryDisplay(props) {
   const [storyData, setStoryData] = useState([]);
   console.log(storyData)
   return (
-    <Container fluid={true}>
+    <Container fluid={true} className="story-container">
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <Container>
@@ -31,7 +31,7 @@ function StoryDisplay(props) {
             </ListGroup>
           </div>
           <div className="tag-list">
-            <h3>Tags</h3>
+            <h3>TAGS</h3>
             <DisplayTags tags={storyData.tags} />
           </div>
         </Col>
@@ -42,8 +42,8 @@ function StoryDisplay(props) {
 
 function GetStoryData({storyID, setStoryData}){
   const { loading, error, data } = useQuery(gql`
-    {
-      allStories(where:{id:"${storyID}"}){
+    query($sid: ID!){
+      allStories(where:{id: $sid}){
         title
         category{
           topic
@@ -58,7 +58,7 @@ function GetStoryData({storyID, setStoryData}){
         }
       }
     }
-  `);
+  `,{variables: {sid: storyID}});
 
   useEffect(() => {
     if(loading === false && data){

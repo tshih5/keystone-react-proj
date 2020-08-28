@@ -11,9 +11,9 @@ function Story(props) {
   return(
     <Jumbotron className="story-preview">
         {props.main_image ? (<img className="img-fluid" src={`http://localhost:3000/images/${props.main_image.filename}`}  alt=""/>) : ''}
-        <h3 className="list-group-item-heading">{props.title}</h3>
+        <h2 className="list-group-story-heading">{props.title}</h2>
         <Link to={`${match.url}/${props.id}`}>
-          <Button>View Story</Button>
+          <Button className="sp-button">閱讀更多</Button>
         </Link>
     </Jumbotron>
   );

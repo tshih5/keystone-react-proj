@@ -1,33 +1,10 @@
 /* || General Styles*/
-/*
-h1{
 
+h1, h2, h3, h4, h5, .h5, h6, p, a, button{
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+  font-weight: 400;
 }
 
-h2{
-
-}
-
-h3{
-
-}
-
-h4{
-
-}
-
-h5{
-
-}
-
-h6{
-
-}
-
-p{
-
-}
-*/
 a {
   color: #000;
 }
@@ -84,9 +61,19 @@ footer{
 
 .tag-list{
   margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.product-header{
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .product-info{
+  margin-top: 50px;
+}
+
+.product-grid{
   margin-top: 50px;
 }
 
@@ -94,6 +81,30 @@ footer{
   margin-top: 50px;
 }
 
+.story-button{
+  background-color: transparent;
+  border-color: transparent;
+  color: #AE654B;
+  margin-bottom: 50px;
+}
+
+.story-button:hover{
+  background-color: #401F20;
+  border-color: transparent;
+}
+
+.sp-button{
+  background-color: #401F20;
+  border-color: #401F20;
+  color: white;
+}
+.sp-button:hover{
+  background-color: #5f301f;
+}
+
+.list-group-story-heading{
+  margin: 5px 0px;
+}
 /* || Main Banner */
 .home-banner-1 {
   background-image: url("./img/home_banner.jpg");
@@ -122,9 +133,9 @@ footer{
   padding-top: 50px;
 }
 
-.customerStory {
-  /*background-image: */
-  left: 1000px;
+.main-story-img {
+  height: 255px;
+  margin-bottom: 50px;
 }
 
 /* ||Buttons*/
@@ -165,10 +176,10 @@ button.pill{
   background-color: white;
 }
 
-
 .card-container {
   padding-bottom: 10px;
 }
+
 .card-child {
   margin-top: 13px;
   margin-bottom: 12px;
@@ -185,12 +196,13 @@ button.pill{
 }
 
 .tag{
-  font-size: medium;
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+  font-size: large;
+  font-weight: 100;
   padding: 5px 3px !important;
   margin: 2px;
   background-color: #AE654B
 }
-
 
 .button-img{
   position: absolute;
@@ -213,5 +225,6 @@ img.testing{
   height: 150px;
   width: auto;
 }
+
 
 

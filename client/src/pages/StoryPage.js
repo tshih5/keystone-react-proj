@@ -22,7 +22,7 @@ function StoryPage(props) {
         </Col>
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <div className="category-list">
+          <div className="category-list chinese-text">
             <h3>趣聞雜談</h3>
             <ListGroup variant="flush">
               <StoryCategoryList />
@@ -38,8 +38,8 @@ function StoryPage(props) {
 function RenderStories(props){
   //console.log(props.match.params.topic);
   const { loading, error, data } = useQuery(gql`
-    {
-      allStories(where:{category:{topic: "${props.match.params.topic}"}}){
+    query($topic: String!){
+      allStories(where:{category:{topic: $topic}}){
         title
         id
         status
@@ -48,7 +48,7 @@ function RenderStories(props){
         }
       }
     }
-  `);
+  `,{variables:{topic: props.match.params.topic}});
 
   if (loading) return <Spinner animation="border" />;
   if (error) return <p>{error.message}</p>;

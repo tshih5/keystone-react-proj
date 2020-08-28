@@ -16,11 +16,12 @@ function ProductDisplay(props) {
     <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container className="product-info">
+          <Container className="product-info chinese-text">
             <GetItemData productID={productID} setProductData={setProductData} />
             <h1>{productData.name}</h1>
             <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} alt=""/>
             <div className="descriptions">
+              <br/>
               <p>[seal]: {productData.seal}
               <br/>[dimensions l x w x h]: {productData.length_cm}{productData.width_cm == null ? '' : 'cm x '}{productData.width_cm}{productData.height_cm == null ? '' : 'cm x '} {productData.height_cm}{productData.height_cm == null ? '' : 'cm'}
               <br/>[weight]: {productData.weight}g
@@ -36,7 +37,7 @@ function ProductDisplay(props) {
         <Col xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <div className="tag-list">
-            <h3>Tags</h3>
+            <h3>TAGS</h3>
             <DisplayTags tags={productData.tags} />
           </div>
         </Col>
@@ -47,8 +48,8 @@ function ProductDisplay(props) {
 
 function GetItemData({productID, setProductData}){
   const { loading, error, data } = useQuery(gql`
-    {
-      allProducts(where:{id:"${productID}"}){
+    query($pid: ID!){
+      allProducts(where:{id: $pid}){
         name
         seal
         length_cm
@@ -70,7 +71,7 @@ function GetItemData({productID, setProductData}){
         id
       }
     }
-  `);
+  `,{variables:{pid: productID}});
 
   useEffect(() => {
     if(loading === false && data){

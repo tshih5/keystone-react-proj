@@ -38,7 +38,7 @@ export default function App() {
       <KeystoneProvider>
         <Router>
           <div className="wrapper">
-            <Navbar bg="dark" variant="dark" expand="lg">
+            <Navbar bg="dark" variant="dark" expand="lg" bsPrefix="chinese-text navbar">
               <Navbar.Brand href="/">
                 Logo
               </Navbar.Brand>
@@ -55,7 +55,6 @@ export default function App() {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
-
             <div className="site-content">
               <Switch>
                 <Route path="/products/:category/:productid">

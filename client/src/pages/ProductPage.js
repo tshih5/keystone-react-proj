@@ -23,18 +23,18 @@ function ProductPage(props) {
     <div>
       <Container>
         <Row>
-          <Col><h1 className="text-center">{props.match.params.category}</h1></Col>
+          <Col><h1 className="text-center product-header chinese-text">{props.match.params.category}</h1></Col>
         </Row>
         <Row>
           <div className="sub-buttongroup">
-            <button className="pill" onClick={()=>{setProducts(oldProducts)}}>all</button>
+            <button className="pill chinese-text" onClick={()=>{setProducts(oldProducts)}}>全部</button>
             <SubCatButtons nameFilter={nameFilter} products={products} setProducts={setProducts} oldProducts={oldProducts}/>
           </div>
         </Row>
       </Container>
       <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
       <Container>
-        <div className="row card-container">
+        <div className="row card-container product-grid">
           <RenderProducts products={products}/>
         </div>
       </Container>
@@ -47,8 +47,8 @@ function ProductPage(props) {
 */
 function GetProducts({nameFilter, setProducts, setOldProducts}){
   const { loading, error, data } = useQuery(gql`
-    {
-      allProducts(where:{main_category:{name: "${nameFilter}"}}){
+    query($name: String!){
+      allProducts(where:{main_category:{name: $name}}){
         name
         price_in_usd
         sub_category{
@@ -60,7 +60,7 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
         id
       }
     }
-  `);
+  `, {variables: {name: nameFilter}});
   
   useEffect(() => {
     if(loading === false && data){
@@ -86,15 +86,15 @@ function RenderProducts(props){
 */
 function SubCatButtons(props){
   const { loading, error, data } = useQuery(gql`
-    {
-      allMineralMainCategories(where:{name: "${props.nameFilter}"}){
+    query($nameFilter: String!){
+      allMineralMainCategories(where:{name: $nameFilter}){
         subcategories{
           name
           id
         }
       }
     }
-  `);
+  `, {variables: {nameFilter: props.nameFilter}});
   
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -102,7 +102,7 @@ function SubCatButtons(props){
   //console.log(data.allMineralMainCategories[0].subcategories);
   if(data){
     return data.allMineralMainCategories[0].subcategories.map((category) => (
-      <button className="pill" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
+      <button className="pill chinese-text" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
     ));
   }else{
     return <h1>Error :(</h1>
