@@ -17,7 +17,7 @@ function HomePage() {
         <Container>
           <Row>
             <Col xl={{span: 10, offset: 1}} lg={12}>
-              <img src={logo} className="main-img img-fluid"/>
+              <img src={logo} className="main-img img-fluid" alt="logo"/>
             </Col>
           </Row>
         </Container>
@@ -35,7 +35,7 @@ function HomePage() {
             <Col className="text-center">
               <div>
                 <Link to={`/products/壽山石`}>
-                  <img className="button-img" src={vertBtn2} />
+                  <img className="button-img" src={vertBtn2} alt="stone button image"/>
                   <button className="button-vertical ">壽<br/>山<br/>石</button>
                 </Link>
               </div>
@@ -43,7 +43,7 @@ function HomePage() {
             <Col className="text-center">
               <div>
                 <Link to={`/products/和田玉`}>
-                  <img className="button-img" src={vertBtn1} />
+                  <img className="button-img" src={vertBtn1} alt="stone button image"/>
                   <button className="button-vertical ">和<br/>田<br/>玉</button>
                 </Link>
               </div>
@@ -63,7 +63,7 @@ function HomePage() {
           </Row>
           <Row>
             <Col lg={6} sm={12} className="text-center">
-              <img className="img-fluid main-story-img" src={mainStory} />
+              <img className="img-fluid main-story-img" src={mainStory} alt=" Some stone display"/>
             </Col>
             <Col lg={6} sm={12}>
               <div className="customerStory">

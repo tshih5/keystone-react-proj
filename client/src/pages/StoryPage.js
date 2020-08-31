@@ -44,7 +44,7 @@ function RenderStories(props){
         id
         status
         main_image{
-          filename
+          publicUrl
         }
       }
     }

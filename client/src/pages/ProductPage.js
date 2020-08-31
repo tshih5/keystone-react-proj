@@ -55,7 +55,7 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
           name
         }
         thumbnail{
-          filename
+          publicUrl
         }
         id
       }

@@ -16,7 +16,7 @@ function StoryDisplay(props) {
           <Container>
             <GetStoryData storyID={storyID} setStoryData={setStoryData} />
             <h1>{storyData.title}</h1>
-            <img className="img-fluid" src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} alt="" />
+            <img className="img-fluid" src={storyData.main_image == null ? '': `${storyData.main_image.publicUrl}`} alt="story main image" />
             <p>Date Published: {storyData.date_published}</p>
             <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
           </Container>
@@ -51,7 +51,7 @@ function GetStoryData({storyID, setStoryData}){
         date_published
         story_content
         main_image{
-          filename
+          publicUrl
         }
         tags{
           tag

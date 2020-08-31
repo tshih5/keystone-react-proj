@@ -19,7 +19,7 @@ function ProductDisplay(props) {
           <Container className="product-info chinese-text">
             <GetItemData productID={productID} setProductData={setProductData} />
             <h1>{productData.name}</h1>
-            <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${productData.main_image.filename}`} alt=""/>
+            <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main image"/>
             <div className="descriptions">
               <br/>
               <p>[seal]: {productData.seal}
@@ -62,7 +62,7 @@ function GetItemData({productID, setProductData}){
         item_story
         note
         main_image{
-          filename
+          publicUrl
         }
         tags{
           tag
