@@ -7,6 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
+import logo from './img/logo.png';
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -40,7 +41,12 @@ export default function App() {
           <div className="wrapper">
             <Navbar bg="dark" variant="dark" expand="lg" bsPrefix="navbar">
               <Navbar.Brand href="/">
-                Logo
+                <img
+                  src={logo}
+                  className="d-inline-block align-top"
+                  height="35"
+                  alt="jhz logo"
+                />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
