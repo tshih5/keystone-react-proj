@@ -38,19 +38,19 @@ export default function App() {
       <KeystoneProvider>
         <Router>
           <div className="wrapper">
-            <Navbar bg="dark" variant="dark" expand="lg" bsPrefix="chinese-text navbar">
+            <Navbar bg="dark" variant="dark" expand="lg" bsPrefix="navbar">
               <Navbar.Brand href="/">
                 Logo
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                  <Nav.Link as={Link} to="/" >Home</Nav.Link>
-                  <NavDropdown title="Stories" id="basic-nav-dropdown">
-                    <StoryDropDowns />
-                  </NavDropdown>
-                  <NavDropdown title="Products" id="basic-nav-dropdown">
+                  <Nav.Link as={Link} to="/" >首頁</Nav.Link>
+                  <NavDropdown title="石頭種類" id="basic-nav-dropdown">
                     <ProductDropDowns />
+                  </NavDropdown>
+                  <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
+                    <StoryDropDowns />
                   </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
