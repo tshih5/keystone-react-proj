@@ -7,6 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
+import logo from './img/logo.png';
 
 import { ApolloClient } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
@@ -25,7 +26,6 @@ import {
   useParams,
 } from "react-router-dom";
 
-
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
   cache: new InMemoryCache(),
@@ -33,44 +33,59 @@ const client = new ApolloClient({
 
 
 export default function App() {
+
   return (
     <ApolloProvider client={client}>
       <KeystoneProvider>
         <Router>
-          <div>
-            <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="/">Nav</Navbar.Brand>
-              <Nav className="mr-auto">
-                <Nav.Link as={Link} to="/">Home</Nav.Link>
-                <NavDropdown title="Stories" id="basic-nav-dropdown">
-                  <StoryDropDowns />
-                </NavDropdown>
-                <NavDropdown title="Products" id="basic-nav-dropdown">
-                  <ProductDropDowns />
-                </NavDropdown>
-              </Nav>
+          <div className="wrapper">
+            <Navbar bg="black" variant="dark" expand="lg" bsPrefix="navbar">
+              <Navbar.Brand href="/">
+                <img
+                  src={logo}
+                  className="d-inline-block align-top"
+                  height="35"
+                  alt="jhz logo"
+                />
+              </Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                  <Nav.Link as={Link} to="/" >首頁</Nav.Link>
+                  <NavDropdown title="石頭種類" id="basic-nav-dropdown">
+                    <ProductDropDowns />
+                  </NavDropdown>
+                  <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
+                    <StoryDropDowns />
+                  </NavDropdown>
+                </Nav>
+              </Navbar.Collapse>
             </Navbar>
+            <div className="site-content">
+              <Switch>
+                <Route path="/products/:category/:productid">
+                  <ProductDisplay />
+                </Route>
+                <Route path="/products/:category">
+                  <ProductPage />
+                </Route>
+                <Route path="/stories/:topic/:storyid">
+                  <StoryDisplay />
+                </Route>
+                <Route path="/stories/:topic">
+                  <StoryPage />
+                </Route>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+              </Switch>
+            </div>
 
-            <Switch>
-              <Route path="/products/:category/:productid">
-                <ProductDisplay />
-              </Route>
-              <Route path="/products/:category">
-                <ProductPage />
-              </Route>
-              <Route path="/stories/:topic/:storyid">
-                <StoryDisplay />
-              </Route>
-              <Route path="/stories/:topic">
-                <StoryPage />
-              </Route>
-              <Route path="/topics">
-                <Topics />
-              </Route>
-              <Route exact path="/">
-                <HomePage />
-              </Route>
-            </Switch>
+            <footer className="py-4 bg-black text-white-50">
+              <div className="container text-center">
+                <small>&copy;2020 by Tom Shih</small>
+              </div>
+            </footer>
           </div>
         </Router>
       </KeystoneProvider>
@@ -96,7 +111,7 @@ function StoryDropDowns(){
   return data.allStoryCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
-    <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic}`}>{category.topic}</NavDropdown.Item>
+    <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</NavDropdown.Item>
   ));
 }
 
@@ -119,46 +134,6 @@ function ProductDropDowns(){
   return data.allMineralMainCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
     /*does not account for spaces in the category name, may cause URL issues */
-    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name}`}>{category.name}</NavDropdown.Item>
+    <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name.trim().replace(/\s/g, '-')}`}>{category.name}</NavDropdown.Item>
   ));
-}
-
-//TODO: remove this later
-function Topics() {
-  let match = useRouteMatch();
-
-  return (
-    <div>
-      <h2>Topics</h2>
-
-      <ul>
-        <li>
-          <Link to={`${match.url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/props-v-state`}>
-            Props v. State
-          </Link>
-        </li>
-      </ul>
-
-      {/* The Topics page has its own <Switch> with more routes
-          that build on the /topics URL path. You can think of the
-          2nd <Route> here as an "index" page for all topics, or
-          the page that is shown when no topic is selected */}
-      <Switch>
-        <Route path={`${match.path}/:topicId`}>
-          <Topic />
-        </Route>
-        <Route path={match.path}>
-          <h3>Please select a topic.</h3>
-        </Route>
-      </Switch>
-    </div>
-  );
-}
-
-function Topic() {
-  let { topicId } = useParams();
-  return <h3>Requested topic ID: {topicId}</h3>;
 }

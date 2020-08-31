@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
-import { Container, Row, Col } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { Container, Row, Col, ListGroup, Badge } from "react-bootstrap";
+import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -10,26 +10,40 @@ function StoryDisplay(props) {
   const [storyData, setStoryData] = useState([]);
   console.log(storyData)
   return (
-    <Container fluid={true}>
-    <Row xl={3} md={3} sm={1}>
-      <Col xl={8} md={7} sm={12}>
-        <GetStoryData storyID={storyID} setStoryData={setStoryData} />
-        <h2>{storyData.title}</h2>
-        <img src={storyData.main_image == null ? '': `http://localhost:3000/images/${storyData.main_image.filename}`} />
-        <p>Date Published: {storyData.date_published}</p>
-        <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
-      </Col>
-      <Col xl={1} md={1} sm={12}></Col>
-      <Col xl={3} md={4} sm={12}>COLUMN 2</Col>
-    </Row>
-  </Container>
+    <Container fluid={true} className="story-container">
+      <Row xl={3} md={3} sm={1}>
+        <Col xl={8} md={7} sm={12}>
+          <Container>
+            <GetStoryData storyID={storyID} setStoryData={setStoryData} />
+            <h1>{storyData.title}</h1>
+            <img className="img-fluid" src={storyData.main_image == null ? '': `${storyData.main_image.publicUrl}`} alt="story main image" />
+            <p>Date Published: {storyData.date_published}</p>
+            <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
+          </Container>
+        </Col>
+        {/*divider for second column */}
+        <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
+        <Col className="sticky-col" xl={3} md={4} sm={12}>
+          <div className="category-list">
+            <h3>趣聞雜談</h3>
+            <ListGroup variant="flush">
+              <StoryCategoryList />
+            </ListGroup>
+          </div>
+          <div className="tag-list">
+            <h3>TAGS</h3>
+            <DisplayTags tags={storyData.tags} />
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
 function GetStoryData({storyID, setStoryData}){
   const { loading, error, data } = useQuery(gql`
-    {
-      allStories(where:{id:"${storyID}"}){
+    query($sid: ID!){
+      allStories(where:{id: $sid}){
         title
         category{
           topic
@@ -37,11 +51,14 @@ function GetStoryData({storyID, setStoryData}){
         date_published
         story_content
         main_image{
-          filename
+          publicUrl
+        }
+        tags{
+          tag
         }
       }
     }
-  `);
+  `,{variables: {sid: storyID}});
 
   useEffect(() => {
     if(loading === false && data){
@@ -53,8 +70,48 @@ function GetStoryData({storyID, setStoryData}){
   return null;
 }
 
+function StoryCategoryList(){
+  const { loading, error, data } = useQuery(gql`
+    {
+      allStoryCategories{
+        topic
+        id
+      }
+    }
+  `);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  //console.log(data);
+  
+  return data.allStoryCategories.map((category) => (
+    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-" or ""
+    /*does not account for spaces in the category name, may cause URL issues */
+    <ListGroup.Item eventKey={category.id} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</ListGroup.Item>
+  ));
+}
+
+function DisplayTags(props){
+  if(!isEmpty(props.tags)){
+    return props.tags.map((tag) => (
+        <Badge className="tag" variant="info">{tag.tag}</Badge>
+    ));
+  }else{
+    return <h5>None</h5>;
+  }
+}
+
 function createMarkup(story_content){
   return {__html: story_content};
+}
+
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
 }
 
 export default withRouter(StoryDisplay);

@@ -9,15 +9,12 @@ import {
 function Story(props) {
   let match = useRouteMatch();
   return(
-    <Jumbotron fluid>
-      <Container>
-        <img src={props.main_image == null ? 'http://placehold.jp/600x350.png': `http://localhost:3000/images/${props.main_image.filename}`} class="img-fluid"/>
-        {/*TODO: Scale image such that it does not extend outside the bounds of the jumbotron */}
-        <h3 className="list-group-item-heading">{props.title}</h3>
+    <Jumbotron className="story-preview">
+        {props.main_image ? (<img className="img-fluid" src={`${props.main_image.publicUrl}`}  alt="story image"/>) : ''}
+        <h2 className="list-group-story-heading">{props.title}</h2>
         <Link to={`${match.url}/${props.id}`}>
-          <Button>View Story</Button>
+          <Button className="sp-button">閱讀更多</Button>
         </Link>
-      </Container>
     </Jumbotron>
   );
 }

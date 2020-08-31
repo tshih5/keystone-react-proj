@@ -1,120 +1,228 @@
+/* || General Styles*/
+
+h1, h2, h3, h4, h5, .h5, h6, p, a, button{
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: #000;
+}
+
+a:hover {
+   color: #00F;
+   text-decoration: none;
+}
+
+a.list-group-item{
+  color: #AE654B;
+}
+
+a.list-group-item.active{
+  background-color: #fff;
+  color: #AE654B;
+}
+
+.main-img{
+  display: block;
+  margin: auto;
+}
+
+/* ||Page layout*/
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer{
+  flex: 0 1 auto;
+}
+
+.site-content{
+  flex: 1;
+}
+
+.sticky-col{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+}
+
+.tag-list{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.product-header{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.product-info{
+  margin-top: 50px;
+}
+
+.product-grid{
+  margin-top: 50px;
+}
+
+.story-container{
+  margin-top: 50px;
+}
+
+.story-button{
+  background-color: transparent;
+  border-color: transparent;
+  color: #AE654B;
+  margin-bottom: 50px;
+}
+
+.story-button:hover{
+  background-color: #401F20;
+  border-color: transparent;
+}
+
+.sp-button{
+  background-color: #401F20;
+  border-color: #401F20;
+  color: white;
+}
+.sp-button:hover{
+  background-color: #5f301f;
+}
+
+.list-group-story-heading{
+  margin: 5px 0px;
+}
+/* || Main Banner */
 .home-banner-1 {
   background-image: url("./img/home_banner.jpg");
   background-size: cover;
   background-position: center, center;
-  min-height: 450px;
-  padding: 50px
+  padding-top: 60px;
+  padding-bottom: 60px; 
 }
 .home-banner-2 {
   background-image: url("./img/flower_banner.jpg");
-  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center, center;
-  min-height: 450px;
+  min-height: 500px;
+  padding-top: 50px;
 }
+
+.banner-title{
+  margin-bottom: 50px;
+}
+
 .home-banner-3 {
   background-image: url("./img/story_banner.jpg");
   background-size: cover;
   background-position: center, center;
   min-height: 450px;
+  padding-top: 50px;
 }
 
-.ButtonProduct1 {
-  border: 1px solid red;
-  left: 500px;
-  top: 100px;
-}
-.ButtonProduct2 {
-  border: 1px solid red;
-  left: 100px;
-  top: 100px;
-}
-.ButtonProduct3 {
-  border: 1px solid red;
-  left: 150px;
-  top: 100px;
-}
-.ButtonProduct4 {
-  border: 1px solid red;
-  left: 200px;
-  top: 100px;
-}
-.customerStory {
-  /*background-image: */
-  left: 1000px;
-}
-.mainRock1 {
-  background-color: grey;
-  /*border: 10px brown;*/
-  color: whitesmoke;
-  border-radius: 50%;
-  font-size: larger;
-}
-.mainRock2 {
-  background-color: grey;
-  color: whitesmoke;
-  border-radius: 50%;
-  font-size: larger;
-}
-.mainRock3 {
-  background-color: grey;
-  color: whitesmoke;
-  border-radius: 50%;
-  font-size: larger;
-}
-.mainRock4 {
-  background-color: grey;
-  color: whitesmoke;
-  border-radius: 50%;
-  font-size: larger;
-}
-.subRock1 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
-}
-.subRock2 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
-}
-.subRock3 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
-}
-.subRock4 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
-}
-.subRock5 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
-}
-.subRock6 {
-  background-color: white;
-  color: burlywood;
-  font-size: small;
-  border: none;
+.main-story-img {
+  height: 255px;
+  margin-bottom: 50px;
 }
 
-.center {
-  display: block;
+/* ||Buttons*/
+button.pill{
+  background-color: white;
+  border: 1px solid #401F20;
+  color: #401F20;
+  padding: 0px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  border-radius: 16px;
+}
+
+.pill:hover{
+  background-color: #E5D3C5;
+  color: #401F20;
+}
+
+.pill:focus{
+  outline: none !important;
+  border: 1px solid tan;
+}
+
+.sub-buttongroup{
+  margin: auto;
+}
+
+.button-vertical{
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  padding-top: 10px;
+  padding-bottom: 150px;
+  height: 250px;
+  font-size: large;
+  width: 35px;
+  background-color: white;
 }
 
 .card-container {
   padding-bottom: 10px;
 }
+
 .card-child {
   margin-top: 13px;
   margin-bottom: 12px;
 }
+
+.story-header{
+  text-align: center;
+  margin-bottom: 50px
+}
+
+.story-preview{
+  background-color: white;
+  padding: 40px 40px;
+}
+
+.tag{
+  font-family: 'Noto Sans TC', Arial, sans-serif;
+  font-size: large;
+  font-weight: 100;
+  padding: 5px 3px !important;
+  margin: 2px;
+  background-color: #AE654B
+}
+
+.button-img{
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -75px;
+}
+
+.fake-button{
+  width: 30px;
+  border: 2px solid black;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.testing{
+  height: 150px;
+  width: auto;
+}
+
+.bg-black{
+  background-color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+  font-weight: 100;
+}
+
