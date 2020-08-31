@@ -3,9 +3,8 @@ const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
 const Stars = require('./fields/Stars');
-const { Content } = require('@keystonejs/field-content');
 const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
-const { LocalFileAdapter } = require('@keystonejs/file-adapters');
+const { LocalFileAdapter, S3Adapter } = require('@keystonejs/file-adapters');
 
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
@@ -83,11 +82,36 @@ const authStrategy = keystone.createAuthStrategy({
   },
 });
 
-const fileAdapter = new LocalFileAdapter({
+// File Adapter settings
+/*const fileAdapter = new LocalFileAdapter({
   src: './public',
   path: '/images',
+});*/
+
+const S3_PATH = 'uploads';
+const bucket = "jxzart-host";
+
+const fileAdapter = new S3Adapter({
+  bucket: 'jxzart-host',
+  folder: S3_PATH,
+  //Due to someting in AWS S3, "/" between S3path and filename is replaced with %5C or the "\" character
+  publicUrl: ({ id, filename, _meta }) =>
+    `https://${bucket}.s3.amazonaws.com/${S3_PATH}%5C${filename}`,
+  s3Options: {
+    // Optional paramaters to be supplied directly to AWS.S3 constructor
+    apiVersion: '2006-03-01',
+    accessKeyId: 'AKIAZNM6XZP4UCF4GHPK',
+    secretAccessKey: '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',
+    region: 'us-west-1',
+  },
+  uploadParams: ({ filename, id, mimetype, encoding }) => ({
+    Metadata: {
+      keystone_id: `${id}`,
+    },
+  }),
 });
 
+//Keystone LIsts
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
@@ -219,6 +243,32 @@ keystone.createList('Product_Tag', {
   },
   labelField: "tag",
 });
+
+
+keystone.createList('UploadTest', {
+  fields: {
+    file: {
+      type: File,
+      adapter: fileAdapter,
+      hooks: {
+        beforeChange: async ({ existingItem }) => {
+          if (existingItem && existingItem.file) {
+            await fileAdapter.delete(existingItem.file);
+          }
+        },
+      },
+    },
+  },
+  hooks: {
+    afterDelete: async ({ existingItem }) => {
+      if (existingItem.file) {
+        await fileAdapter.delete(existingItem.file);
+      }
+    },
+  },
+});
+
+
 
 module.exports = {
   keystone,
