@@ -217,5 +217,12 @@ img.testing{
   width: auto;
 }
 
+.bg-black{
+  background-color: black;
+}
 
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+  font-weight: 100;
+}
 

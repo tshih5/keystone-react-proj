@@ -39,7 +39,7 @@ export default function App() {
       <KeystoneProvider>
         <Router>
           <div className="wrapper">
-            <Navbar bg="dark" variant="dark" expand="lg" bsPrefix="navbar">
+            <Navbar bg="black" variant="dark" expand="lg" bsPrefix="navbar">
               <Navbar.Brand href="/">
                 <img
                   src={logo}
@@ -81,7 +81,7 @@ export default function App() {
               </Switch>
             </div>
 
-            <footer className="py-4 bg-dark text-white-50">
+            <footer className="py-4 bg-black text-white-50">
               <div className="container text-center">
                 <small>&copy;2020 by Tom Shih</small>
               </div>
