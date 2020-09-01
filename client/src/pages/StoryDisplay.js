@@ -18,8 +18,7 @@ function StoryDisplay(props) {
             <h1>{storyData.title}</h1>
             {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main image" />}
             <p>Date Published: {storyData.date_published}</p>
-            {/*<div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />*/}
-            <p>{storyData.story_content}</p>
+            <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
           </Container>
         </Col>
         {/*divider for second column */}
