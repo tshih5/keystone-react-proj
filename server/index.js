@@ -1,22 +1,22 @@
-const { Keystone, BaseKeystoneAdapter } = require('@keystonejs/keystone');
+const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
-const Stars = require('./fields/Stars');
+//const Stars = require('./fields/Stars');
 const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
-const { LocalFileAdapter, S3Adapter } = require('@keystonejs/file-adapters');
+const { S3Adapter } = require('@keystonejs/file-adapters');
 
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
-const { StaticApp } = require('@keystonejs/app-static');
 const initialiseData = require('./initial-data');
 
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 
 const PROJECT_NAME = 'cms-proj';
 const adapterConfig = { mongoUri: 'mongodb://localhost/cms-proj' };
-
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
@@ -76,17 +76,7 @@ keystone.createList('User', {
 const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
   list: 'User',
-  config: {
-    identityField: 'username', // default: 'email'
-    secretField: 'password', // default: 'password'
-  },
 });
-
-// File Adapter settings
-/*const fileAdapter = new LocalFileAdapter({
-  src: './public',
-  path: '/images',
-});*/
 
 const S3_PATH = 'uploads';
 const bucket = "jxzart-host";
@@ -96,12 +86,12 @@ const fileAdapter = new S3Adapter({
   folder: S3_PATH,
   //Due to someting in AWS S3, "/" between S3path and filename is replaced with %5C or the "\" character
   publicUrl: ({ id, filename, _meta }) =>
-    `https://${bucket}.s3.amazonaws.com/${S3_PATH}%5C${filename}`,
+    `https://${bucket}.s3.amazonaws.com/${S3_PATH}/${filename}`,
   s3Options: {
     // Optional paramaters to be supplied directly to AWS.S3 constructor
     apiVersion: '2006-03-01',
-    accessKeyId: 'AKIAZNM6XZP4UCF4GHPK',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAZNM6XZP4XAT777EP',
+    secretAccessKey: process.env.SECRET_KEY,
     region: 'us-west-1',
   },
   uploadParams: ({ filename, id, mimetype, encoding }) => ({
@@ -111,7 +101,7 @@ const fileAdapter = new S3Adapter({
   }),
 });
 
-//Keystone LIsts
+//Keystone Lists
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
@@ -130,7 +120,6 @@ keystone.createList('Product', {
     note:{type: Text, isMultiline: true},
     favorite: {type: Checkbox},
     price_in_usd: {type: Decimal},
-    quality: {type: Stars, starCount: 5 },
     tags:{type: Relationship, ref: 'Product_Tag', many: true},
     main_image: {
       type: File,
@@ -200,7 +189,7 @@ keystone.createList('Story',{
     category:{type: Relationship, ref: 'Story_Category', many: false},
     date_published:{type: CalendarDay},
     story_content:{type: Wysiwyg},
-    status:{type: Select, options: ['Published', 'In_Progress', 'Hidden']},
+    status:{type: Select, options: ['Draft', 'Published', 'Hidden']},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
     main_image: {
       type: File,
@@ -244,43 +233,14 @@ keystone.createList('Product_Tag', {
   labelField: "tag",
 });
 
-
-keystone.createList('UploadTest', {
-  fields: {
-    file: {
-      type: File,
-      adapter: fileAdapter,
-      hooks: {
-        beforeChange: async ({ existingItem }) => {
-          if (existingItem && existingItem.file) {
-            await fileAdapter.delete(existingItem.file);
-          }
-        },
-      },
-    },
-  },
-  hooks: {
-    afterDelete: async ({ existingItem }) => {
-      if (existingItem.file) {
-        await fileAdapter.delete(existingItem.file);
-      }
-    },
-  },
-});
-
-
-
 module.exports = {
   keystone,
   apps: [
     new GraphQLApp(),
     new AdminUIApp({
+      name: PROJECT_NAME,
       enableDefaultRoute: true,
       authStrategy,
-    }),
-    new StaticApp({
-      path: '/images',
-      src: './public',
     }),
   ],
 };
