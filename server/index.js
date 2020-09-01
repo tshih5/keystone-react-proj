@@ -10,12 +10,13 @@ const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const initialiseData = require('./initial-data');
 
+const dotenv = require('dotenv');
+dotenv.config();
 
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 
 const PROJECT_NAME = 'cms-proj';
 const adapterConfig = { mongoUri: 'mongodb://localhost/cms-proj' };
-
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
