@@ -1,4 +1,4 @@
-const { Keystone, BaseKeystoneAdapter } = require('@keystonejs/keystone');
+const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
 const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
@@ -85,12 +85,12 @@ const fileAdapter = new S3Adapter({
   folder: S3_PATH,
   //Due to someting in AWS S3, "/" between S3path and filename is replaced with %5C or the "\" character
   publicUrl: ({ id, filename, _meta }) =>
-    `https://${bucket}.s3.amazonaws.com/${S3_PATH}%5C${filename}`,
+    `https://${bucket}.s3.amazonaws.com/${S3_PATH}/${filename}`,
   s3Options: {
     // Optional paramaters to be supplied directly to AWS.S3 constructor
     apiVersion: '2006-03-01',
-    accessKeyId: 'AKIAZNM6XZP4UCF4GHPK',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAZNM6XZP4XAT777EP',
+    secretAccessKey: process.env.SECRET_KEY,
     region: 'us-west-1',
   },
   uploadParams: ({ filename, id, mimetype, encoding }) => ({
@@ -187,7 +187,7 @@ keystone.createList('Story',{
     },
     category:{type: Relationship, ref: 'Story_Category', many: false},
     date_published:{type: CalendarDay},
-    story_content:{type: Text, isMultiline: true},
+    story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Draft', 'Published', 'Hidden']},
     tags:{type: Relationship, ref: 'Story_Tag', many: true},
     main_image: {
