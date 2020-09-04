@@ -27,7 +27,7 @@ import {
 } from "react-router-dom";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
+  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK}),
   cache: new InMemoryCache(),
 });
 
