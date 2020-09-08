@@ -11,6 +11,8 @@
 # production
 build/
 dist/
+.dockerignore
+Dockerfile
 
 # misc
 .env
