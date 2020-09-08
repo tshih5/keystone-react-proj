@@ -68,6 +68,10 @@ footer{
   margin-top: 50px;
 }
 
+.product-note{
+  display:inline-block;
+}
+
 .story-container{
   margin-top: 50px;
 }

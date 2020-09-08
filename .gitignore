@@ -9,7 +9,10 @@
 /coverage
 
 # production
-/build
+build/
+dist/
+.dockerignore
+Dockerfile
 
 # misc
 .env
