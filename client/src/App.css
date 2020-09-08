@@ -153,7 +153,7 @@ button.pill{
 
 .pill:focus{
   outline: none !important;
-  border: 1px solid tan;
+  border: 1px solid #AE654B;
 }
 
 .sub-buttongroup{
@@ -161,14 +161,24 @@ button.pill{
 }
 
 .button-vertical{
+  margin-top: 5px;
+  margin-bottom: 5px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
   padding-bottom: 150px;
   height: 250px;
   font-size: large;
   width: 35px;
   background-color: white;
+  border: 1px solid black;
+}
+
+.button-vertical:focus{
+  outline: none !important;
+  border: 1px solid #AE654B;
 }
 
 .card-container {
