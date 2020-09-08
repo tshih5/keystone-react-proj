@@ -92,6 +92,7 @@ function StoryCategoryList(){
   ));
 }
 
+//display tags as badges
 function DisplayTags(props){
   if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
@@ -106,6 +107,7 @@ function createMarkup(story_content){
   return {__html: story_content};
 }
 
+//check if obj is empty
 function isEmpty(obj) {
   for(var key in obj) {
       if(obj.hasOwnProperty(key))
