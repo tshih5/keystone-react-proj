@@ -22,14 +22,17 @@ function ProductDisplay(props) {
             <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main image"/>
             <div className="descriptions">
               <br/>
-              <p>[seal]: {productData.seal}
-              <br/>[dimensions l x w x h]: {productData.length_cm}{productData.width_cm == null ? '' : 'cm x '}{productData.width_cm}{productData.height_cm == null ? '' : 'cm x '} {productData.height_cm}{productData.height_cm == null ? '' : 'cm'}
-              <br/>[weight]: {productData.weight}g
-              <br/>[creator]: {productData.creator}</p>
-              <p>[craftsmanship_comment]: {productData.craftsmanship_comment}</p>
-              <p>[item description]: {productData.item_description}</p>
-              <p>[item story]: {productData.item_story} </p>
-              <p>[note]: {productData.note}</p>
+              <p>[石種]: {productData.material}
+              <br/>[印紐]: {productData.seal}
+              <br/>[尺寸]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
+              <br/>[石質]: {productData.quality}
+              <br/>[重量]: {productData.weight}g
+              <br/>[作者]: {productData.creator}</p>
+              <p>[雕材賞析/雕工]: <br/>{productData.craftsmanship_comment}</p>
+              <p>[物品說明]: <br/>{productData.item_description}</p>
+              <p>[背後典故]: <br/>{productData.item_story} </p>
+              <span>[備註]: <div dangerouslySetInnerHTML={createMarkup(productData.note)} className="product-note"/></span>
+              
             </div>
           </Container>
 
@@ -51,10 +54,12 @@ function GetItemData({productID, setProductData}){
     query($pid: ID!){
       allProducts(where:{id: $pid}){
         name
+        material
         seal
-        length_cm
-        height_cm
-        width_cm
+        length_mm
+        height_mm
+        width_mm
+        quality
         weight
         creator
         craftsmanship_comment
@@ -102,4 +107,7 @@ function isEmpty(obj) {
   return true;
 }
 
+function createMarkup(story_content){
+  return {__html: story_content};
+}
 export default withRouter(ProductDisplay);
