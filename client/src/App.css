@@ -226,6 +226,10 @@ button.pill{
   margin-right: auto;
 }
 
+.descriptions{
+  margin-bottom: 50px;
+}
+
 img.testing{
   height: 150px;
   width: auto;
