@@ -72,7 +72,7 @@ function RenderStories(props){
 //graphql query to get story categories for the dropdown buttons
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
-    {
+  query{
       allStoryCategories{
         topic
         id

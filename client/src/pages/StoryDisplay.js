@@ -75,7 +75,7 @@ function GetStoryData({storyID, setStoryData}){
 //graphql query 
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
-    {
+  query{
       allStoryCategories{
         topic
         id

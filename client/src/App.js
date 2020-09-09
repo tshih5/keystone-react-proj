@@ -95,7 +95,7 @@ export default function App() {
 /*Render dropdown buttons for story tab*/
 function StoryDropDowns(){
   const { loading, error, data } = useQuery(gql`
-    {
+    query{
       allStoryCategories{
         topic
       }
@@ -117,7 +117,7 @@ function StoryDropDowns(){
  */
 function ProductDropDowns(){
   const { loading, error, data } = useQuery(gql`
-    {
+  query{
       allMineralMainCategories{
         name
       }
