@@ -22,8 +22,6 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch,
-  useParams,
 } from "react-router-dom";
 
 const client = new ApolloClient({
@@ -61,6 +59,7 @@ export default function App() {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
+            {/*Routes*/}
             <div className="site-content">
               <Switch>
                 <Route path="/products/:category/:productid">
@@ -109,8 +108,7 @@ function StoryDropDowns(){
   //console.log(data);
   
   return data.allStoryCategories.map((category) => (
-    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
-    /*does not account for spaces in the category name, may cause URL issues */
+    //if category name contains spaces/ starting/trailing spaces, trim and replace spaces with "-"
     <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</NavDropdown.Item>
   ));
 }
@@ -132,8 +130,7 @@ function ProductDropDowns(){
   console.log(data);
 
   return data.allMineralMainCategories.map((category) => (
-    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
-    /*does not account for spaces in the category name, may cause URL issues */
+    //if category name contains spaces/ starting/trailing spaces, trim and replace spaces with "-"
     <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name.trim().replace(/\s/g, '-')}`}>{category.name}</NavDropdown.Item>
   ));
 }
