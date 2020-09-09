@@ -6,6 +6,7 @@ import {
   withRouter,
 } from "react-router-dom";
 
+//story preview component used in the story page
 function Story(props) {
   let match = useRouteMatch();
   return(

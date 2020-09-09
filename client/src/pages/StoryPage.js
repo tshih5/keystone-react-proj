@@ -8,6 +8,7 @@ import {
   withRouter,
 } from "react-router-dom";
 
+//displays story previews in a vertical list
 function StoryPage(props) {
   return (
     <Container className="story-container" fluid={true}>
@@ -35,6 +36,7 @@ function StoryPage(props) {
   );
 }
 
+//renders a story preview with an image and title; only displayes published stories
 function RenderStories(props){
   //console.log(props.match.params.topic);
   const { loading, error, data } = useQuery(gql`
@@ -67,6 +69,7 @@ function RenderStories(props){
   
 }
 
+//graphql query to get story categories for the dropdown buttons
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
     {
