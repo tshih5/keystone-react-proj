@@ -26,12 +26,12 @@ function ProductDisplay(props) {
               <br/>[尺寸 / Dimensions]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
               <br/>[重量 / weight]: {productData.weight}g</p>
 
-              <p>[石種 / Material]: {productData.material}</p>
-              <p>[石質 / Quality]: {productData.quality}</p>
-              <p>[作者 / Artist]: {productData.creator}</p>
+              <p>[石種 / Material]: <br/>{productData.material}</p>
+              <p>[石質 / Quality]: <br/>{productData.quality}</p>
+              <p>[作者 / Artist]: <br/>{productData.creator}</p>
               <p>[雕材賞析/雕工 Craftsmanship]: <br/>{productData.craftsmanship_comment}</p>
               <p>[物品說明 / Item Description]: <br/>{productData.item_description}</p>
-              <p>[背後典故 / Story]: <br/>{productData.item_story} </p>
+              <p>[背後典故 / Story]: <br/>{productData.item_story}</p>
               <span>[備註 / Note]: <div dangerouslySetInnerHTML={createMarkup(productData.note)} className="product-note"/></span>
               
             </div>
