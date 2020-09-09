@@ -70,6 +70,7 @@ function GetStoryData({storyID, setStoryData}){
   return null;
 }
 
+//graphql query 
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
     {
