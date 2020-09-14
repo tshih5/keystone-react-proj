@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Nav, Navbar, NavDropdown} from "react-bootstrap";
+import { Nav, Navbar, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
@@ -22,16 +22,15 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
 } from "react-router-dom";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK}),
+  link: new HttpLink({ uri: "http://localhost:3000/admin/api"}),
   cache: new InMemoryCache(),
 });
 
-
 export default function App() {
-
   return (
     <ApolloProvider client={client}>
       <KeystoneProvider>
@@ -57,18 +56,22 @@ export default function App() {
                     <StoryDropDowns />
                   </NavDropdown>
                 </Nav>
+                <NavSearch/>
               </Navbar.Collapse>
             </Navbar>
             {/*Routes*/}
             <div className="site-content">
               <Switch>
-                <Route path="/products/:category/:productid">
+                <Route path="/search/">
+                  <h1>Search</h1>
+                </Route>
+                <Route path="/products/display/:productid">
                   <ProductDisplay />
                 </Route>
                 <Route path="/products/:category">
                   <ProductPage />
                 </Route>
-                <Route path="/stories/:topic/:storyid">
+                <Route path="/stories/display/:storyid">
                   <StoryDisplay />
                 </Route>
                 <Route path="/stories/:topic">
@@ -91,6 +94,26 @@ export default function App() {
     </ApolloProvider>
   );
 }
+
+//Navbar form
+function NavSearch(){
+  const [searchFilter, setSearchFilter] = useState("Search");
+
+  function handleSubmit(e){
+    console.log("hi");
+    return <Redirect to={`/search/?q=${searchFilter}`} />
+  }
+
+  return(
+    <Form inline>
+      <FormControl type="text" placeholder={searchFilter} className=" mr-sm-2" onChange={event => setSearchFilter(event.target.value)}/>
+      <Link to={`/search/?q=${searchFilter}`}>
+          <Button variant="light">Search</Button>
+      </Link>
+    </Form>
+  );
+}
+
 
 /*Render dropdown buttons for story tab*/
 function StoryDropDowns(){

@@ -97,12 +97,12 @@ function SubCatButtons(props){
   if (error) return <p>Error :(</p>;
 
   //console.log(data.allMineralMainCategories[0].subcategories);
-  if(data){
+  if(data && data.allMineralMainCategories[0]){
     return data.allMineralMainCategories[0].subcategories.map((category) => (
       <button className="pill chinese-text" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
     ));
   }else{
-    return <h1>Error :(</h1>
+    return <h1>Not found :(</h1>
   }
   
 }
