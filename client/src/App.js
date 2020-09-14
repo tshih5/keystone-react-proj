@@ -7,6 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
+import SearchPage from "./pages/SearchPage";
 import logo from './img/logo.png';
 
 import { ApolloClient } from 'apollo-boost';
@@ -62,23 +63,39 @@ export default function App() {
             {/*Routes*/}
             <div className="site-content">
               <Switch>
-                <Route path="/search/">
-                  <h1>Search</h1>
-                </Route>
-                <Route path="/products/display/:productid">
+                {/*ID match with the format [0-9a-f]{24}*/}
+                <Route path="/products/display/:productid([0-9a-f]{24})">
                   <ProductDisplay />
                 </Route>
-                <Route path="/products/:category">
-                  <ProductPage />
+                <Route path="/stories/display/:storyid([0-9a-f]{24})">
+                  <StoryDisplay />
+                </Route>
+
+                {/*ID does not match*/}
+                <Route path="/products/display/:productid">
+                  <h1>404 Not found</h1>
                 </Route>
                 <Route path="/stories/display/:storyid">
-                  <StoryDisplay />
+                  <h1>404 Not found</h1>
+                </Route>
+
+                {/*Category match*/}
+                <Route path="/products/:category">
+                  <ProductPage />
                 </Route>
                 <Route path="/stories/:topic">
                   <StoryPage />
                 </Route>
+                
+                {/*Search page*/}
+                <Route path="/search/">
+                  <SearchPage />
+                </Route>
                 <Route exact path="/">
                   <HomePage />
+                </Route>
+                <Route>
+                  <h1>404: Page not found</h1>
                 </Route>
               </Switch>
             </div>
@@ -99,16 +116,11 @@ export default function App() {
 function NavSearch(){
   const [searchFilter, setSearchFilter] = useState("Search");
 
-  function handleSubmit(e){
-    console.log("hi");
-    return <Redirect to={`/search/?q=${searchFilter}`} />
-  }
-
   return(
     <Form inline>
-      <FormControl type="text" placeholder={searchFilter} className=" mr-sm-2" onChange={event => setSearchFilter(event.target.value)}/>
+      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => setSearchFilter(event.target.value)}/>
       <Link to={`/search/?q=${searchFilter}`}>
-          <Button variant="light">Search</Button>
+          <Button variant="light" type="submit">Search</Button>
       </Link>
     </Form>
   );
