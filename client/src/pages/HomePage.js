@@ -10,6 +10,8 @@ import vertBtn1 from './../img/vertical_button_1.png';
 import vertBtn2 from './../img/vertical_button_2.png';
 import mainStory from './../img/main_story.png';
 
+//3 section homepage
+
 function HomePage() {
   return (
     <div>

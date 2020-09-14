@@ -22,12 +22,10 @@ import {
   Switch,
   Route,
   Link,
-  useRouteMatch,
-  useParams,
 } from "react-router-dom";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: 'http://localhost:3000/admin/api'}),
+  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK}),
   cache: new InMemoryCache(),
 });
 
@@ -61,6 +59,7 @@ export default function App() {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
+            {/*Routes*/}
             <div className="site-content">
               <Switch>
                 <Route path="/products/:category/:productid">
@@ -96,7 +95,7 @@ export default function App() {
 /*Render dropdown buttons for story tab*/
 function StoryDropDowns(){
   const { loading, error, data } = useQuery(gql`
-    {
+    query{
       allStoryCategories{
         topic
       }
@@ -109,8 +108,7 @@ function StoryDropDowns(){
   //console.log(data);
   
   return data.allStoryCategories.map((category) => (
-    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
-    /*does not account for spaces in the category name, may cause URL issues */
+    //if category name contains spaces/ starting/trailing spaces, trim and replace spaces with "-"
     <NavDropdown.Item key={category.topic} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</NavDropdown.Item>
   ));
 }
@@ -119,7 +117,7 @@ function StoryDropDowns(){
  */
 function ProductDropDowns(){
   const { loading, error, data } = useQuery(gql`
-    {
+  query{
       allMineralMainCategories{
         name
       }
@@ -132,8 +130,7 @@ function ProductDropDowns(){
   console.log(data);
 
   return data.allMineralMainCategories.map((category) => (
-    //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-"
-    /*does not account for spaces in the category name, may cause URL issues */
+    //if category name contains spaces/ starting/trailing spaces, trim and replace spaces with "-"
     <NavDropdown.Item key={category.name} as={Link} to={`/products/${category.name.trim().replace(/\s/g, '-')}`}>{category.name}</NavDropdown.Item>
   ));
 }

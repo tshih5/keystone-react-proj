@@ -14,14 +14,24 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
+const expressSession = require('express-session');
+const MongoStore = require('connect-mongo')(expressSession);
 
-const PROJECT_NAME = 'cms-proj';
-const adapterConfig = { mongoUri: 'mongodb://localhost/cms-proj' };
+const PROJECT_NAME = 'jxz-art';
+const MONGO_URI = process.env.MONGO_URI;
+const adapterConfig = { mongoUri: MONGO_URI || 'mongodb://localhost/cms-proj' };
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(adapterConfig),
   onConnect: process.env.CREATE_TABLES !== 'true' && initialiseData,
+  sessionStore: new MongoStore({ url: MONGO_URI || 'mongodb://localhost/cms-proj' }),
+  cookie:{
+    secure: process.env.NODE_ENV === 'production', // Defaults to true in production
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+    sameSite: false,
+  },
+  cookieSecret: process.env.COOKIE_SECRET || 'very-secret',
 });
 
 // Access control functions
@@ -244,4 +254,7 @@ module.exports = {
       authStrategy,
     }),
   ],
+  configureExpress: app => {
+    app.set('trust proxy', 1);
+  }
 };

@@ -13,7 +13,7 @@ function StoryDisplay(props) {
     <Container fluid={true} className="story-container">
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container>
+          <Container className="descriptions">
             <GetStoryData storyID={storyID} setStoryData={setStoryData} />
             <h1>{storyData.title}</h1>
             {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main image" />}
@@ -24,16 +24,18 @@ function StoryDisplay(props) {
         {/*divider for second column */}
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <div className="category-list">
-            <h3>趣聞雜談</h3>
-            <ListGroup variant="flush">
-              <StoryCategoryList />
-            </ListGroup>
-          </div>
-          <div className="tag-list">
-            <h3>TAGS</h3>
-            <DisplayTags tags={storyData.tags} />
-          </div>
+          <Container>
+            <div className="category-list">
+              <h3>趣聞雜談</h3>
+              <ListGroup variant="flush">
+                <StoryCategoryList />
+              </ListGroup>
+            </div>
+            <div className="tag-list">
+              <h3>TAGS</h3>
+              <DisplayTags tags={storyData.tags} />
+            </div>
+          </Container>
         </Col>
       </Row>
     </Container>
@@ -70,9 +72,10 @@ function GetStoryData({storyID, setStoryData}){
   return null;
 }
 
+//graphql query 
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
-    {
+  query{
       allStoryCategories{
         topic
         id
