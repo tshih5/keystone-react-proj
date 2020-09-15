@@ -1,10 +1,5 @@
 /* || General Styles*/
 
-h1, h2, h3, h4, h5, .h5, h6, p, a, button{
-  font-family: 'Noto Sans TC', Arial, sans-serif;
-  font-weight: 400;
-}
-
 a {
   color: #000;
 }
