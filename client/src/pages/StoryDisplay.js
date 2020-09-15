@@ -45,7 +45,7 @@ function StoryDisplay(props) {
 function GetStoryData({storyID, setStoryData}){
   const { loading, error, data } = useQuery(gql`
     query($sid: ID!){
-      allStories(where:{id: $sid}){
+      Story(where:{id: $sid}){
         title
         category{
           topic
@@ -64,7 +64,7 @@ function GetStoryData({storyID, setStoryData}){
 
   useEffect(() => {
     if(loading === false && data){
-      setStoryData(data.allStories[0]);
+      setStoryData(data.Story);
     }
   }, [data]);
 

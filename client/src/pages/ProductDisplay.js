@@ -55,7 +55,7 @@ function ProductDisplay(props) {
 function GetItemData({productID, setProductData}){
   const { loading, error, data } = useQuery(gql`
     query($pid: ID!){
-      allProducts(where:{id: $pid}){
+      Product(where:{id: $pid}){
         name
         material
         seal
@@ -83,7 +83,7 @@ function GetItemData({productID, setProductData}){
   
   useEffect(() => {
     if(loading === false && data){
-      setProductData(data.allProducts[0]);
+      setProductData(data.Product);
     }
   }, [data]);
 
