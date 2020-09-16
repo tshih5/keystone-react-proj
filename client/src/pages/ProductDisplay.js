@@ -16,7 +16,7 @@ function ProductDisplay(props) {
     <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container className="product-info chinese-text">
+          <Container className="product-info">
             <GetItemData productID={productID} setProductData={setProductData} />
             <h1>{productData.name}</h1>
             <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main image"/>

@@ -10,7 +10,7 @@ function StoryDisplay(props) {
   const [storyData, setStoryData] = useState([]);
   console.log(storyData)
   return (
-    <Container fluid={true} className="story-container">
+    <Container fluid={true} >
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <Container className="descriptions">

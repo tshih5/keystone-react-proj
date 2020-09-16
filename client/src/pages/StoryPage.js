@@ -11,13 +11,13 @@ import {
 //displays story previews in a vertical list
 function StoryPage(props) {
   return (
-    <Container className="story-container" fluid={true}>
+    <Container fluid={true}>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <div className="story-header">
-            <h1>{props.match.params.topic.replace(/-/g, ' ')}</h1>
-          </div>
-          <Container>
+          <Container className="story-container">
+            <div className="story-header">
+              <h1>{props.match.params.topic.replace(/-/g, ' ')}</h1>
+            </div>
             <RenderStories {...props}/>
           </Container>
         </Col>
