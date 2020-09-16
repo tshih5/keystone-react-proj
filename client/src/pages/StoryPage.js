@@ -24,7 +24,7 @@ function StoryPage(props) {
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <div className="category-list chinese-text">
-            <h3>趣聞雜談</h3>
+            <h4>趣聞雜談</h4>
             <ListGroup variant="flush">
               <StoryCategoryList />
             </ListGroup>
