@@ -100,7 +100,7 @@ const fileAdapter = new S3Adapter({
   s3Options: {
     // Optional paramaters to be supplied directly to AWS.S3 constructor
     apiVersion: '2006-03-01',
-    accessKeyId: 'AKIAZNM6XZP4XAT777EP',
+    accessKeyId: process.env.ACCESS_KEY,
     secretAccessKey: process.env.SECRET_KEY,
     region: 'us-west-1',
   },

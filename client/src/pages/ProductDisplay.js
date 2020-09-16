@@ -41,7 +41,7 @@ function ProductDisplay(props) {
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <Container>
             <div className="tag-list">
-              <h3>TAGS</h3>
+              <h4>TAGS</h4>
               <DisplayTags tags={productData.tags} />
             </div>
           </Container>
@@ -55,7 +55,7 @@ function ProductDisplay(props) {
 function GetItemData({productID, setProductData}){
   const { loading, error, data } = useQuery(gql`
     query($pid: ID!){
-      allProducts(where:{id: $pid}){
+      Product(where:{id: $pid}){
         name
         material
         seal
@@ -83,7 +83,7 @@ function GetItemData({productID, setProductData}){
   
   useEffect(() => {
     if(loading === false && data){
-      setProductData(data.allProducts[0]);
+      setProductData(data.Product);
     }
   }, [data]);
 
