@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Nav, Navbar, NavDropdown} from "react-bootstrap";
+import { Nav, Navbar, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
+import SearchPage from "./pages/SearchPage";
 import logo from './img/logo.png';
 
 import { ApolloClient } from 'apollo-boost';
@@ -22,16 +23,16 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
+  useHistory,
 } from "react-router-dom";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK}),
+  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK || "http://localhost:3000/admin/api"}),
   cache: new InMemoryCache(),
 });
 
-
 export default function App() {
-
   return (
     <ApolloProvider client={client}>
       <KeystoneProvider>
@@ -57,32 +58,52 @@ export default function App() {
                     <StoryDropDowns />
                   </NavDropdown>
                 </Nav>
+                <NavSearch/>
               </Navbar.Collapse>
             </Navbar>
             {/*Routes*/}
             <div className="site-content">
               <Switch>
-                <Route path="/products/:category/:productid">
+                {/*ID match with the format [0-9a-f]{24}*/}
+                <Route path="/products/display/:productid([0-9a-f]{24})">
                   <ProductDisplay />
                 </Route>
+                <Route path="/stories/display/:storyid([0-9a-f]{24})">
+                  <StoryDisplay />
+                </Route>
+
+                {/*ID does not match*/}
+                <Route path="/products/display/:productid">
+                  <h1>404 Not found</h1>
+                </Route>
+                <Route path="/stories/display/:storyid">
+                  <h1>404 Not found</h1>
+                </Route>
+
+                {/*Category match*/}
                 <Route path="/products/:category">
                   <ProductPage />
-                </Route>
-                <Route path="/stories/:topic/:storyid">
-                  <StoryDisplay />
                 </Route>
                 <Route path="/stories/:topic">
                   <StoryPage />
                 </Route>
+
+                {/*Search page*/}
+                <Route path="/search/">
+                  <SearchPage />
+                </Route>
                 <Route exact path="/">
                   <HomePage />
+                </Route>
+                <Route>
+                  <h1>404: Page not found</h1>
                 </Route>
               </Switch>
             </div>
 
             <footer className="py-4 bg-black text-white-50">
               <div className="container text-center">
-                <small>&copy;2020 by Tom Shih</small>
+                <small>&copy;2020 by Tom Shih, Shineyang Shih, 焯印堂</small>
               </div>
             </footer>
           </div>
@@ -91,6 +112,28 @@ export default function App() {
     </ApolloProvider>
   );
 }
+
+//Navbar form
+function NavSearch(){
+  const [searchFilter, setSearchFilter] = useState("");
+  const history = useHistory();
+
+  //handle searches, may need to implement parsing for more complex searches like tags
+  function onSearch(e){
+    e.preventDefault();
+    if(searchFilter !== ""){
+      history.push(`/search/?q=${searchFilter}`);
+    }
+  }
+
+  return(
+    <Form inline onSubmit={e => onSearch(e)}>
+      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      <Button variant="light" type="submit">Search</Button>
+    </Form>
+  );
+}
+
 
 /*Render dropdown buttons for story tab*/
 function StoryDropDowns(){

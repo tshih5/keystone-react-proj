@@ -26,13 +26,13 @@ function StoryDisplay(props) {
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <Container>
             <div className="category-list">
-              <h3>趣聞雜談</h3>
+              <h4>趣聞雜談</h4>
               <ListGroup variant="flush">
                 <StoryCategoryList />
               </ListGroup>
             </div>
             <div className="tag-list">
-              <h3>TAGS</h3>
+              <h4>TAGS</h4>
               <DisplayTags tags={storyData.tags} />
             </div>
           </Container>
@@ -45,7 +45,7 @@ function StoryDisplay(props) {
 function GetStoryData({storyID, setStoryData}){
   const { loading, error, data } = useQuery(gql`
     query($sid: ID!){
-      allStories(where:{id: $sid}){
+      Story(where:{id: $sid}){
         title
         category{
           topic
@@ -64,7 +64,7 @@ function GetStoryData({storyID, setStoryData}){
 
   useEffect(() => {
     if(loading === false && data){
-      setStoryData(data.allStories[0]);
+      setStoryData(data.Story);
     }
   }, [data]);
 
