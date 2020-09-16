@@ -15,6 +15,7 @@ a.list-group-item{
 
 a.list-group-item.active{
   background-color: #fff;
+  border-color: black;
   color: #AE654B;
 }
 
