@@ -58,7 +58,7 @@ export default function App() {
                     <StoryDropDowns />
                   </NavDropdown>
                 </Nav>
-                {/*<NavSearch/>*/}
+                <NavSearch/>
               </Navbar.Collapse>
             </Navbar>
             {/*Routes*/}
