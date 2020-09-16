@@ -46,8 +46,8 @@ footer{
   align-self: flex-start;
 }
 
-.tag-list{
-  margin-top: 50px;
+.sticky-bar-right{
+  margin-top: 50px; /* 50*/
   margin-bottom: 50px;
 }
 
@@ -69,7 +69,7 @@ footer{
 }
 
 .story-container{
-  margin-top: 50px;
+  margin-top: 0px; /*50*/
 }
 
 .story-button{
@@ -224,6 +224,7 @@ button.pill{
 
 .descriptions{
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 img.testing{

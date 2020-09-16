@@ -40,7 +40,7 @@ function ProductDisplay(props) {
         <Col xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <Container>
-            <div className="tag-list">
+            <div className="sticky-bar-right">
               <h4>TAGS</h4>
               <DisplayTags tags={productData.tags} />
             </div>
