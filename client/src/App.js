@@ -118,6 +118,7 @@ function NavSearch(){
   const [searchFilter, setSearchFilter] = useState("");
   const history = useHistory();
 
+  //handle searches, may need to implement parsing for more complex searches like tags
   function onSearch(e){
     e.preventDefault();
     if(searchFilter !== ""){
