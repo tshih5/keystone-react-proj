@@ -74,9 +74,13 @@ function GetProducts({nameFilter, setProducts, setOldProducts}){
 }
 
 function RenderProducts(props){
-  return props.products.map((item) => (
-    <Col lg={3} md={4} sm={6} key={item.id}><Product  {...item} /></Col>
-  ));
+  if(props.products.length !== 0){
+    return props.products.map((item) => (
+      <Col lg={3} md={4} sm={6} key={item.id}><Product  {...item} /></Col>
+    ));
+  }else{
+    return <h1>No items found :(</h1>
+  }
 }
 
 /* Render the buttons for the sub categories
@@ -102,7 +106,7 @@ function SubCatButtons(props){
       <button className="pill chinese-text" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
     ));
   }else{
-    return <h1>Not found :(</h1>
+    return null;
   }
   
 }
