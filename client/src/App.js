@@ -24,6 +24,7 @@ import {
   Route,
   Link,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 
 const client = new ApolloClient({
@@ -114,14 +115,20 @@ export default function App() {
 
 //Navbar form
 function NavSearch(){
-  const [searchFilter, setSearchFilter] = useState("Search");
+  const [searchFilter, setSearchFilter] = useState("");
+  const history = useHistory();
+
+  function onSearch(e){
+    e.preventDefault();
+    if(searchFilter !== ""){
+      history.push(`/search/?q=${searchFilter}`);
+    }
+  }
 
   return(
-    <Form inline>
-      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => setSearchFilter(event.target.value)}/>
-      <Link to={`/search/?q=${searchFilter}`}>
-          <Button variant="light" type="submit">Search</Button>
-      </Link>
+    <Form inline onSubmit={e => onSearch(e)}>
+      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      <Button variant="light" type="submit">Search</Button>
     </Form>
   );
 }
