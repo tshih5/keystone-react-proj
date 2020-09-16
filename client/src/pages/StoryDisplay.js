@@ -24,14 +24,16 @@ function StoryDisplay(props) {
         {/*divider for second column */}
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <Container>
+          <Container className="sticky-bar-right">
             <div className="category-list">
               <h4>趣聞雜談</h4>
               <ListGroup variant="flush">
                 <StoryCategoryList />
               </ListGroup>
             </div>
-            <div className="tag-list">
+            <br />
+            <br />
+            <div>
               <h4>TAGS</h4>
               <DisplayTags tags={storyData.tags} />
             </div>

@@ -23,12 +23,14 @@ function StoryPage(props) {
         </Col>
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <div className="category-list chinese-text">
-            <h4>趣聞雜談</h4>
-            <ListGroup variant="flush">
-              <StoryCategoryList />
-            </ListGroup>
-          </div>
+          <Container className="sticky-bar-right">
+            <div className="category-list chinese-text">
+              <h4>趣聞雜談</h4>
+              <ListGroup variant="flush">
+                <StoryCategoryList />
+              </ListGroup>
+            </div>
+          </Container>
         </Col>
       </Row>
     </Container>
