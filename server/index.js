@@ -112,6 +112,36 @@ const fileAdapter = new S3Adapter({
 });
 
 //Keystone Lists
+keystone.createList('Mineral_Main_Category', {
+  fields: {
+    name: {type: Text},
+    subcategories:{
+      type: Relationship,
+      ref: 'Mineral_Sub_Category',
+      many: true
+    },
+    description:{
+      type: Text, 
+      isMultiline: true
+    },
+  },
+  labelField: "name",
+});
+
+keystone.createList('Mineral_Sub_Category',{
+  fields:{
+    name:{type: Text},
+  },
+  labelField: "name",
+});
+
+keystone.createList('Story_Category', {
+  fields: {
+    topic: {type: Text},
+  },
+  labelField: "topic",
+});
+
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
@@ -131,7 +161,7 @@ keystone.createList('Product', {
     note:{type: Wysiwyg},
     favorite: {type: Checkbox},
     price_in_usd: {type: Decimal},
-    tags:{type: Relationship, ref: 'Product_Tag', many: true},
+    tags:{type: Relationship, ref: 'Tag', many: true},
     main_image: {
       type: File,
       adapter: fileAdapter,
@@ -165,29 +195,6 @@ keystone.createList('Product', {
       }
     },
   },
-  labelField: "id",
-});
-
-keystone.createList('Mineral_Main_Category', {
-  fields: {
-    name: {type: Text},
-    subcategories:{
-      type: Relationship,
-      ref: 'Mineral_Sub_Category',
-      many: true
-    },
-    description:{
-      type: Text, 
-      isMultiline: true
-    },
-  },
-  labelField: "name",
-});
-
-keystone.createList('Mineral_Sub_Category',{
-  fields:{
-    name:{type: Text},
-  },
   labelField: "name",
 });
 
@@ -201,7 +208,7 @@ keystone.createList('Story',{
     date_published:{type: CalendarDay},
     story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Draft', 'Published', 'Hidden']},
-    tags:{type: Relationship, ref: 'Story_Tag', many: true},
+    tags:{type: Relationship, ref: 'Tag', many: true},
     main_image: {
       type: File,
       adapter: fileAdapter,
@@ -221,27 +228,14 @@ keystone.createList('Story',{
       }
     },
   },
+  labelField: "title",
 });
 
-keystone.createList('Story_Category', {
-  fields: {
-    topic: {type: Text},
-  },
-  labelField: "topic",
-});
-
-keystone.createList('Story_Tag', {
-  fields: {
-    tag: {type: Text},
-  },
-  labelField: "tag",
-});
-
-keystone.createList('Product_Tag', {
+keystone.createList('Tag', {
   fields:{
-    tag:{type: Text}
+    name:{type: Text}
   },
-  labelField: "tag",
+  labelField: "name",
 });
 
 module.exports = {
