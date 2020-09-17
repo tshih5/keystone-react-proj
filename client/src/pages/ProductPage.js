@@ -79,7 +79,7 @@ function RenderProducts(props){
       <Col lg={3} md={4} sm={6} key={item.id}><Product  {...item} /></Col>
     ));
   }else{
-    return <h1>No items found :(</h1>
+    return null;
   }
 }
 
