@@ -73,7 +73,7 @@ function GetItemData({productID, setProductData}){
           publicUrl
         }
         tags{
-          tag
+          name
         }
         price_in_usd
         id
@@ -95,7 +95,7 @@ function DisplayTags(props){
   console.log(props);
   if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.tag}</Badge>
+        <Badge className="tag" variant="info">{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;

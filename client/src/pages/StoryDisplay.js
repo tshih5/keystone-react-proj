@@ -58,7 +58,7 @@ function GetStoryData({storyID, setStoryData}){
           publicUrl
         }
         tags{
-          tag
+          name
         }
       }
     }
@@ -101,7 +101,7 @@ function StoryCategoryList(){
 function DisplayTags(props){
   if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.tag}</Badge>
+        <Badge className="tag" variant="info">{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;
