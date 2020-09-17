@@ -7,7 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
-import SearchPage from "./pages/SearchPage";
+//import SearchPage from "./pages/SearchPage";
 import logo from './img/logo.png';
 
 import { ApolloClient } from 'apollo-boost';
@@ -90,7 +90,7 @@ export default function App() {
 
                 {/*Search page*/}
                 <Route path="/search/">
-                  <SearchPage />
+                  {/*<SearchPage />*/}
                 </Route>
                 <Route exact path="/">
                   <HomePage />

@@ -11,7 +11,7 @@ import {
 //displays story previews in a vertical list
 function StoryPage(props) {
   return (
-    <Container fluid={true}>
+    <Container className="story-container">
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <Container className="story-container">
