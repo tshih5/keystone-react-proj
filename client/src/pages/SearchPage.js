@@ -42,7 +42,7 @@ function SearchPage(props) {
   let pages = Math.ceil(data._allProductsMeta.count / itemsPerPage);
 
   return (
-    <Container className="story-container" fluid={true}>
+    <Container className="story-container" >
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <div className="story-header">

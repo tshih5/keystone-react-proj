@@ -13,7 +13,7 @@ function ProductDisplay(props) {
 
   console.log(productData);
   return (
-    <Container fluid={true}>
+    <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <Container className="product-info chinese-text">
