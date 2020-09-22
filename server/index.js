@@ -16,11 +16,14 @@ dotenv.config();
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
+const nodemailer = require('nodemailer');
 
 const PROJECT_NAME = 'jxz-art';
 const MONGO_URI = process.env.MONGO_URI;
 const adapterConfig = { mongoUri: MONGO_URI || 'mongodb://localhost/cms-proj' };
 
+
+//Create Keystone
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(adapterConfig),
@@ -111,7 +114,7 @@ const fileAdapter = new S3Adapter({
   }),
 });
 
-//Keystone Lists
+//User generated Keystone lists
 keystone.createList('Product', {
   fields: {
     name: {type: Text},
@@ -244,6 +247,48 @@ keystone.createList('Product_Tag', {
   labelField: "tag",
 });
 
+
+//Nodemailer
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  auth: {
+    user: process.env.SMTP_USERNAME,
+    pass: process.env.SMTP_PASSWORD,
+  }
+});
+
+transporter.verify(function(error, success){
+  if(error){
+    console.log(error);
+  }else{
+    console.log("Server is ready to take our messages");
+  }
+})
+
+function sendEmail(req, res, next) {
+  var name = req.body.name;
+  var email = req.body.email;
+  var subject = req.body.subject;
+  var message = req.body.message
+  var content = `name: ${name} \n email: ${email} \n subject: ${subject} \n message: ${message}`
+
+  var mail = {
+    from: name,
+    to: "dadsrocks12345@gmail.com",
+    subject: subject,
+    text: content
+  }
+
+  transporter.sendMail(main, (err, data) => {
+    if(err){
+      res.json({status: 'fail'});
+    }else{
+      res.json({status: 'success'});
+    }
+  });
+}
+
 module.exports = {
   keystone,
   apps: [
@@ -256,5 +301,6 @@ module.exports = {
   ],
   configureExpress: app => {
     app.set('trust proxy', 1);
+    app.post('/send', sendEmail);
   }
 };
