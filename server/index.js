@@ -269,7 +269,7 @@ function sendEmail(req, res, next) {
   var email = req.body.email;
   var subject = req.body.subject;
   var message = req.body.message;
-  var content = `name: ${name} \n email: ${email} \n subject: ${subject} \n message: ${message}`
+  var content = `name: ${name} \nemail: ${email} \nsubject: ${subject} \nmessage: ${message}`
 
   var mail = {
     from: name,
