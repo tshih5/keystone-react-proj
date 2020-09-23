@@ -15,6 +15,7 @@ a.list-group-item{
 
 a.list-group-item.active{
   background-color: #fff;
+  border-color: black;
   color: #AE654B;
 }
 
@@ -45,7 +46,7 @@ footer{
   align-self: flex-start;
 }
 
-.tag-list{
+.sticky-bar-right{
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -187,7 +188,7 @@ button.pill{
 
 .story-header{
   text-align: center;
-  margin-bottom: 50px
+  margin-bottom: 20px
 }
 
 .story-preview{
@@ -223,6 +224,7 @@ button.pill{
 
 .descriptions{
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 img.testing{

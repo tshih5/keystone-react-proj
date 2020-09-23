@@ -10,7 +10,7 @@ function StoryDisplay(props) {
   const [storyData, setStoryData] = useState([]);
   console.log(storyData)
   return (
-    <Container className="story-container">
+    <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <Container className="descriptions">
@@ -24,14 +24,16 @@ function StoryDisplay(props) {
         {/*divider for second column */}
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <Container>
+          <Container className="sticky-bar-right">
             <div className="category-list">
               <h4>趣聞雜談</h4>
               <ListGroup variant="flush">
                 <StoryCategoryList />
               </ListGroup>
             </div>
-            <div className="tag-list">
+            <br />
+            <br />
+            <div>
               <h4>TAGS</h4>
               <DisplayTags tags={storyData.tags} />
             </div>
@@ -56,7 +58,7 @@ function GetStoryData({storyID, setStoryData}){
           publicUrl
         }
         tags{
-          tag
+          name
         }
       }
     }
@@ -99,7 +101,7 @@ function StoryCategoryList(){
 function DisplayTags(props){
   if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.tag}</Badge>
+        <Badge className="tag" variant="info">{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;

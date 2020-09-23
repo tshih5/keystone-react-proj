@@ -16,7 +16,7 @@ function ProductDisplay(props) {
     <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container className="product-info chinese-text">
+          <Container className="product-info">
             <GetItemData productID={productID} setProductData={setProductData} />
             <h1>{productData.name}</h1>
             <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main image"/>
@@ -40,7 +40,7 @@ function ProductDisplay(props) {
         <Col xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <Container>
-            <div className="tag-list">
+            <div className="sticky-bar-right">
               <h4>TAGS</h4>
               <DisplayTags tags={productData.tags} />
             </div>
@@ -73,7 +73,7 @@ function GetItemData({productID, setProductData}){
           publicUrl
         }
         tags{
-          tag
+          name
         }
         price_in_usd
         id
@@ -95,7 +95,7 @@ function DisplayTags(props){
   console.log(props);
   if(!isEmpty(props.tags)){
     return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.tag}</Badge>
+        <Badge className="tag" variant="info">{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;

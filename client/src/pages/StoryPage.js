@@ -11,24 +11,26 @@ import {
 //displays story previews in a vertical list
 function StoryPage(props) {
   return (
-    <Container className="story-container">
+    <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <div className="story-header">
-            <h1>{props.match.params.topic.replace(/-/g, ' ')}</h1>
-          </div>
-          <Container>
+          <Container className="story-container">
+            <div className="story-header">
+              <h1>{props.match.params.topic.replace(/-/g, ' ')}</h1>
+            </div>
             <RenderStories {...props}/>
           </Container>
         </Col>
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
-          <div className="category-list chinese-text">
-            <h4>趣聞雜談</h4>
-            <ListGroup variant="flush">
-              <StoryCategoryList />
-            </ListGroup>
-          </div>
+          <Container className="sticky-bar-right">
+            <div className="category-list chinese-text">
+              <h4>趣聞雜談</h4>
+              <ListGroup variant="flush">
+                <StoryCategoryList />
+              </ListGroup>
+            </div>
+          </Container>
         </Col>
       </Row>
     </Container>
