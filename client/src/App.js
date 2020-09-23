@@ -7,23 +7,19 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
+//import ContactUs from "./components/contact";
 //import SearchPage from "./pages/SearchPage";
+
 import logo from './img/logo.png';
 
-import { ApolloClient } from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache, useQuery} from '@apollo/client';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-
 import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  Redirect,
   useHistory,
 } from "react-router-dom";
 
@@ -91,6 +87,9 @@ export default function App() {
                 {/*Search page*/}
                 <Route path="/search/">
                   {/*<SearchPage />*/}
+                </Route>
+                <Route path="/contactus">
+                  <ContactUs />
                 </Route>
                 <Route exact path="/">
                   <HomePage />
