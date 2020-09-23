@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Product from "../components/product";
-import { Container, Row, Col, CardDeck } from 'react-bootstrap';
+import { Container, Row, Col, Spinner} from 'react-bootstrap';
 
 //This page displays the added items from the cms in a grid
 function ProductPage(props) {
@@ -48,7 +48,7 @@ function ProductPage(props) {
 function GetProducts({nameFilter, setProducts, setOldProducts}){
   const { loading, error, data } = useQuery(gql`
     query($name: String!){
-      allProducts(where:{main_category:{name: $name}}){
+      allProducts(where:{main_category:{name: $name}} orderBy: \"name\"){
         name
         price_in_usd
         sub_category{
