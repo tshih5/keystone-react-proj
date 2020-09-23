@@ -7,8 +7,8 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
-//import ContactUs from "./components/contact";
-//import SearchPage from "./pages/SearchPage";
+import ContactUs from "./components/contact";
+//import SearchPage from "./pages/SearchPage"; 
 
 import logo from './img/logo.png';
 
@@ -53,6 +53,7 @@ export default function App() {
                   <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
                     <StoryDropDowns />
                   </NavDropdown>
+                  <Nav.Link as={Link} to="/contactus" >關於我們</Nav.Link>
                 </Nav>
                 {/*<NavSearch/>*/}
               </Navbar.Collapse>
@@ -127,7 +128,7 @@ function NavSearch(){
 
   return(
     <Form inline onSubmit={e => onSearch(e)}>
-      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
       <Button variant="light" type="submit">Search</Button>
     </Form>
   );
