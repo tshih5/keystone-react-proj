@@ -1,7 +1,7 @@
 import React from "react";
 import { Spinner, Container, Row, Col, ListGroup} from "react-bootstrap";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import Story from "./../components/story";
 import {
   Link,

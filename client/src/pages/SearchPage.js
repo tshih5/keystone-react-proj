@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Spinner, Container, Row, Col, Pagination} from "react-bootstrap";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import Product from "./../components/product";
 import {
   withRouter,

@@ -3,7 +3,7 @@ import "../App.css";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 //This page displays individual products/items with lots of info
 

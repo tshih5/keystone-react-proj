@@ -3,7 +3,7 @@ import "../App.css";
 import { Container, Row, Col, ListGroup, Badge } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 
 function StoryDisplay(props) {
   let storyID = props.match.params.storyid;
