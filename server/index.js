@@ -17,6 +17,8 @@ const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
 const nodemailer = require('nodemailer');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const PROJECT_NAME = 'jxz-art';
 const MONGO_URI = process.env.MONGO_URI;
@@ -267,10 +269,12 @@ transporter.verify(function(error, success){
 })
 
 function sendEmail(req, res, next) {
+  console.log(req.body);
+  
   var name = req.body.name;
   var email = req.body.email;
   var subject = req.body.subject;
-  var message = req.body.message
+  var message = req.body.message;
   var content = `name: ${name} \n email: ${email} \n subject: ${subject} \n message: ${message}`
 
   var mail = {
@@ -280,13 +284,14 @@ function sendEmail(req, res, next) {
     text: content
   }
 
-  transporter.sendMail(main, (err, data) => {
+  transporter.sendMail(mail, (err, data) => {
     if(err){
       res.json({status: 'fail'});
     }else{
       res.json({status: 'success'});
     }
   });
+  
 }
 
 module.exports = {
@@ -301,6 +306,12 @@ module.exports = {
   ],
   configureExpress: app => {
     app.set('trust proxy', 1);
+    app.use(cors());
+    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.json());
     app.post('/send', sendEmail);
+    app.get('/xd', function (req, res) {
+      res.send('hello world')
+    })
   }
 };
