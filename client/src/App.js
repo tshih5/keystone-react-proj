@@ -7,7 +7,7 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
-import ContactUs from "./components/contact";
+import ContactUs from "./pages/ContactUs";
 //import SearchPage from "./pages/SearchPage"; 
 
 import logo from './img/logo.png';
