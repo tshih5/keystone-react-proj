@@ -6,11 +6,6 @@ export default function ContactUs(){
   const EMAIL_ROUTE = process.env.REACT_APP_CMS_EMAIL || "http://localhost:3000/send"
   const [emailData, setEmailData] = useState({name: '', email: '', subject: '', message: ''});
 
-  //console.log("Name: ", emailData.name);
-  //console.log("Email: ", emailData.email);
-  //console.log("Subject: ", emailData.subject);
-  //console.log("Message: ", emailData.message);
-
   function onSendEmail(e){
     e.preventDefault();
     axios({
@@ -37,7 +32,7 @@ export default function ContactUs(){
   }
 
   return(
-    <Container>
+    <Container className="story-container">
       <Form onSubmit={e => onSendEmail(e)}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -60,12 +55,9 @@ export default function ContactUs(){
           <Form.Label>Message</Form.Label>
           <Form.Control as="textarea" name="message" rows="5" onChange={e => handleChange(e)} required/>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-        <Button type="reset" onClick={resetForm}>Reset Form</Button>
+        <Button variant="dark" type="submit" className="mr-sm-2 sp-button">Submit</Button>
+        <Button variant="dark" type="reset" onClick={resetForm} className="sp-button">Reset Form</Button>
       </Form>
-      
     </Container>
     
   );
