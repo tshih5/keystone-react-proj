@@ -74,7 +74,7 @@ function HomePage() {
               </div>
               <div >
                 <Link to={`/stories/壽山石學`}>{/*Change this to first category tag*/}
-                  <Button className="story-button">更多故事</Button>
+                  <Button variant="dark" className="story-button">更多故事</Button>
                 </Link>
               </div>
             </Col>
