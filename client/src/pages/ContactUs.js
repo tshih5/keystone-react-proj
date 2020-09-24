@@ -14,10 +14,10 @@ export default function ContactUs(){
       data: emailData,
     }).then((response) => {
       console.log(response.data);
-      if(response.data === 'success'){
+      if(response.data.status === 'success'){
         alert("Message Sent.");
         resetForm();
-      }else if(response.data === 'fail'){
+      }else if(response.data.status === 'fail'){
         alert("Message failed to send :(");
       }
     })
