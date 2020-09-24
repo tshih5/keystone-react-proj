@@ -35,7 +35,7 @@ export default function ContactUs(){
     <Container className="story-container">
       <Form onSubmit={e => onSendEmail(e)}>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Email address<span className="requiredField">*</span></Form.Label>
           <Form.Control type="email" name="email" placeholder="Enter email" onChange={e => handleChange(e)} required/>
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -43,17 +43,18 @@ export default function ContactUs(){
         </Form.Group>
 
         <Form.Group controlId="formName">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>Name<span className="requiredField">*</span></Form.Label>
           <Form.Control type="text" name="name" placeholder="Name" onChange={e => handleChange(e)} required/>
         </Form.Group>
         <Form.Group controlId="formSubject">
-          <Form.Label>Subject</Form.Label>
+          <Form.Label>Subject<span className="requiredField">*</span></Form.Label>
           <Form.Control type="text" name="subject" placeholder="Subject" onChange={e => handleChange(e)} required/>
         </Form.Group>
 
         <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Message</Form.Label>
+          <Form.Label>Message<span className="requiredField">*</span></Form.Label>
           <Form.Control as="textarea" name="message" rows="5" onChange={e => handleChange(e)} required/>
+          <p>An asterisk(<span className="requiredField">*</span>) indicates a required field</p>
         </Form.Group>
         <Button variant="dark" type="submit" className="mr-sm-2 sp-button">Submit</Button>
         <Button variant="dark" type="reset" onClick={resetForm} className="sp-button">Reset Form</Button>
