@@ -66,10 +66,10 @@ function HomePage() {
               <img className="img-fluid main-story-img" src={mainStory} alt=" Some stone display"/>
             </Col>
             <Col lg={6} sm={12}>
-              <div className="customerStory">
+              <div className="shortStory">
                 <p>小小收藏，方寸間內藏乾坤萬千，鑒賞是一種風格，收藏是一種態度，路要自已親自領略。
                   這裡分享了有關國石的藝術、濟先齋相關的點點滴滴，期望和各位朋友結緣、共同參與印石和國石文化。
-                  在鑒賞、分享、藝術與收藏之中，希望各界能在這裡得到最大尋石樂趣。更多故事
+                  在鑒賞、分享、藝術與收藏之中，希望各界能在這裡得到最大尋石樂趣。
                 </p>
               </div>
               <div >
