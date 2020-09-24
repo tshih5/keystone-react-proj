@@ -241,3 +241,6 @@ img.testing{
   font-weight: 100;
 }
 
+.requiredField{
+  color: red;
+}
