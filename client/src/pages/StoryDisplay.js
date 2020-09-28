@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/client';
 function StoryDisplay(props) {
   let storyID = props.match.params.storyid;
   const [storyData, setStoryData] = useState([]);
-  console.log(storyData)
+  
   return (
     <Container>
       <Row xl={3} md={3} sm={1}>
@@ -16,7 +16,7 @@ function StoryDisplay(props) {
           <Container className="descriptions">
             <GetStoryData storyID={storyID} setStoryData={setStoryData} />
             <h1>{storyData.title}</h1>
-            {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main image" />}
+            {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main" />}
             <p>Date Published: {storyData.date_published}</p>
             <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
           </Container>

@@ -37,7 +37,7 @@ function HomePage() {
             <Col className="text-center" sm={6} lg={3}>
               <div>
                 <Link to={`/products/壽山石`}>
-                  <img className="button-img" src={vertBtn2} alt="stone button image"/>
+                  <img className="button-img" src={vertBtn2} alt="stone button"/>
                   <button className="button-vertical ">壽<br/>山<br/>石</button>
                 </Link>
               </div>
@@ -45,7 +45,7 @@ function HomePage() {
             <Col className="text-center" sm={6} lg={3}>
               <div>
                 <Link to={`/products/和田玉`}>
-                  <img className="button-img" src={vertBtn1} alt="stone button image"/>
+                  <img className="button-img" src={vertBtn1} alt="stone button"/>
                   <button className="button-vertical ">和<br/>田<br/>玉</button>
                 </Link>
               </div>
