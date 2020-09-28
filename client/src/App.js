@@ -8,11 +8,12 @@ import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
 import ContactUs from "./pages/ContactUs";
-//import SearchPage from "./pages/SearchPage"; 
+import SearchPage from "./pages/SearchPage"; 
 
 import logo from './img/logo.png';
 
-import { ApolloProvider, ApolloClient, HttpLink, InMemoryCache, useQuery} from '@apollo/client';
+import { ApolloProvider, ApolloClient, HttpLink, ApolloLink, InMemoryCache, useQuery} from '@apollo/client';
+import { onError } from "@apollo/client/link/error";
 import gql from 'graphql-tag';
 import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
@@ -23,8 +24,22 @@ import {
   useHistory,
 } from "react-router-dom";
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+      ),
+    );
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK || "http://localhost:3000/admin/api"})
+const link = ApolloLink.from([errorLink, httpLink]);
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK || "http://localhost:3000/admin/api"}),
+  link,
   cache: new InMemoryCache(),
 });
 
@@ -55,7 +70,7 @@ export default function App() {
                   </NavDropdown>
                   <Nav.Link as={Link} to="/contactus" >關於我們</Nav.Link>
                 </Nav>
-                {/*<NavSearch/>*/}
+                <NavSearch/>
               </Navbar.Collapse>
             </Navbar>
             {/*Routes*/}
@@ -87,7 +102,7 @@ export default function App() {
 
                 {/*Search page*/}
                 <Route path="/search/">
-                  {/*<SearchPage />*/}
+                  <SearchPage />
                 </Route>
                 <Route path="/contactus">
                   <ContactUs />
