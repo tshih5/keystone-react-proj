@@ -6,18 +6,23 @@ import {
 } from "react-router-dom";
 
 import Product from "../components/product";
-import { Container, Row, Col, Spinner} from 'react-bootstrap';
+import { Spinner, Container, Row, Col } from 'react-bootstrap';
 
 //This page displays the added items from the cms in a grid
 function ProductPage(props) {
   const [nameFilter, setNameFilter] = useState(props.match.params.category);
   const [products, setProducts] = useState([]);
   const [oldProducts, setOldProducts] = useState([]);
-  //console.log(props);
 
+  const { loading, error, data } = useQuery(PRODUCT_QUERY, {variables: {name: nameFilter}});
+  
   useEffect(() => {
     setNameFilter(props.match.params.category);
-  }, [props.match.params.category]);
+    if(loading === false && data){
+      setProducts(data.allProducts);
+      setOldProducts(data.allProducts);
+    }
+  }, [props.match.params.category, data, loading]);
 
   return (
     <div>
@@ -32,54 +37,41 @@ function ProductPage(props) {
           </div>
         </Row>
       </Container>
-      <GetProducts nameFilter={nameFilter} products={products} setProducts={setProducts} setOldProducts={setOldProducts}/>
       <Container>
         <div className="row card-container product-grid">
-          <RenderProducts products={products}/>
+          <RenderProducts products={products} loading={loading} error={error}/>
         </div>
       </Container>
     </div>
   );
 }
 
-/* Get Products based on main category
-** Does not return anything
-*/
-function GetProducts({nameFilter, setProducts, setOldProducts}){
-  const { loading, error, data } = useQuery(gql`
-    query($name: String!){
-      allProducts(where:{main_category:{name: $name}} orderBy: \"name\"){
+const PRODUCT_QUERY = gql`
+  query($name: String!){
+    allProducts(where:{main_category:{name: $name}} orderBy: \"name\"){
+      name
+      price_in_usd
+      sub_category{
         name
-        price_in_usd
-        sub_category{
-          name
-        }
-        thumbnail{
-          publicUrl
-        }
-        id
       }
+      thumbnail{
+        publicUrl
+      }
+      id
     }
-  `, {variables: {name: nameFilter}});
-  
-  useEffect(() => {
-    if(loading === false && data){
-      setProducts(data.allProducts);
-      setOldProducts(data.allProducts);
-    }
-  }, [data]);
-
-  if (error) return <p>Error :(</p>;
-  return null;
-}
+  }`;
 
 function RenderProducts(props){
-  if(props.products.length !== 0){
+  if(props.products.length !== 0 && !props.loading){
     return props.products.map((item) => (
       <Col lg={3} md={4} sm={6} key={item.id}><Product  {...item} /></Col>
     ));
+  }else if(props.loading){
+    return <Spinner animation="border" />;
+  }else if(props.error){
+    return <h1>{props.error}</h1>
   }else{
-    return null;
+    return <h1>No results.</h1>;
   }
 }
 
@@ -101,6 +93,7 @@ function SubCatButtons(props){
   if (error) return <p>Error :(</p>;
 
   //console.log(data.allMineralMainCategories[0].subcategories);
+  //check to see if there is at least 1 main category
   if(data && data.allMineralMainCategories[0]){
     return data.allMineralMainCategories[0].subcategories.map((category) => (
       <button className="pill chinese-text" key={category.id} onClick={()=>{FilterProducts(props, category.name)}}>{category.name}</button>
