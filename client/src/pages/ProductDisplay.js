@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "../App.css";
 import { Container, Row, Col, Badge } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 
@@ -94,7 +94,7 @@ function DisplayTags(props){
 
   if(!isEmpty(props.data.Product.tags)){
     return props.data.Product.tags.map((tag) => (
-        <Badge key={tag.name} className="tag" variant="info">{tag.name}</Badge>
+      <Badge key={tag.name} className="tag" variant="info" as={Link} to={`/search/?t=${tag.name}`}>{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;
