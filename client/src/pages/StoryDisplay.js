@@ -6,20 +6,15 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 
 function StoryDisplay(props) {
-  let storyID = props.match.params.storyid;
-  const [storyData, setStoryData] = useState([]);
-  
+  //const [storyID, setstoryID] = useState(props.match.params.storyid);
+  const storyID = props.match.params.storyid;
+  const { loading, error, data } = useQuery(STORY_QUERY,{variables: {sid: storyID}});
+
   return (
     <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container className="descriptions">
-            <GetStoryData storyID={storyID} setStoryData={setStoryData} />
-            <h1>{storyData.title}</h1>
-            {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main" />}
-            <p>Date Published: {storyData.date_published}</p>
-            <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
-          </Container>
+          <DisplayStory data={data} loading={loading} error={error}/>
         </Col>
         {/*divider for second column */}
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
@@ -35,7 +30,7 @@ function StoryDisplay(props) {
             <br />
             <div>
               <h4>TAGS</h4>
-              <DisplayTags tags={storyData.tags} />
+              <DisplayTags data={data} loading={loading} error={error} />
             </div>
           </Container>
         </Col>
@@ -44,37 +39,43 @@ function StoryDisplay(props) {
   );
 }
 
-function GetStoryData({storyID, setStoryData}){
-  const { loading, error, data } = useQuery(gql`
-    query($sid: ID!){
-      Story(where:{id: $sid}){
-        title
-        category{
-          topic
-        }
-        date_published
-        story_content
-        main_image{
-          publicUrl
-        }
-        tags{
-          name
-        }
+const STORY_QUERY = gql`
+  query($sid: ID!){
+    Story(where:{id: $sid}){
+      title
+      category{
+        topic
+      }
+      date_published
+      story_content
+      main_image{
+        publicUrl
+      }
+      tags{
+        name
       }
     }
-  `,{variables: {sid: storyID}});
+  }`;
 
-  useEffect(() => {
-    if(loading === false && data){
-      setStoryData(data.Story);
-    }
-  }, [data]);
+function DisplayStory(props){
+  if(props.error) return <h1>Error: {props.error.message}</h1>;
+  if(props.loading) return <h1>Loading...</h1>;
 
-  if(error) return <p>Error :(</p>
+  if(props.data && !props.loading){
+    const storyData = props.data.Story;
+    return(
+      <Container className="descriptions">
+        <h1>{storyData.title}</h1>
+        {storyData.main_image == null ? '': <img className="img-fluid" src={`${storyData.main_image.publicUrl}`} alt="story main" />}
+        <p>Date Published: {storyData.date_published}</p>
+        <div dangerouslySetInnerHTML={createMarkup(storyData.story_content)} />
+      </Container>
+    );
+  }
   return null;
 }
 
-//graphql query 
+//graphql query for sidebar list
 function StoryCategoryList(){
   const { loading, error, data } = useQuery(gql`
   query{
@@ -89,19 +90,22 @@ function StoryCategoryList(){
   if (error) return <p>Error :(</p>;
 
   //console.log(data);
-  
+
   return data.allStoryCategories.map((category) => (
     //TODO: if category name contains spaces/ starting/trailing spaces, trim value and replace spaces with a "-" or ""
     /*does not account for spaces in the category name, may cause URL issues */
-    <ListGroup.Item eventKey={category.id} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</ListGroup.Item>
+    <ListGroup.Item key={category.id} as={Link} to={`/stories/${category.topic.trim().replace(/\s/g, '-')}`}>{category.topic}</ListGroup.Item>
   ));
 }
 
 //display tags as badges
 function DisplayTags(props){
-  if(!isEmpty(props.tags)){
-    return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.name}</Badge>
+  if(props.error) return <p>Error: {props.error.message}</p>;
+  if(props.loading) return <h5>Loading . . .</h5>;
+
+  if(!isEmpty(props.data.Story.tags)){
+    return props.data.Story.tags.map((tag) => (
+      <Badge key={tag.name} className="tag" variant="info" as={Link} to={`/search/?t=${tag.name}`}>{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;
@@ -115,8 +119,9 @@ function createMarkup(story_content){
 //check if obj is empty
 function isEmpty(obj) {
   for(var key in obj) {
-      if(obj.hasOwnProperty(key))
-          return false;
+      if(obj.hasOwnProperty(key)){
+        return false;
+      }
   }
   return true;
 }
