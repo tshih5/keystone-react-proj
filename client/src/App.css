@@ -64,8 +64,10 @@ footer{
   margin-top: 50px;
 }
 
-.product-note{
-  display:inline-block;
+.product-note img{
+  width: 100%;
+  height: auto;
+  max-width: 640px;
 }
 
 .story-container{
@@ -196,13 +198,16 @@ button.pill{
   padding: 40px 40px;
 }
 
-.tag{
-  font-family: 'Noto Sans TC', Arial, sans-serif;
+a.tag{
   font-size: large;
   font-weight: 100;
   padding: 5px 3px !important;
   margin: 2px;
   background-color: #AE654B
+}
+
+a.tag:hover{
+  background-color: black;
 }
 
 .button-img{
