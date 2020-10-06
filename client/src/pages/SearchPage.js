@@ -6,9 +6,19 @@ import Product from "./../components/product";
 import {
   withRouter,
 } from "react-router-dom";
+import { Query } from "@keystonejs/apollo-helpers";
 
 //displays story previews in a vertical list
 function SearchPage(props) {
+  console.log("DECODED URI: " + decodeURIComponent(props.location.search));
+  const searchParams = new URLSearchParams(decodeURIComponent(props.location.search));
+  const searchName = searchParams.get('q');
+  //get all tags
+  console.log("term: " + searchParams.get('q'));
+  console.log("tags: " + searchParams.getAll('t'));
+
+  //let sq = generateQuery();
+
   //number of results per page, "first" in query
   const itemsPerPage = 20;
   //which page is clicked
@@ -33,7 +43,7 @@ function SearchPage(props) {
         count
       }
     }
-  `, {variables: {name: props.location.search.substring(3, props.location.search.length), skip: offset, first: itemsPerPage}});
+  `, {variables: {name: searchName, skip: offset, first: itemsPerPage}});
 
   if (loading) return <Spinner animation="border" />;
   if (error) return <p>{error.message}</p>;
@@ -46,7 +56,7 @@ function SearchPage(props) {
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <div className="story-header">
-              <h1>Search results for: "{props.location.search.substring(3, props.location.search.length)}"</h1>
+              <h1>Search results for: "{searchName}"</h1>
           </div>
           <Container>
             <Paging clicked={clickedPage} setClicked={setClickedPage} pages={pages}/>
@@ -69,6 +79,39 @@ function SearchPage(props) {
       </Row>
     </Container>
   );
+}
+
+function generateQuery(){
+
+  let variableDef = `$name: String!, $tag: String!`;
+  let allProdParams = `where:{name_contains: $name, tags_some: {name_contains:$tag}}`
+  let allStoryParams = `where:{title_contains: $name, tags_some:{name_contains:$tag}}`
+
+  const searchQuery = `
+    query(${variableDef}, $skip: Int!, $first: Int!){
+      allProducts(${allProdParams}, skip: $skip, first: $first){
+        name
+        id
+        tags{
+          name
+        }
+      }
+      allStories(${allStoryParams}, skip: $skip, first: $first){
+        title
+        id
+        tags{
+          name
+        }
+      }
+      _allProductsMeta(${allProdParams}){
+        count
+      }
+      _allStoriesMeta(${allStoryParams}){
+        count
+      }
+    }`;
+  console.log(searchQuery);
+  return gql`${searchQuery}`;
 }
 
 //displays search results passed from props
