@@ -10,19 +10,18 @@ import { Spinner, Container, Row, Col } from 'react-bootstrap';
 
 //This page displays the added items from the cms in a grid
 function ProductPage(props) {
-  const [nameFilter, setNameFilter] = useState(props.match.params.category);
+  const nameFilter = props.match.params.category;
   const [products, setProducts] = useState([]);
   const [oldProducts, setOldProducts] = useState([]);
 
   const { loading, error, data } = useQuery(PRODUCT_QUERY, {variables: {name: nameFilter}});
   
   useEffect(() => {
-    setNameFilter(props.match.params.category);
     if(loading === false && data){
       setProducts(data.allProducts);
       setOldProducts(data.allProducts);
     }
-  }, [props.match.params.category, data, loading]);
+  }, [data, loading]);
 
   return (
     <div>
