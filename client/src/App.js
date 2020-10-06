@@ -137,8 +137,35 @@ function NavSearch(){
   function onSearch(e){
     e.preventDefault();
     if(searchFilter !== ""){
-      history.push(`/search/?q=${searchFilter}`);
+      const searchURI = parseSearchField(searchFilter);
+      console.log("SearchURI: " + searchURI);
+      history.push(`/search/?${searchURI}`);
     }
+  }
+
+  function parseSearchField(searchField){
+    //TODO: make query field more robust eventually
+    //(term with no spaces)                                                   -> q=(term with no spaces)
+    //(tags [can have multiple] of the form tag:name also no spaces )         -> t=(tag)
+    let queryString = "";                         //query string that will be returned
+    let seenTerm = false;                         //only one term will be in the searchstring;
+    const queryArray = searchField.split(/\s+/);  //split filters by whitespace
+    //console.log("queryArray: " + queryArray);
+    queryArray.map(queryParam => {
+      if(queryParam.indexOf("tag") === 0){
+        let tagName = queryParam.substring(queryParam.indexOf(":") + 1);
+        //console.log("tag found: " + tagName);
+        queryString += ("t=" + tagName + "&");
+      }else{
+        //console.log("term found: " + queryParam);
+        if(!seenTerm){
+          seenTerm = true;
+          //console.log("term set: " + queryParam);
+          queryString += ("q=" + queryParam + "&");
+        }
+      }
+    });
+    return queryString;
   }
 
   return(
