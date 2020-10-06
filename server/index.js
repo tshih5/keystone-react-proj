@@ -258,7 +258,7 @@ transporter.verify(function(error, success){
   if(error){
     console.log(error);
   }else{
-    console.log("Server is ready to take our messages");
+    console.log("\nServer is ready to take our messages\n");
   }
 })
 
@@ -301,7 +301,7 @@ module.exports = {
   configureExpress: app => {
     app.set('trust proxy', 1);
     app.use(cors());
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
     app.post('/send', sendEmail);
     app.get('/xd', function (req, res) {
