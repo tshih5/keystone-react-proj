@@ -68,7 +68,7 @@ export default function App() {
                   <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
                     <StoryDropDowns />
                   </NavDropdown>
-                  <Nav.Link as={Link} to="/contactus" >關於我們</Nav.Link>
+                  <Nav.Link as={Link} to="/contactus" >連絡我們</Nav.Link>
                 </Nav>
                 <NavSearch/>
               </Navbar.Collapse>
