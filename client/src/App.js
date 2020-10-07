@@ -118,7 +118,7 @@ export default function App() {
 
             <footer className="py-4 bg-black text-white-50">
               <div className="container text-center">
-                <small>&copy;2020 by Tom Shih, Shineyang Shih, 焯印堂</small>
+                <small>&copy;2020 by 濟先齋, 焯印堂</small>
               </div>
             </footer>
           </div>
