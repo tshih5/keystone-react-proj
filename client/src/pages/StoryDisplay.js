@@ -42,6 +42,7 @@ function StoryDisplay(props) {
 const STORY_QUERY = gql`
   query($sid: ID!){
     Story(where:{id: $sid}){
+      status
       title
       category{
         topic
@@ -60,6 +61,7 @@ const STORY_QUERY = gql`
 function DisplayStory(props){
   if(props.error) return <h1>Error: {props.error.message}</h1>;
   if(props.loading) return <h1>Loading...</h1>;
+  if(props.data.Story.status !== "Published") return <h1>404: Page not found</h1>;
 
   if(props.data && !props.loading){
     const storyData = props.data.Story;
