@@ -8,6 +8,7 @@ import {
 import logo from './../img/home_main.png';
 import vertBtn1 from './../img/vertical_button_1.png';
 import vertBtn2 from './../img/vertical_button_2.png';
+import vertBtn3 from './../img/vertical_button_3.png';
 import mainStory from './../img/main_story.png';
 
 //3 section homepage
@@ -33,8 +34,7 @@ function HomePage() {
             </Col>
           </Row>
           <Row>
-            <Col sm={12} lg={3}></Col>
-            <Col className="text-center" sm={6} lg={3}>
+            <Col className="text-center" sm={6} lg={4}>
               <div>
                 <Link to={`/products/壽山石`}>
                   <img className="button-img" src={vertBtn2} alt="stone button"/>
@@ -42,7 +42,7 @@ function HomePage() {
                 </Link>
               </div>
             </Col>
-            <Col className="text-center" sm={6} lg={3}>
+            <Col className="text-center" sm={6} lg={4}>
               <div>
                 <Link to={`/products/和田玉`}>
                   <img className="button-img" src={vertBtn1} alt="stone button"/>
@@ -50,7 +50,14 @@ function HomePage() {
                 </Link>
               </div>
             </Col>
-            <Col sm={12} lg={3}></Col>
+            <Col className="text-center" sm={12} lg={3}>
+              <div>
+                <Link to={`/products/其它(樣品)`}>
+                  <img className="button-img" src={vertBtn3} alt="stone button"/>
+                  <button className="button-vertical ">其<br/>它</button>
+                </Link>
+              </div>
+            </Col>
           </Row>
         </Container>
       </div>
