@@ -4,6 +4,7 @@ import { Container, Row, Col, Badge } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
+import placeholder from '../img/placeholder.png';
 
 //This page displays individual products/items with lots of info
 
@@ -35,6 +36,7 @@ function ProductDisplay(props) {
 const PRODUCT_QUERY = gql`
   query($pid: ID!){
     Product(where:{id: $pid}){
+      hidden
       name
       material
       seal
@@ -62,13 +64,14 @@ const PRODUCT_QUERY = gql`
 function DisplayProduct(props){
   if(props.error) return <h1>Error: {props.error.message}</h1>;
   if(props.loading) return <h1>Loading</h1>;
+  if(props.data.Product.hidden === true) return <h1>404: Page not found</h1>;
 
   if(props.data && !props.loading){
     const productData = props.data.Product;
     return(
       <Container className="product-info">
         <h1>{productData.name}</h1>
-        <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main"/>
+        <img className="img-fluid" src={productData.main_image == null ? placeholder: `${productData.main_image.publicUrl}`} alt="stone main"/>
         <div className="descriptions">
           <p>[印紐 / Seal]: {productData.seal}
           <br/>[尺寸 / Dimensions]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
