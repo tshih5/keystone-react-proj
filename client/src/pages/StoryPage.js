@@ -53,7 +53,6 @@ const STORY_QUERY = gql`
     allStories(where:{category:{topic: $topic}, status: Published}){
       title
       id
-      status
       main_image{
         publicUrl
       }
