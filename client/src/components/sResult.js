@@ -7,8 +7,7 @@ import {
 
 //Result preview on search page
 function SearchResult(props) {
-  console.log(props);
-
+  //console.log(props);
   if(props.prod){
     return(
       <Jumbotron className="story-preview">
