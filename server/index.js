@@ -1,7 +1,7 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
+const { Text, Decimal, Checkbox, Password, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
 //const Stars = require('./fields/Stars');
 const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
 const { S3Adapter } = require('@keystonejs/file-adapters');
@@ -149,8 +149,9 @@ keystone.createList('Story_Category', {
 
 keystone.createList('Product', {
   fields: {
+    hidden:{type: Checkbox, isRequired: true},
     name: {type: Text},
-    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false,isRequired: true},
+    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false, isRequired: true},
     sub_category: {type: Relationship, ref: 'Mineral_Sub_Category', many: false, isRequired: true},
     seal:{type: Text},
     length_mm:{type: Decimal},
