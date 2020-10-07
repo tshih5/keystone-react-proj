@@ -47,7 +47,7 @@ function ProductPage(props) {
 
 const PRODUCT_QUERY = gql`
   query($name: String!){
-    allProducts(where:{main_category:{name: $name}} orderBy: \"name\"){
+    allProducts(where:{main_category:{name: $name}, hidden_not: true} orderBy: \"name\"){
       name
       price_in_usd
       sub_category{
