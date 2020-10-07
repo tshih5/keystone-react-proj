@@ -95,6 +95,8 @@ function DisplayTags(props){
   if(props.error) return <p>Error: {props.error.message}</p>;
   if(props.loading) return <h5>Loading . . .</h5>;
 
+  if(props.data.Product.hidden === true) return null;
+  
   if(!isEmpty(props.data.Product.tags)){
     return props.data.Product.tags.map((tag) => (
       <Badge key={tag.name} className="tag" variant="info" as={Link} to={`/search/?t=${tag.name}`}>{tag.name}</Badge>
