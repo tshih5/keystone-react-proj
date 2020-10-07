@@ -98,6 +98,15 @@ footer{
 .list-group-story-heading{
   margin: 5px 0px;
 }
+
+.page-link{
+  color: #343a40;
+}
+
+.paging{
+  padding: 0rem 4rem;
+}
+
 /* || Main Banner */
 .home-banner-1 {
   background-image: url("./img/home_banner.jpg");
@@ -249,3 +258,10 @@ img.testing{
 .requiredField{
   color: red;
 }
+
+.page-item.active .page-link{
+  background-color: #343a40;
+  border-color: #343a40;
+  color: white;
+}
+
