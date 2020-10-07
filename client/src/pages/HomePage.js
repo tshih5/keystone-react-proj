@@ -30,7 +30,7 @@ function HomePage() {
         <Container>
           <Row>
             <Col>
-              <h1 className="text-center banner-title ">石頭種類</h1>
+              <h1 className="text-center banner-title ">收藏種類</h1>
             </Col>
           </Row>
           <Row>
