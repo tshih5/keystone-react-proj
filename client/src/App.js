@@ -7,28 +7,39 @@ import ProductPage from "./pages/ProductPage";
 import HomePage from "./pages/HomePage";
 import ProductDisplay from "./pages/ProductDisplay";
 import StoryDisplay from "./pages/StoryDisplay";
-//import SearchPage from "./pages/SearchPage";
+import ContactUs from "./pages/ContactUs";
+import SearchPage from "./pages/SearchPage"; 
+
 import logo from './img/logo.png';
 
-import { ApolloClient } from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider, ApolloClient, HttpLink, ApolloLink, InMemoryCache, useQuery} from '@apollo/client';
+import { onError } from "@apollo/client/link/error";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
-
 import { KeystoneProvider } from '@keystonejs/apollo-helpers';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
-  Redirect,
   useHistory,
 } from "react-router-dom";
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+      ),
+    );
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
+
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK || "http://localhost:3000/admin/api"})
+const link = ApolloLink.from([errorLink, httpLink]);
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: process.env.REACT_APP_HTTP_LINK || "http://localhost:3000/admin/api"}),
+  link,
   cache: new InMemoryCache(),
 });
 
@@ -57,8 +68,9 @@ export default function App() {
                   <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
                     <StoryDropDowns />
                   </NavDropdown>
+                  <Nav.Link as={Link} to="/contactus" >連絡我們</Nav.Link>
                 </Nav>
-                {/*<NavSearch/>*/}
+                <NavSearch/>
               </Navbar.Collapse>
             </Navbar>
             {/*Routes*/}
@@ -90,7 +102,10 @@ export default function App() {
 
                 {/*Search page*/}
                 <Route path="/search/">
-                  {/*<SearchPage />*/}
+                  <SearchPage />
+                </Route>
+                <Route path="/contactus">
+                  <ContactUs />
                 </Route>
                 <Route exact path="/">
                   <HomePage />
@@ -103,7 +118,7 @@ export default function App() {
 
             <footer className="py-4 bg-black text-white-50">
               <div className="container text-center">
-                <small>&copy;2020 by Tom Shih, Shineyang Shih, 焯印堂</small>
+                <small>&copy;2020 by 濟先齋, 焯印堂</small>
               </div>
             </footer>
           </div>
@@ -122,13 +137,40 @@ function NavSearch(){
   function onSearch(e){
     e.preventDefault();
     if(searchFilter !== ""){
-      history.push(`/search/?q=${searchFilter}`);
+      const searchURI = parseSearchField(searchFilter);
+      console.log("SearchURI: " + searchURI);
+      history.push(`/search/?${searchURI}`);
     }
+  }
+
+  function parseSearchField(searchField){
+    //TODO: make query field more robust eventually
+    //(term with no spaces)                                                   -> q=(term with no spaces)
+    //(tags [can have multiple] of the form tag:name also no spaces )         -> t=(tag)
+    let queryString = "";                         //query string that will be returned
+    let seenTerm = false;                         //only one term will be in the searchstring;
+    const queryArray = searchField.split(/\s+/);  //split filters by whitespace
+    //console.log("queryArray: " + queryArray);
+    queryArray.map(queryParam => {
+      if(queryParam.indexOf("tag") === 0){
+        let tagName = queryParam.substring(queryParam.indexOf(":") + 1);
+        //console.log("tag found: " + tagName);
+        queryString += ("t=" + tagName + "&");
+      }else{
+        //console.log("term found: " + queryParam);
+        if(!seenTerm){
+          seenTerm = true;
+          //console.log("term set: " + queryParam);
+          queryString += ("q=" + queryParam + "&");
+        }
+      }
+    });
+    return queryString;
   }
 
   return(
     <Form inline onSubmit={e => onSearch(e)}>
-      <FormControl type="text" placeholder="Search" className=" mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
       <Button variant="light" type="submit">Search</Button>
     </Form>
   );

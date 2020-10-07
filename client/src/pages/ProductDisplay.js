@@ -1,48 +1,30 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import "../App.css";
 import { Container, Row, Col, Badge } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
+import placeholder from '../img/placeholder.png';
 
 //This page displays individual products/items with lots of info
 
 function ProductDisplay(props) {
-  let productID = props.match.params.productid;
-  const [productData, setProductData] = useState([]);
+  //const [productID, setProductID] = useState(props.match.params.productid);
+  const productID = props.match.params.productid;
+  const { loading, error, data } = useQuery(PRODUCT_QUERY,{variables:{pid: productID}});
 
-  console.log(productData);
   return (
     <Container>
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
-          <Container className="product-info chinese-text">
-            <GetItemData productID={productID} setProductData={setProductData} />
-            <h1>{productData.name}</h1>
-            <img className="img-fluid" src={productData.main_image == null ? 'http://placehold.jp/600x350.png': `${productData.main_image.publicUrl}`} alt="stone main image"/>
-            <div className="descriptions">
-              <br/>
-              <p>[印紐 / Seal]: {productData.seal}
-              <br/>[尺寸 / Dimensions]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
-              <br/>[重量 / weight]: {productData.weight}g</p>
-
-              <p>[石種 / Material]: <br/>{productData.material}</p>
-              <p>[石質 / Quality]: <br/>{productData.quality}</p>
-              <p>[作者 / Artist]: <br/>{productData.creator}</p>
-              <p>[雕材賞析/雕工 Craftsmanship]: <br/>{productData.craftsmanship_comment}</p>
-              <p>[物品說明 / Item Description]: <br/>{productData.item_description}</p>
-              <p>[背後典故 / Story]: <br/>{productData.item_story}</p>
-              <span>[備註 / Note]: <div dangerouslySetInnerHTML={createMarkup(productData.note)} className="product-note"/></span>
-            </div>
-          </Container>
-
+          <DisplayProduct data={data} loading={loading} error={error}/>
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>
           <Container>
-            <div className="tag-list">
+            <div className="sticky-bar-right">
               <h4>TAGS</h4>
-              <DisplayTags tags={productData.tags} />
+              <DisplayTags data={data} loading={loading} error={error}/>
             </div>
           </Container>
         </Col>
@@ -51,51 +33,73 @@ function ProductDisplay(props) {
   );
 }
 
-//graphql query to get product by id
-function GetItemData({productID, setProductData}){
-  const { loading, error, data } = useQuery(gql`
-    query($pid: ID!){
-      Product(where:{id: $pid}){
-        name
-        material
-        seal
-        length_mm
-        height_mm
-        width_mm
-        quality
-        weight
-        creator
-        craftsmanship_comment
-        item_description
-        item_story
-        note
-        main_image{
-          publicUrl
-        }
-        tags{
-          tag
-        }
-        price_in_usd
-        id
+const PRODUCT_QUERY = gql`
+  query($pid: ID!){
+    Product(where:{id: $pid}){
+      hidden
+      name
+      material
+      seal
+      length_mm
+      height_mm
+      width_mm
+      quality
+      weight
+      creator
+      craftsmanship_comment
+      item_description
+      item_story
+      note
+      main_image{
+        publicUrl
       }
+      tags{
+        name
+      }
+      price_in_usd
+      id
     }
-  `,{variables:{pid: productID}});
-  
-  useEffect(() => {
-    if(loading === false && data){
-      setProductData(data.Product);
-    }
-  }, [data]);
+  }`;
 
-  if(error) return <p>Error :(</p>
+function DisplayProduct(props){
+  if(props.error) return <h1>Error: {props.error.message}</h1>;
+  if(props.loading) return <h1>Loading</h1>;
+  if(props.data.Product.hidden === true) return <h1>404: Page not found</h1>;
+
+  if(props.data && !props.loading){
+    const productData = props.data.Product;
+    return(
+      <Container className="product-info">
+        <h1>{productData.name}</h1>
+        <img className="img-fluid" src={productData.main_image == null ? placeholder: `${productData.main_image.publicUrl}`} alt="stone main"/>
+        <div className="descriptions">
+          <p>[印紐 / Seal]: {productData.seal}
+          <br/>[尺寸 / Dimensions]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
+          <br/>[重量 / weight]: {productData.weight}g</p>
+          {/*<p>[石種 / Material]: <br/>{productData.material}</p>*/}
+          {productData.material ? <p>[石種 / Material]: <br /> ${productData.material}</p> : ''}
+          <p>[石質 / Quality]: <br/>{productData.quality}</p>
+          <p>[作者 / Artist]: <br/>{productData.creator}</p>
+          <p>[雕材賞析/雕工 Craftsmanship]: <br/>{productData.craftsmanship_comment}</p>
+          <p>[物品說明 / Item Description]: <br/>{productData.item_description}</p>
+          <p>[背後典故 / Story]: <br/>{productData.item_story}</p>
+          <span>[備註 / Note]: <div dangerouslySetInnerHTML={createMarkup(productData.note)} className="product-note"/></span>
+        </div>
+      </Container>
+    );
+  }
   return null;
 }
 
 function DisplayTags(props){
-  console.log(props);
-  if(!isEmpty(props.tags)){
-    return props.tags.map((tag) => (
-        <Badge className="tag" variant="info">{tag.tag}</Badge>
+  if(props.error) return <p>Error: {props.error.message}</p>;
+  if(props.loading) return <h5>Loading . . .</h5>;
+
+  if(props.data.Product.hidden === true) return null;
+  
+  if(!isEmpty(props.data.Product.tags)){
+    return props.data.Product.tags.map((tag) => (
+      <Badge key={tag.name} className="tag" variant="info" as={Link} to={`/search/?t=${tag.name}`}>{tag.name}</Badge>
     ));
   }else{
     return <h5>None</h5>;
@@ -104,8 +108,9 @@ function DisplayTags(props){
 
 function isEmpty(obj) {
   for(var key in obj) {
-      if(obj.hasOwnProperty(key))
-          return false;
+      if(obj.hasOwnProperty(key)){
+        return false;
+      }
   }
   return true;
 }

@@ -1,7 +1,7 @@
 const { Keystone } = require('@keystonejs/keystone');
 const { PasswordAuthStrategy } = require('@keystonejs/auth-password');
 
-const { Text, Decimal, Checkbox, Password, Url, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
+const { Text, Decimal, Checkbox, Password, Select, CalendarDay, Relationship, File } = require('@keystonejs/fields');
 //const Stars = require('./fields/Stars');
 const { Wysiwyg } = require('@keystonejs/fields-wysiwyg-tinymce');
 const { S3Adapter } = require('@keystonejs/file-adapters');
@@ -16,11 +16,16 @@ dotenv.config();
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 const expressSession = require('express-session');
 const MongoStore = require('connect-mongo')(expressSession);
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const PROJECT_NAME = 'jxz-art';
 const MONGO_URI = process.env.MONGO_URI;
 const adapterConfig = { mongoUri: MONGO_URI || 'mongodb://localhost/cms-proj' };
 
+
+//Create Keystone
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter(adapterConfig),
@@ -112,10 +117,41 @@ const fileAdapter = new S3Adapter({
 });
 
 //Keystone Lists
-keystone.createList('Product', {
+keystone.createList('Mineral_Main_Category', {
   fields: {
     name: {type: Text},
-    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false,isRequired: true},
+    subcategories:{
+      type: Relationship,
+      ref: 'Mineral_Sub_Category',
+      many: true
+    },
+    description:{
+      type: Text, 
+      isMultiline: true
+    },
+  },
+  labelField: "name",
+});
+
+keystone.createList('Mineral_Sub_Category',{
+  fields:{
+    name:{type: Text},
+  },
+  labelField: "name",
+});
+
+keystone.createList('Story_Category', {
+  fields: {
+    topic: {type: Text},
+  },
+  labelField: "topic",
+});
+
+keystone.createList('Product', {
+  fields: {
+    hidden:{type: Checkbox, isRequired: true},
+    name: {type: Text},
+    main_category: {type: Relationship, ref: 'Mineral_Main_Category', many: false, isRequired: true},
     sub_category: {type: Relationship, ref: 'Mineral_Sub_Category', many: false, isRequired: true},
     seal:{type: Text},
     length_mm:{type: Decimal},
@@ -131,7 +167,7 @@ keystone.createList('Product', {
     note:{type: Wysiwyg},
     favorite: {type: Checkbox},
     price_in_usd: {type: Decimal},
-    tags:{type: Relationship, ref: 'Product_Tag', many: true},
+    tags:{type: Relationship, ref: 'Tag', many: true},
     main_image: {
       type: File,
       adapter: fileAdapter,
@@ -165,29 +201,6 @@ keystone.createList('Product', {
       }
     },
   },
-  labelField: "id",
-});
-
-keystone.createList('Mineral_Main_Category', {
-  fields: {
-    name: {type: Text},
-    subcategories:{
-      type: Relationship,
-      ref: 'Mineral_Sub_Category',
-      many: true
-    },
-    description:{
-      type: Text, 
-      isMultiline: true
-    },
-  },
-  labelField: "name",
-});
-
-keystone.createList('Mineral_Sub_Category',{
-  fields:{
-    name:{type: Text},
-  },
   labelField: "name",
 });
 
@@ -201,7 +214,7 @@ keystone.createList('Story',{
     date_published:{type: CalendarDay},
     story_content:{type: Wysiwyg},
     status:{type: Select, options: ['Draft', 'Published', 'Hidden']},
-    tags:{type: Relationship, ref: 'Story_Tag', many: true},
+    tags:{type: Relationship, ref: 'Tag', many: true},
     main_image: {
       type: File,
       adapter: fileAdapter,
@@ -221,28 +234,60 @@ keystone.createList('Story',{
       }
     },
   },
+  labelField: "title",
 });
 
-keystone.createList('Story_Category', {
-  fields: {
-    topic: {type: Text},
-  },
-  labelField: "topic",
-});
-
-keystone.createList('Story_Tag', {
-  fields: {
-    tag: {type: Text},
-  },
-  labelField: "tag",
-});
-
-keystone.createList('Product_Tag', {
+keystone.createList('Tag', {
   fields:{
-    tag:{type: Text}
+    name:{type: Text}
   },
-  labelField: "tag",
+  labelField: "name",
 });
+
+
+//Nodemailer
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  auth: {
+    user: process.env.SMTP_USERNAME,
+    pass: process.env.SMTP_PASSWORD,
+  }
+});
+
+transporter.verify(function(error, success){
+  if(error){
+    console.log(error);
+  }else{
+    console.log("\nServer is ready to take our messages\n");
+  }
+})
+
+function sendEmail(req, res, next) {
+  console.log(req.body);
+  
+  var name = req.body.name;
+  var email = req.body.email;
+  var subject = req.body.subject;
+  var message = req.body.message;
+  var content = `name: ${name} \nemail: ${email} \nsubject: ${subject} \nmessage: ${message}`
+
+  var mail = {
+    from: name,
+    to: "dadsrocks12345@gmail.com",
+    subject: subject,
+    text: content
+  }
+
+  transporter.sendMail(mail, (err, data) => {
+    if(err){
+      res.json({status: 'fail'});
+    }else{
+      res.json({status: 'success'});
+    }
+  });
+  
+}
 
 module.exports = {
   keystone,
@@ -256,5 +301,12 @@ module.exports = {
   ],
   configureExpress: app => {
     app.set('trust proxy', 1);
+    app.use(cors());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.post('/send', sendEmail);
+    app.get('/xd', function (req, res) {
+      res.send('hello world')
+    })
   }
 };

@@ -15,6 +15,7 @@ a.list-group-item{
 
 a.list-group-item.active{
   background-color: #fff;
+  border-color: black;
   color: #AE654B;
 }
 
@@ -45,7 +46,7 @@ footer{
   align-self: flex-start;
 }
 
-.tag-list{
+.sticky-bar-right{
   margin-top: 50px;
   margin-bottom: 50px;
 }
@@ -63,8 +64,10 @@ footer{
   margin-top: 50px;
 }
 
-.product-note{
-  display:inline-block;
+.product-note img{
+  width: 100%;
+  height: auto;
+  max-width: 640px;
 }
 
 .story-container{
@@ -95,6 +98,15 @@ footer{
 .list-group-story-heading{
   margin: 5px 0px;
 }
+
+.page-link{
+  color: #343a40;
+}
+
+.paging{
+  padding: 0rem 4rem;
+}
+
 /* || Main Banner */
 .home-banner-1 {
   background-image: url("./img/home_banner.jpg");
@@ -187,7 +199,7 @@ button.pill{
 
 .story-header{
   text-align: center;
-  margin-bottom: 50px
+  margin-bottom: 20px
 }
 
 .story-preview{
@@ -195,13 +207,16 @@ button.pill{
   padding: 40px 40px;
 }
 
-.tag{
-  font-family: 'Noto Sans TC', Arial, sans-serif;
+a.tag{
   font-size: large;
   font-weight: 100;
   padding: 5px 3px !important;
   margin: 2px;
   background-color: #AE654B
+}
+
+a.tag:hover{
+  background-color: black;
 }
 
 .button-img{
@@ -223,6 +238,7 @@ button.pill{
 
 .descriptions{
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 img.testing{
@@ -237,5 +253,15 @@ img.testing{
 .navbar-dark .navbar-nav .nav-link {
   color: rgba(255, 255, 255, 1);
   font-weight: 100;
+}
+
+.requiredField{
+  color: red;
+}
+
+.page-item.active .page-link{
+  background-color: #343a40;
+  border-color: #343a40;
+  color: white;
 }
 
