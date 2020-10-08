@@ -34,7 +34,8 @@ function SearchPage(props) {
   if (error) return <p>{error.message}</p>;
 
   //number of pages
-  let pages = Math.ceil((data._allProductsMeta.count + data._allStoriesMeta.count) / itemsPerPage);
+
+  let pages = (Math.ceil(Math.max(data._allProductsMeta.count, data._allStoriesMeta.count) / 10) * 10) / (itemsPerPage / 2);
 
   return (
     <Container className="story-container" >
@@ -93,7 +94,7 @@ function generateQuery(tags){
         count
       }
     }`;
-  //console.log(searchQuery);
+  console.log(searchQuery);
   return gql(searchQuery);
 }
 
@@ -133,7 +134,7 @@ function DisplayResults(props){
   }
 
   let tot_arr = [...prod_arr, ...story_arr];
-  //console.log(tot_arr);
+  console.log(tot_arr);
   if(prod_arr.length === 0 && story_arr.length === 0){
     return <p>Theres nothing here right now; Please check back later.</p>
   }else{
@@ -156,7 +157,7 @@ function Paging(props){
 
   return(
     <div>
-      <Pagination size="lg">{items}</Pagination>
+      <Pagination size="sm">{items}</Pagination>
       <br />
     </div>
   );
