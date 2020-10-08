@@ -62,7 +62,7 @@ export default function App() {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                   <Nav.Link as={Link} to="/" >首頁</Nav.Link>
-                  <NavDropdown title="石頭種類" id="basic-nav-dropdown">
+                  <NavDropdown title="收藏種類" id="basic-nav-dropdown">
                     <ProductDropDowns />
                   </NavDropdown>
                   <NavDropdown title="趣聞雜談" id="basic-nav-dropdown">
