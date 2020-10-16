@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React from "react";
 import "../App.css";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 import placeholder from '../img/placeholder.png';
+//sharing
+import Sharing from '../components/sharing';
 
 //This page displays individual products/items with lots of info
 
@@ -18,6 +20,7 @@ function ProductDisplay(props) {
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <DisplayProduct data={data} loading={loading} error={error}/>
+          <Sharing data={data} loading={loading} error={error} />
         </Col>
         <Col xl={1} md={1} sm={12}></Col>
         <Col className="sticky-col" xl={3} md={4} sm={12}>

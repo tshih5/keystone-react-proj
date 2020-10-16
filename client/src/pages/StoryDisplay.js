@@ -4,6 +4,8 @@ import { Container, Row, Col, ListGroup, Badge } from "react-bootstrap";
 import { withRouter, Link } from "react-router-dom";
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
+//sharing
+import Sharing from '../components/sharing';
 
 function StoryDisplay(props) {
   //const [storyID, setstoryID] = useState(props.match.params.storyid);
@@ -15,6 +17,7 @@ function StoryDisplay(props) {
       <Row xl={3} md={3} sm={1}>
         <Col xl={8} md={7} sm={12}>
           <DisplayStory data={data} loading={loading} error={error}/>
+          <Sharing data={data} loading={loading} error={error} />
         </Col>
         {/*divider for second column */}
         <Col className="d-sm-none d-md-block" xl={1} md={1} sm={12}></Col>
