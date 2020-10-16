@@ -7,6 +7,7 @@ import {
     TwitterShareButton, TwitterIcon,
     EmailShareButton, EmailIcon,
     PinterestShareButton, PinterestIcon,
+    WeiboShareButton, WeiboIcon,
   } from "react-share";
 
 export default function Sharing(props){
@@ -62,7 +63,18 @@ export default function Sharing(props){
             </PinterestShareButton>
           </OverlayTrigger>
         </div>
-        
+
+        <div className="social-icon">
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip("Weibo")}>
+            <WeiboShareButton url={shareUrl}>
+              <WeiboIcon size={iconSize} round/>
+            </WeiboShareButton>
+          </OverlayTrigger>
+        </div>
+
         <div className="social-icon">
           <OverlayTrigger
             placement="top"
