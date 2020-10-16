@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Nav, Navbar, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
+import { Nav, Navbar, NavDropdown, Form, FormControl, Button, OverlayTrigger, Tooltip} from "react-bootstrap";
 
 import StoryPage from "./pages/StoryPage";
 import ProductPage from "./pages/ProductPage";
@@ -170,12 +170,23 @@ function NavSearch(){
 
   return(
     <Form inline onSubmit={e => onSearch(e)}>
-      <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      <OverlayTrigger
+        placement="left"
+        delay={{ show: 250, hide: 400 }}
+        overlay={renderTooltip()}
+      >
+        <FormControl type="text" placeholder="Search" className="mr-sm-2" onChange={event => {setSearchFilter(event.target.value)}}/>
+      </OverlayTrigger>
       <Button variant="light" type="submit">Search</Button>
     </Form>
   );
 }
 
+function renderTooltip(){
+  return(
+    <Tooltip id={"searchbar-tooltip"}> Search tags with <i>tag:tagname</i> </Tooltip>
+  );
+}
 
 /*Render dropdown buttons for story tab*/
 function StoryDropDowns(){
