@@ -107,6 +107,13 @@ footer{
   padding: 0rem 4rem;
 }
 
+.sharing{
+  margin: 20px 0px
+}
+.social-icon{
+  display: inline-block;
+  margin-right: 20px;
+}
 /* || Main Banner */
 .home-banner-1 {
   background-image: url("./img/home_banner.jpg");
