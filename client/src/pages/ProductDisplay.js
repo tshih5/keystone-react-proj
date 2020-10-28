@@ -80,7 +80,7 @@ function DisplayProduct(props){
           <br/>[尺寸 / Dimensions]: {productData.length_mm}{productData.width_mm == null ? '' : 'mm x '}{productData.width_mm}{productData.height_mm == null ? '' : 'mm x '} {productData.height_mm}{productData.height_mm == null ? '' : 'mm'}
           <br/>[重量 / weight]: {productData.weight}g</p>
           {/*<p>[石種 / Material]: <br/>{productData.material}</p>*/}
-          {productData.material ? <p>[石種 / Material]: <br /> ${productData.material}</p> : ''}
+          {productData.material ? <p>[石種 / Material]: <br /> {productData.material}</p> : ''}
           <p>[石質 / Quality]: <br/>{productData.quality}</p>
           <p>[作者 / Artist]: <br/>{productData.creator}</p>
           <p>[雕材賞析/雕工 Craftsmanship]: <br/>{productData.craftsmanship_comment}</p>
