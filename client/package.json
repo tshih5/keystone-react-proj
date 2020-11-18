@@ -20,6 +20,7 @@
     "react-share": "^4.3.1",
     "serve": "^11.3.2"
   },
+  "engines" : { "node" : ">=12.16.1" },
   "scripts": {
     "start": "set PORT=3005 && react-scripts start",
     "build": "react-scripts build",
