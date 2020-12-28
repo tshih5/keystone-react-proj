@@ -8,6 +8,9 @@ import {
   withRouter,
 } from "react-router-dom";
 
+//TODO: infinite scroll possible solution
+//https://sysgears.com/articles/how-to-implement-infinite-scroll-with-graphql-and-react/
+
 //displays story previews in a vertical list
 function SearchPage(props) {
   //console.log("DECODED URI: " + decodeURIComponent(props.location.search));
