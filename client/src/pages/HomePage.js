@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import logo from './../img/home_main.png';
 import vertBtn1 from './../img/vertical_button_1.png';
-import vertBtn2 from './../img/vertical_button_2.png';
+import vertBtn4 from './../img/vertical_button_4.png';
 import vertBtn3 from './../img/vertical_button_3.png';
 import mainStory from './../img/main_story.png';
 
@@ -37,7 +37,7 @@ function HomePage() {
             <Col className="text-center" sm={6} lg={4}>
               <div>
                 <Link to={`/products/壽山石`}>
-                  <img className="button-img" src={vertBtn2} alt="stone button"/>
+                  <img className="button-img" src={vertBtn4} alt="stone button"/>
                   <button className="button-vertical ">壽<br/>山<br/>石</button>
                 </Link>
               </div>
